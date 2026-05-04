@@ -1,30 +1,124 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#7fd3df" />
-<link rel="manifest" href="manifest.json" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>一家四口日本關西旅程</title>
+
 <style>
-:root{--paper:#e7fbff;--paper2:#f7fdff;--ink:#12323a;--blue:#7fd3df;--blue2:#bfeef4;--deep:#244e5a;--sun:#f4c95d;--aqua:#d9f8fb;--line:#12323a;--shadow:rgba(18,50,58,.18)}*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans TC',-apple-system,BlinkMacSystemFont,sans-serif;background:#bdeef5;color:var(--ink);line-height:1.7;background-image:radial-gradient(rgba(18,50,58,.08) 1px,transparent 1px),linear-gradient(180deg,#aeeaf4,#e6fbff 48%,#c9f4f8);background-size:7px 7px,100% 100%}.wrap{max-width:1180px;margin:auto;padding:18px}.panel{border:5px solid var(--line);background:linear-gradient(180deg,var(--paper2),var(--paper));box-shadow:8px 8px 0 rgba(18,50,58,.22);position:relative}.panel:before{content:"";position:absolute;inset:7px;border:2px solid var(--line);pointer-events:none}.hero{padding:34px 24px 22px;margin:18px 0}.hero-art{min-height:300px;border:4px solid var(--line);background:radial-gradient(circle at 14% 16%,#f4c95d 0 8%,transparent 9%),radial-gradient(circle at 78% 22%,#f4df8f 0 2%,transparent 3%),radial-gradient(circle at 45% 42%,#f4df8f 0 3%,transparent 4%),linear-gradient(135deg,#7fd3df,#c9f7fb 58%,#e9fbff);position:relative;overflow:hidden}.hero-art:after{content:"☀︎   ✦   ★   ✦   ☾";position:absolute;inset:auto 10px 18px;font-size:42px;letter-spacing:16px;color:#f4c95d;text-shadow:2px 2px 0 #12323a}.faces{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:28px;position:relative;z-index:2}.face{aspect-ratio:1;border:4px solid #12323a;border-radius:50%;background:#d9f8fb;display:flex;align-items:center;justify-content:center;box-shadow:5px 5px 0 rgba(18,50,58,.38);overflow:hidden}.face img{width:100%;height:100%;object-fit:cover;filter:saturate(1.08) contrast(1.02)}.title{font-size:clamp(34px,6vw,64px);text-align:center;letter-spacing:.04em;margin:16px 0 4px;color:#12323a}.subtitle{text-align:center;font-size:18px;margin:0 auto 12px;max-width:850px}.toolbar{position:sticky;top:0;z-index:10;background:rgba(217,248,251,.94);border-bottom:4px solid #12323a;padding:10px;display:flex;gap:8px;flex-wrap:wrap}.pill,.btn{display:inline-block;background:#f7fdff;border:3px solid #12323a;box-shadow:3px 3px 0 #12323a;border-radius:999px;padding:7px 12px;color:#12323a;text-decoration:none;font-weight:800}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:#f7fdff;border:4px solid #12323a;padding:18px;box-shadow:5px 5px 0 rgba(18,50,58,.24);margin:14px 0}.day{background:linear-gradient(180deg,#f7fdff,#dff8fb)}h1,h2,h3{line-height:1.2}h2{font-size:30px;margin:34px 0 12px;border-bottom:4px solid #12323a;display:inline-block}h3{font-size:22px;margin:6px 0 10px}.small{font-size:14px}.meta{font-weight:800;color:#24515b}.item{border-top:2px dashed #12323a;padding:10px 0}.item:first-of-type{border-top:0}a{color:#0b6978;font-weight:900}table{width:100%;border-collapse:collapse;background:#f7fdff;border:4px solid #12323a;box-shadow:5px 5px 0 rgba(18,50,58,.22);margin:12px 0}th,td{border:2px solid #12323a;padding:10px;vertical-align:top;text-align:left}th{background:#7fd3df}.done{opacity:.55;text-decoration:line-through}.check{width:auto;transform:scale(1.25);margin-right:8px}input,textarea{width:100%;padding:10px;border:3px solid #12323a;background:#f7fdff;font:inherit}button{border:3px solid #12323a;background:#7fd3df;box-shadow:3px 3px 0 #12323a;padding:10px 14px;font-weight:900;cursor:pointer;border-radius:12px;margin:4px}.summaryBox{font-size:18px;font-weight:900}.tag{background:#bfeef4;border:2px solid #12323a;padding:2px 7px;margin:2px;display:inline-block}.footer{text-align:center;margin:26px 0;font-weight:900}.star{color:#f4c95d;text-shadow:1px 1px 0 #12323a}.quick-result{margin-top:12px;background:#e7fbff;border:3px dashed #12323a;border-radius:14px;padding:12px}@media(max-width:700px){.faces{grid-template-columns:repeat(2,1fr)}.hero-art{min-height:300px}.toolbar{position:relative}.title{font-size:36px}th,td{font-size:14px}}@media print{.toolbar,.form,button{display:none}.card,table,.panel{box-shadow:none}body{background:white}}
+body{
+  margin:0;
+  font-family:'Noto Sans TC',sans-serif;
+  background:linear-gradient(#bdeef5,#f7fdff);
+  color:#12323a;
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:12px;
+}
+
+.card{
+  background:#fff;
+  border:3px solid #12323a;
+  border-radius:16px;
+  padding:16px;
+  margin:12px 0;
+  box-shadow:4px 4px 0 #12323a;
+}
+
+h1{text-align:center}
+h2{margin:10px 0}
+
+.item{
+  border-top:1px dashed #aaa;
+  padding:8px 0;
+}
+
+/* 浮動按鈕 */
+.floating{
+  position:fixed;
+  right:12px;
+  z-index:9999;
+  border:3px solid #12323a;
+  border-radius:999px;
+  padding:12px;
+  font-weight:bold;
+  text-decoration:none;
+  color:#12323a;
+  box-shadow:3px 3px 0 #12323a;
+}
+
+.quick{bottom:130px;background:#7fd3df;}
+.today{bottom:70px;background:#f4c95d;}
+.top{bottom:10px;background:white;}
 </style>
 </head>
-<body>
-<div class="toolbar"><a class="pill" href="#overview">總覽</a><a class="pill" href="#quick">快速操作</a><a class="pill" href="#days">每日行程</a><a class="pill" href="#transport">交通</a><a class="pill" href="#lodging">住宿</a><a class="pill" href="#budget">費用</a><a class="pill" href="#add">新增</a><button onclick="window.print()">列印/PDF</button><button onclick="resetData()">重置資料</button></div>
-<main class="wrap">
-<header class="panel hero"><div class="hero-art"><div class="faces"><div class="face"><img src="family_q1.png" alt="Q版家人1"></div><div class="face"><img src="family_q1.png" alt="Q版家人2"></div><div class="face"><img src="family_q1.png" alt="Q版家人3"></div><div class="face"><img src="family_q1.png" alt="Q版家人4"></div></div></div><h1 class="title">一家四口日本關西旅程</h1><p class="subtitle">輕鬆親子旅遊｜神戶牛・大阪天神祭・海遊館・USJ・京都 teamLab</p><p style="text-align:center"><span class="tag">2大2小</span><span class="tag">可打勾</span><span class="tag">費用統計</span><span class="tag">地圖導航</span><span class="tag">離線查看</span></p></header>
-<section id="overview" class="grid"><div class="card"><h3>✈ 去程</h3><p>7/24 06:20 TPE T2 → 10:00 UKB T2<br>長榮 BR134</p></div><div class="card"><h3>✈ 回程</h3><p>7/31 11:10 KIX T1 → 13:05 TPE T2<br>長榮 BR177</p></div><div class="card summaryBox"><h3>費用總覽</h3><p id="totals">計算中...</p></div></section>
-<section id="quick" class="card"><h2>📍 每日快速操作</h2><h3>Day 2｜大阪天神祭</h3><button onclick="openMap('34.6923,135.5200')">📍 親子觀賞點</button><button onclick="openMap('34.6955,135.5305')">📍 備用安靜位置</button><button onclick="openMap('APA Hotel Osaka Temmabashi Ekimae')">🏨 回飯店</button><button onclick="showDay2()">🗺 今日動線</button><h3>Day 3｜海遊館主軸</h3><button onclick="openMap('Osaka Aquarium Kaiyukan')">🐠 海遊館</button><button onclick="openMap('Tempozan Marketplace')">🍽 天保山午餐</button><button onclick="openMap('Liber Hotel Osaka')">🏨 回 Liber Hotel</button><button onclick="showDay3()">🗺 今日動線</button><h3>Day 4｜USJ</h3><button onclick="openMap('Universal Studios Japan')">🎢 園區地圖</button><button onclick="openMap('Super Nintendo World USJ')">🍄 任天堂世界</button><button onclick="openMap('Minion Park USJ')">🎈 小小兵</button><button onclick="openMap('Wizarding World of Harry Potter USJ')">🧙 哈利波特</button><button onclick="showUSJPlan()">🗺 最佳動線</button><button onclick="showUSJTips()">⚠️ 不排隊技巧</button><button onclick="showKids()">👶 小孩適合</button><button onclick="showNoKids()">⚠️ 不建議設施</button><div id="dayBox" class="quick-result">點選上方按鈕，這裡會顯示當天現場攻略。</div></section>
-<section id="days"><h2>每日行程</h2><div id="dayList"></div></section>
-<section id="transport"><h2>移動交通規劃</h2><table><thead><tr><th>完成</th><th>日期</th><th>起點 → 終點</th><th>工具</th><th>時間</th><th>費用估算</th><th>導航</th></tr></thead><tbody id="routeRows"></tbody></table></section>
-<section id="lodging"><h2>住宿與訂房紀錄</h2><table><thead><tr><th>日期</th><th>住宿</th><th>區域</th><th>訂單/確認碼</th><th>費用 JPY</th><th>費用 TWD</th><th>地圖</th></tr></thead><tbody id="hotelRows"></tbody></table></section>
-<section id="budget"><h2>費用紀錄</h2><div class="card form"><h3>新增費用</h3><div class="grid"><input id="bDate" placeholder="日期，例如 7/24"><input id="bItem" placeholder="項目"><input id="bJpy" type="number" placeholder="日圓"><input id="bTwd" type="number" placeholder="台幣"><button onclick="addBudget()">新增費用</button></div></div><table><thead><tr><th>日期</th><th>項目</th><th>JPY</th><th>TWD</th></tr></thead><tbody id="budgetRows"></tbody></table></section>
-<section id="add" class="card form"><h2>新增行程</h2><div class="grid"><input id="nDay" placeholder="日期"><input id="nTime" placeholder="時間"><input id="nTitle" placeholder="行程名稱"><input id="nMap" placeholder="地圖連結"><textarea id="nNote" placeholder="特色/備註"></textarea><button onclick="addPlan()">新增到每日行程</button></div></section><p class="footer">願這趟旅程像水藍色的河流，輕柔地帶著一家人前往美好的地方。</p>
-</main>
-<script>
-const maps=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);const yen=v=>'¥'+Number(v||0).toLocaleString();const twd=v=>'NT$'+Number(v||0).toLocaleString();function openMap(q){window.open('https://www.google.com/maps?q='+encodeURIComponent(q),'_blank')}function showDay2(){dayBox.innerHTML='<b>Day 2｜天神祭不擠版</b><p>🏨 APA天滿橋 → 🚶 天滿橋南側河岸（5–10分鐘）</p><p>🎆 看船渡御/花火 → 🍢 吃屋台小吃</p><p>😴 小孩累了：直接按「回飯店」。</p><p>🎒 必帶：小風扇、水、濕紙巾、小毛巾。</p>'}function showDay3(){dayBox.innerHTML='<b>Day 3｜海遊館主軸</b><p>🚃 天滿橋/飯店 → 大阪港・海遊館</p><p>🐠 海遊館約2.5–3小時，主看鯨鯊大水槽、水母區、觸摸區。</p><p>🍽 天保山 Market Place 午餐。</p><p>🏨 下午回 Liber Hotel 休息，為隔天 USJ 存體力。</p>'}function showUSJPlan(){dayBox.innerHTML='<b>Day 4｜USJ最佳動線</b><p>🌅 07:30–08:00 到門口。</p><p>🍄 入園先直衝任天堂世界：馬力歐賽車 → 耀西。</p><p>🍽 中午避開熱門設施，改吃飯/逛商店。</p><p>🎈 下午小小兵與親子設施。</p><p>🧙 傍晚哈利波特區，拍城堡與奶油啤酒。</p>'}function showUSJTips(){dayBox.innerHTML='<b>USJ不排隊技巧</b><p>✔ 早到門口，常會提早開園。</p><p>✔ 熱門設施排超過40分鐘就考慮放棄。</p><p>✔ 午餐11:00或14:00，避開12:00–13:30。</p><p>✔ 每2小時休息一次，補水降溫。</p><p>✔ Express Pass建議選含任天堂/哈利波特的版本。</p>'}function showKids(){dayBox.innerHTML='<b>小孩適合設施</b><p>✔ 耀西冒險</p><p>✔ 小小兵瘋狂乘車</p><p>✔ Hello Kitty / Snoopy / 芝麻街區</p><p>✔ 任天堂互動區與拍照</p>'}function showNoKids(){dayBox.innerHTML='<b>小孩較不建議/需評估</b><p>❌ 飛天翼龍：太刺激。</p><p>❌ 好萊塢美夢乘車遊：高速雲霄飛車。</p><p>⚠️ 哈利波特禁忌之旅：畫面暗、晃動較大。</p><p>⚠️ 大白鯊：部分孩子會怕爆炸聲與黑暗。</p>'}
-const defaultData={done:{},days:[{d:'7/23 四',title:'台中出發 → 桃園機場過夜',items:[['20:20','台中火車站候車','提前到站，搭統聯客運。',0,350,maps('統聯客運 台中火車站 大智北路')],['21:00','統聯客運前往桃園機場','約 2.5 小時。',0,1400,maps('桃園國際機場 第二航廈')],['23:30','抵達桃園機場 T2','前往 5F 美食街外圍找無扶手長椅休息。',0,0,maps('桃園國際機場第二航廈 美食街')]]},{d:'7/24 五',title:'神戶牛 → 大阪天神祭宵宮',items:[['04:20','桃園機場 T2 報到','06:20 長榮 BR134 起飛。',0,0,maps('桃園國際機場第二航廈')],['10:00','抵達神戶機場','出關領行李後搭 Port Liner 到三宮。',1360,0,maps('神戶機場')],['12:30','Mouriya 本店 神戶牛午餐','Kobe beef Rump 120g，約 ¥9,000–9,500/人。',38000,0,maps('Mouriya Honten Kobe')],['15:30','APA 天滿橋入住休息','晚上輕鬆感受天神祭宵宮。',0,0,maps('APA Hotel Osaka Temmabashi Ekimae')],['晚上','天神祭宵宮','天滿橋、大川沿岸散步，不硬擠人潮。',0,0,maps('天満橋 大川 大阪 天神祭')]]},{d:'7/25 六',title:'童書之森＋楠珺社＋天神祭本宮',items:[['上午','童書之森 中之島','安藤忠雄設計，親子與療癒感兼具。',0,0,maps('こども本の森 中之島')],['中午','中之島/北濱咖啡午餐','咖啡廳或簡餐。',8000,0,maps('北浜 カフェ 大阪')],['下午','回飯店休息','晚上人潮多，建議午后補眠。',0,0,maps('APA Hotel Osaka Temmabashi Ekimae')],['晚上','大阪天神祭本宮','船渡御/花火，住天滿橋可彈性撤退。',0,0,maps('大阪 天神祭 天満橋')]]},{d:'7/26 日',title:'海遊館主軸＋移動到 USJ 區',items:[['上午','退房後前往海遊館','以海遊館為主，先寄放或攜帶行李依現場調整。',2400,0,maps('Osaka Aquarium Kaiyukan')],['10:30–13:30','大阪海遊館','主看鯨鯊大水槽、水母區、觸摸區。',8000,0,maps('Osaka Aquarium Kaiyukan')],['13:30','天保山 Market Place 午餐','海遊館旁用餐，省移動。',6000,0,maps('Tempozan Marketplace')],['15:30','Liber Hotel Osaka 入住休息','下午洗澡、休息，為隔天USJ存體力。',0,0,maps('Liber Hotel Osaka')],['晚上','Universal CityWalk 簡單晚餐','不要吃太晚，早睡。',7000,0,maps('Universal CityWalk Osaka')]]},{d:'7/27 一',title:'日本環球影城 USJ',items:[['07:30','抵達 USJ 門口','常會提早開園，建議早到。',0,0,maps('Universal Studios Japan')],['早上','任天堂世界','馬力歐賽車 → 耀西 → 拍照。',0,0,maps('Super Nintendo World USJ')],['下午','小小兵＋親子設施','中午避開人潮，下午輕鬆玩。',0,0,maps('Minion Park USJ')],['傍晚','哈利波特區','城堡拍照、奶油啤酒，傍晚氣氛佳。',0,0,maps('Wizarding World of Harry Potter USJ')],['晚上','CityWalk 晚餐後回飯店','不要硬撐到太晚。',8000,0,maps('Universal CityWalk Osaka')]]},{d:'7/28 二',title:'換到 OASIS NANIWA＋心齋橋文具購物',items:[['上午','退房移動到 OASIS NANIWA','寄放行李或入住。',2400,0,maps('OASIS NANIWA Osaka')],['下午','Shimojima 心齋橋店','文具、包裝材料、品牌素材靈感。',10000,0,maps('シモジマ 心斎橋店')],['傍晚','心齋橋/道頓堀','購物與美食散步。',8000,0,maps('Dotonbori Osaka')]]},{d:'7/29 三',title:'京都 teamLab Biovortex Kyoto',items:[['上午','大阪前往京都','約 1 小時，京都車站午餐。',3200,0,maps('Kyoto Station')],['下午','teamLab Biovortex Kyoto','沉浸式展覽，當日主行程。',0,0,maps('teamLab Biovortex Kyoto')],['傍晚','鴨川/祇園或京都車站','依體力選一個散步點。',7000,0,maps('Gion Kyoto')]]},{d:'7/30 四',title:'Joshin Super Kids Land＋自由購物',items:[['上午','睡晚一點','整理行李與伴手禮清單。',0,0,maps('OASIS NANIWA Osaka')],['中午','Joshin Super Kids Land 本店','模型、鋼彈、玩具，日本橋電電街。',10000,0,maps('Joshin Super Kids Land Main Store')],['下午','黑門市場/難波補買','最後購物日，別太晚回飯店。',12000,0,maps('Kuromon Market Osaka')]]},{d:'7/31 五',title:'關西機場回台灣',items:[['08:00','前往關西機場 KIX T1','建議提早出發。',6000,0,maps('Kansai International Airport Terminal 1')],['11:10','長榮 BR177 回台灣','13:05 抵達桃園 T2。',0,0,maps('Taiwan Taoyuan International Airport Terminal 2')]]}],routes:[['7/23','台中火車站 → 桃園機場T2','統聯客運 1623','約2–2.5小時','NT$300–350/人',maps('台中火車站 到 桃園機場第二航廈')],['7/24','神戶機場 → 三宮','Port Liner','約18分鐘','約¥340/人',maps('神戶機場 到 三宮駅')],['7/24','三宮 → Mouriya 本店','步行','約5–8分鐘','¥0',maps('三宮駅 到 Mouriya Honten Kobe')],['7/24','三宮 → 天滿橋 APA','JR/阪神+大阪Metro','約50–70分鐘','約¥700–900/人',maps('三宮駅 到 APA Hotel Osaka Temmabashi Ekimae')],['7/26','天滿橋 → 海遊館','大阪Metro/京阪轉乘','約40–50分鐘','約¥400–600/人',maps('APA Hotel Osaka Temmabashi Ekimae 到 Osaka Aquarium Kaiyukan')],['7/26','海遊館 → Liber Hotel Osaka','大阪Metro/JR','約25–40分鐘','約¥300–500/人',maps('Osaka Aquarium Kaiyukan 到 Liber Hotel Osaka')],['7/29','大阪 → 京都','JR/阪急/京阪擇一','約45–70分鐘','約¥430–800/人',maps('大阪 到 京都 teamLab Biovortex Kyoto')],['7/31','OASIS NANIWA → KIX T1','南海電鐵/利木津巴士','約50–75分鐘','約¥970–1,500/人',maps('OASIS NANIWA Osaka 到 関西国際空港 Terminal 1')]],hotels:[['7/24–7/26','APA Hotel Osaka Temmabashi Ekimae','天滿橋','Agoda 1715112246',48544,10680,maps('APA Hotel Osaka Temmabashi Ekimae')],['7/26–7/28','Liber Hotel Osaka 大阪利蓓爾飯店','櫻島/USJ','Trip 1616329233185585 / 8RAXG31G',53300,11970,maps('Liber Hotel Osaka')],['7/28–7/31','OASIS NANIWA','大阪市區','易遊網 ORD0029621149',24345,5356,maps('OASIS NANIWA Osaka')]],budgets:[['7/26','海遊館門票','約¥7,000–8,000/四人','待確認'],['7/27','USJ 門票/Express Pass','待確認','待確認'],['7/29','teamLab Biovortex Kyoto','待確認','待確認']]};
-let data=JSON.parse(localStorage.getItem('tripData')||'null')||defaultData;function save(){localStorage.setItem('tripData',JSON.stringify(data))}function key(...a){return a.join('|')}function toggle(k){data.done[k]=!data.done[k];save();render()}function render(){dayList.innerHTML=data.days.map((x,di)=>`<div class="card day"><h3><span class="star">✦</span> ${x.d}｜${x.title}</h3>${x.items.map((i,ii)=>{let k=key('d',di,ii),cl=data.done[k]?'done':'';return `<div class="item ${cl}"><label><input class="check" type="checkbox" ${data.done[k]?'checked':''} onchange="toggle('${k}')"><b>${i[0]}｜<a target="_blank" href="${i[5]}">${i[1]}</a></b></label><br><span class="small">${i[2]}</span><br><span class="meta">預估：${i[3]?yen(i[3]):''} ${i[4]?twd(i[4]):''}</span></div>`}).join('')}</div>`).join('');routeRows.innerHTML=data.routes.map((r,ri)=>{let k=key('r',ri);return `<tr class="${data.done[k]?'done':''}"><td><input class="check" type="checkbox" ${data.done[k]?'checked':''} onchange="toggle('${k}')"></td>${r.slice(0,5).map(c=>`<td>${c}</td>`).join('')}<td><a target="_blank" href="${r[5]}">導航</a></td></tr>`}).join('');hotelRows.innerHTML=data.hotels.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${yen(r[4])}</td><td>${twd(r[5])}</td><td><a target="_blank" href="${r[6]}">地圖</a></td></tr>`).join('');budgetRows.innerHTML=data.budgets.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');let j=0,t=0;data.days.forEach(d=>d.items.forEach(i=>{j+=Number(i[3]||0);t+=Number(i[4]||0)}));data.hotels.forEach(h=>{j+=Number(h[4]||0);t+=Number(h[5]||0)});totals.innerHTML=`目前預估：${yen(j)}｜${twd(t)}<br><span class="small">不含未確認門票與現場彈性購物。</span>`}function addBudget(){data.budgets.push([bDate.value,bItem.value,bJpy.value,bTwd.value]);save();render()}function addPlan(){data.days.push({d:nDay.value,title:nTitle.value,items:[[nTime.value,nTitle.value,nNote.value,0,0,nMap.value||maps(nTitle.value)]]});save();render()}function resetData(){if(confirm('確定重置為預設行程？')){localStorage.removeItem('tripData');data=JSON.parse(JSON.stringify(defaultData));render()}}if('serviceWorker'in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{})}render();
-</script>
-</body></html>
+
+<body id="top">
+
+<!-- 浮動按鈕 -->
+<a href="quick.html" class="floating quick">📍</a>
+<a href="today.html" class="floating today">📅</a>
+<a href="#top" class="floating top">⬆️</a>
+
+<div class="wrap">
+
+<h1>一家四口日本關西旅程</h1>
+
+<div class="card">
+<h2>✈ 去程</h2>
+7/24 桃園 → 神戶
+</div>
+
+<div class="card">
+<h2>✈ 回程</h2>
+7/31 關西 → 桃園
+</div>
+
+<div class="card">
+<h2>Day 1｜神戶牛＋天神祭</h2>
+<div class="item">04:20 機場報到</div>
+<div class="item">10:00 抵達神戶</div>
+<div class="item">12:30 神戶牛</div>
+<div class="item">15:30 飯店</div>
+</div>
+
+<div class="card">
+<h2>Day 2｜童書之森＋天神祭</h2>
+<div class="item">童書之森</div>
+<div class="item">北浜午餐</div>
+<div class="item">天神祭</div>
+</div>
+
+<div class="card">
+<h2>Day 3｜海遊館</h2>
+<div class="item">海遊館</div>
+<div class="item">天保山午餐</div>
+</div>
+
+<div class="card">
+<h2>Day 4｜USJ</h2>
+<div class="item">任天堂世界</div>
+<div class="item">小小兵</div>
+<div class="item">哈利波特</div>
+</div>
+
+<div class="card">
+<h2>Day 5｜心齋橋購物</h2>
+</div>
+
+<div class="card">
+<h2>Day 6｜京都 teamLab</h2>
+</div>
+
+<div class="card">
+<h2>Day 7｜回程</h2>
+</div>
+
+</div>
+
+</body>
+</html>
