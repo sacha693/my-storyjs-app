@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>導遊語音介紹｜一家四口日本關西旅程</title>
+<style>
+:root{--ink:#12323a;--line:#12323a;--blue:#7fd3df;--soft:#e7fbff;--card:#f7fdff;--yellow:#f4c95d}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:linear-gradient(#bdeef5,#f7fdff);color:var(--ink);line-height:1.7}.wrap{max-width:960px;margin:auto;padding:14px 14px 90px}.card{background:var(--card);border:4px solid var(--line);border-radius:20px;padding:16px;margin:14px 0;box-shadow:5px 5px 0 rgba(18,50,58,.22)}h1,h2,h3{line-height:1.2}.btn{display:inline-block;border:3px solid var(--line);background:var(--blue);color:var(--ink);text-decoration:none;padding:10px 13px;border-radius:13px;font-weight:900;box-shadow:3px 3px 0 var(--line);margin:5px 4px 5px 0;cursor:pointer}.btn.alt{background:#fff}.btn.warn{background:var(--yellow)}.spot{border-top:2px dashed var(--line);padding:14px 0}.spot:first-of-type{border-top:0}.script{background:var(--soft);border:3px dashed var(--line);border-radius:14px;padding:12px;margin-top:8px}.tag{display:inline-block;background:#fff;border:2px solid var(--line);border-radius:999px;padding:3px 8px;margin:2px;font-weight:900}.float{position:fixed;right:12px;z-index:9999;border:3px solid var(--line);border-radius:999px;padding:12px 14px;font-weight:900;text-decoration:none;color:var(--ink);box-shadow:3px 3px 0 var(--line)}.quick{bottom:132px;background:var(--blue)}.today{bottom:72px;background:var(--yellow)}.top{bottom:12px;background:#fff}.small{font-size:14px;opacity:.85}@media(max-width:650px){.btn{width:100%;text-align:center}.wrap{padding:10px 10px 90px}.float{right:8px;padding:10px 12px}}</style>
+</head>
+<body id="top">
+<a class="float quick" href="quick.html">📍 快速</a>
+<a class="float today" href="today.html">📅 今天</a>
+<a class="float top" href="#top">⬆️</a>
+<main class="wrap">
+<section class="card">
+<h1>🎧 景點導遊語音介紹</h1>
+<p>點選每個景點的「播放國語導覽」，手機會用國語朗讀導遊介紹。若沒有聲音，請確認手機沒有靜音，並使用 Safari / Chrome 開啟。</p>
+<p><a class="btn alt" href="index.html">完整行程</a><a class="btn alt" href="quick.html">快速操作</a><a class="btn alt" href="today.html">今天模式</a><a class="btn alt" href="usj.html">USJ攻略</a></p>
+<div><span class="tag">親子版</span><span class="tag">國語語音</span><span class="tag">好拍照</span><span class="tag">不累導覽</span></div>
+</section>
+<section class="card" id="guideList"></section>
+</main>
+<script>
+const spots=[
+{d:'Day 1',name:'神戶機場',map:'神戶機場',text:'現在我們抵達的是神戶機場。這座機場規模不大，但動線清楚、出關相對輕鬆，很適合作為關西自由行的入口。接下來搭乘 Port Liner 前往三宮，沿途可以看到神戶港灣城市的感覺，今天的重點是輕鬆進入日本，不要把第一天排太滿。'},
+{d:'Day 1',name:'Mouriya 本店 神戶牛',map:'Mouriya Honten Kobe',text:'這裡是神戶知名的牛排餐廳 Mouriya 本店。神戶牛的特色是油花細緻、入口柔軟，適合慢慢品嘗。今天建議把這餐當作重點體驗，吃完後不要再排太多神戶景點，直接移動到大阪休息，會是最舒服的安排。'},
+{d:'Day 1-2',name:'大阪天神祭',map:'大阪 天神祭 天満橋',text:'大阪天神祭是日本三大祭之一，每年七月二十四日與二十五日舉行。最熱鬧的是二十五日晚上的船渡御與煙火。親子旅行不建議硬擠橋中央，可以選擇天滿橋河岸邊，保留可以撤退的路線。拍照時可以把河面、燈火與人群氣氛一起拍進畫面。'},
+{d:'Day 2',name:'童書之森 中之島',map:'こども本の森 中之島',text:'童書之森中之島是由建築師安藤忠雄設計的兒童圖書空間。建築以清水模與大量書牆構成，安靜、簡潔又很好拍。這裡不只是孩子看書的地方，也很適合大人放慢腳步，作為天神祭前的輕鬆室內行程。'},
+{d:'Day 2',name:'北浜咖啡街區',map:'北浜 カフェ 大阪',text:'北浜一帶靠近河岸，有許多咖啡廳與洋風建築，氣氛比心齋橋更安靜。這裡適合安排午餐或下午茶，讓一家人坐下休息。拍照可以選窗邊、河岸、橋景，畫面會有大阪都市裡比較優雅的一面。'},
+{d:'Day 3',name:'大阪海遊館',map:'Osaka Aquarium Kaiyukan',text:'大阪海遊館是關西很適合親子的水族館。參觀重點是中央巨大的太平洋水槽，可以看到鯨鯊與魟魚優雅游過。建議不要趕路，順著動線慢慢往下走，水母區也非常好拍，光線柔和，很適合拍療癒感照片。'},
+{d:'Day 3',name:'天保山 Market Place',map:'Tempozan Marketplace',text:'天保山 Market Place 就在海遊館旁邊，是午餐與休息很方便的地方。親子自由行最怕為了吃飯再拉車，所以這裡是高 CP 值選擇。吃完可以視體力決定是否逛一下，不一定要再加摩天輪。'},
+{d:'Day 4',name:'日本環球影城 USJ',map:'Universal Studios Japan',text:'今天是環球影城日，策略是早上先衝熱門區，中午拍照吃飯，下午安排表演與輕鬆設施。不要用全破心態玩 USJ，親子旅行最重要的是保留體力。排隊超過四十分鐘，可以先跳過，改拍照或休息。'},
+{d:'Day 4',name:'超級任天堂世界',map:'Super Nintendo World USJ',text:'超級任天堂世界是 USJ 最熱門區域之一，色彩鮮明、互動感強，非常適合拍照。建議早上先來，先玩重點設施，再慢慢拍照。這裡的蘑菇餐廳也很有主題感，但用餐時間可能較長，要保留彈性。'},
+{d:'Day 4',name:'哈利波特魔法世界',map:'Wizarding World of Harry Potter USJ',text:'哈利波特魔法世界最迷人的地方是霍格華茲城堡與活米村街景。傍晚來拍照很有氣氛，燈光與城堡輪廓會更漂亮。禁忌之旅畫面較暗、晃動較明顯，膽小的孩子可以先評估。'},
+{d:'Day 4',name:'未來水世界',map:'WaterWorld Universal Studios Japan',text:'未來水世界是非常適合下午安排的表演，因為可以坐下來休息，同時又有水上特技、爆破與演員互動。下午兩點到五點通常是體力下降的時段，這個表演能讓行程重新恢復節奏。'},
+{d:'Day 5',name:'シモジマ 心齋橋店',map:'Shimojima Shinsaibashi',text:'シモジマ心齋橋店是文具與包裝材料愛好者很適合逛的店。這裡可以找到紙袋、貼紙、包材與各種實用小物，也很適合尋找品牌靈感。建議設定預算與時間，不然很容易逛太久。'},
+{d:'Day 5',name:'道頓堀',map:'Dotonbori Osaka',text:'道頓堀是大阪最有代表性的美食與霓虹街區。這裡很適合晚上拍照，尤其是固力果跑跑人、河岸與招牌街景。餐食可以選章魚燒、大阪燒或拉麵，但不建議排太久的名店，親子旅行舒服比排隊更重要。'},
+{d:'Day 6',name:'京都車站 拉麵小路',map:'Kyoto Ramen Street',text:'京都車站拉麵小路集合多間日本拉麵店，很適合作為京都一日遊的午餐點。因為就在車站內，動線簡單，不需要為吃飯多走路。吃完再前往 teamLab，節奏會比較穩。'},
+{d:'Day 6',name:'teamLab Biovortex Kyoto',map:'teamLab Biovortex Kyoto',text:'teamLab Biovortex Kyoto 是這天的主行程，特色是沉浸式光影、互動藝術與流動的視覺空間。這裡很適合拍照，但也建議留一點時間只是感受作品，不要全程只忙著拍。親子參觀時，提醒孩子慢慢走、不要奔跑。'},
+{d:'Day 6',name:'鴨川',map:'Kamo River Kyoto',text:'鴨川是京都很舒服的散步地點。傍晚時分，河岸氣氛安靜，適合讓孩子放鬆，也適合大人沉澱旅程。這裡不需要安排任務，只要慢慢走、拍拍照，就是很好的京都收尾。'},
+{d:'Day 7',name:'關西國際機場',map:'Kansai International Airport Terminal 1',text:'最後一天的重點是準時、穩定、不趕。建議早上八點從難波出發，九點前抵達關西機場第一航廈。完成報到與安檢後，再補買伴手禮。回程不要再排景點，讓整趟旅行好好收尾。'}
+];
+function speak(t){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='zh-TW';u.rate=.92;u.pitch=1;speechSynthesis.speak(u)}
+function stopSpeak(){speechSynthesis.cancel()}
+function map(q){return 'https://www.google.com/maps?q='+encodeURIComponent(q)}
+guideList.innerHTML='<h2>景點導遊介紹</h2>'+spots.map((s,i)=>`<div class="spot"><h3>${s.d}｜${s.name}</h3><p><a class="btn" target="_blank" href="${map(s.map)}">📍 地圖導航</a><button class="btn warn" onclick="speak(spots[${i}].text)">▶ 播放國語導覽</button><button class="btn alt" onclick="stopSpeak()">■ 停止</button></p><div class="script">${s.text}</div></div>`).join('');
+</script>
+</body>
+</html>
