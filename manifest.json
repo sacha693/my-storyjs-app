@@ -2,7 +2,7 @@
   "name": "一家四口日本關西旅程",
   "short_name": "關西旅程",
   "description": "神戶、大阪、USJ、京都 teamLab 親子自由行 App",
-  "start_url": "itinerary.html",
+  "start_url": "main.html?v=12",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
@@ -11,17 +11,7 @@
   "categories": ["travel", "lifestyle"],
   "lang": "zh-Hant",
   "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/201/201623.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/201/201623.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    {"src": "https://cdn-icons-png.flaticon.com/512/201/201623.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "https://cdn-icons-png.flaticon.com/512/201/201623.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ]
 }
