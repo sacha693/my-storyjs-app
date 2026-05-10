@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每日消費記帳｜日本關西旅程</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7fd3df">
+<style>
+:root{--ink:#12323a;--line:#12323a;--blue:#7fd3df;--paper:#f7fdff;--soft:#e7fbff;--sun:#f4c95d;--rose:#ffd7e5;--mint:#d8f5ec}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:linear-gradient(#bdeef5,#f7fdff);color:var(--ink);line-height:1.6}.wrap{max-width:980px;margin:auto;padding:14px 14px 100px}.card{background:var(--paper);border:4px solid var(--line);border-radius:22px;padding:16px;margin:14px 0;box-shadow:5px 5px 0 rgba(18,50,58,.22)}h1,h2,h3{line-height:1.2}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}label{font-weight:900;font-size:14px}input,select{width:100%;padding:11px;border:3px solid var(--line);border-radius:12px;background:#fff;font:inherit}button,.btn{display:inline-block;border:3px solid var(--line);background:var(--blue);color:var(--ink);text-decoration:none;border-radius:14px;padding:10px 13px;font-weight:900;box-shadow:3px 3px 0 var(--line);margin:5px 4px 5px 0;cursor:pointer}.btn.white,button.white{background:#fff}.btn.sun,button.sun{background:var(--sun)}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.total{background:#fff;border:3px solid var(--line);border-radius:18px;padding:12px}.total b{font-size:24px}table{width:100%;border-collapse:collapse;background:#fff;border:4px solid var(--line);box-shadow:5px 5px 0 rgba(18,50,58,.18);margin:12px 0}th,td{border:2px solid var(--line);padding:9px;text-align:left;vertical-align:top}th{background:var(--blue)}.small{font-size:13px;opacity:.85}.tag{display:inline-block;border:2px solid var(--line);border-radius:999px;padding:2px 7px;font-size:12px;font-weight:900;background:var(--soft)}.danger{background:#ffd7d7}.float{position:fixed;right:12px;z-index:9999;border:3px solid var(--line);border-radius:999px;padding:12px 14px;font-weight:900;text-decoration:none;color:var(--ink);box-shadow:3px 3px 0 var(--line)}.f1{bottom:132px;background:#fff}.f2{bottom:72px;background:var(--sun)}.f3{bottom:12px;background:#fff}@media(max-width:650px){.wrap{padding:10px 10px 100px}table{font-size:13px}.btn,button{width:100%;text-align:center}.float{right:8px;padding:10px 12px;font-size:14px}}</style>
+</head>
+<body>
+<a class="float f1" href="index.html">🏠 主頁</a>
+<a class="float f2" href="today.html">📅 今天</a>
+<a class="float f3" href="#top">⬆️</a>
+<main class="wrap" id="top">
+<section class="card">
+<h1>💰 每日消費記帳</h1>
+<p>可記錄日圓與台幣，資料會保存在這支手機瀏覽器裡。換手機或清除瀏覽資料會消失，建議每天用「匯出CSV」備份一次。</p>
+<p><a class="btn white" href="index.html">回主頁</a><button class="sun" onclick="exportCSV()">匯出CSV</button><button class="white" onclick="clearAll()">清空全部</button></p>
+</section>
+<section class="card">
+<h2>新增一筆消費</h2>
+<div class="grid">
+<div><label>日期</label><select id="date"><option>7/23</option><option>7/24</option><option>7/25</option><option>7/26</option><option>7/27</option><option>7/28</option><option>7/29</option><option>7/30</option><option>7/31</option></select></div>
+<div><label>類別</label><select id="cat"><option>餐食</option><option>交通</option><option>門票</option><option>購物</option><option>住宿</option><option>便利商店</option><option>其他</option></select></div>
+<div><label>項目</label><input id="item" placeholder="例如：拉麵、地鐵、藥妝"></div>
+<div><label>金額 JPY</label><input id="jpy" type="number" inputmode="decimal" placeholder="日圓"></div>
+<div><label>金額 TWD</label><input id="twd" type="number" inputmode="decimal" placeholder="台幣，可不填"></div>
+<div><label>付款方式</label><select id="pay"><option>現金</option><option>信用卡</option><option>IC卡</option><option>其他</option></select></div>
+</div>
+<p><button onclick="addExpense()">新增消費</button></p>
+<p class="small">換算參考：若只填日圓，系統會用匯率 0.22 自動估台幣，可自行修改。</p>
+</section>
+<section class="card">
+<h2>總覽</h2>
+<div class="summary"><div class="total">日圓總計<br><b id="sumJpy">¥0</b></div><div class="total">台幣總計<br><b id="sumTwd">NT$0</b></div><div class="total">今日/所選日<br><select id="filterDate" onchange="render()"><option value="all">全部日期</option><option>7/23</option><option>7/24</option><option>7/25</option><option>7/26</option><option>7/27</option><option>7/28</option><option>7/29</option><option>7/30</option><option>7/31</option></select></div></div>
+</section>
+<section class="card">
+<h2>消費明細</h2>
+<div id="list"></div>
+</section>
+<section class="card">
+<h2>每日小計</h2>
+<div id="daily"></div>
+</section>
+</main>
+<script>
+const RATE=0.22;
+let expenses=JSON.parse(localStorage.getItem('kansaiExpenses')||'[]');
+function moneyJPY(n){return '¥'+Math.round(Number(n||0)).toLocaleString()}
+function moneyTWD(n){return 'NT$'+Math.round(Number(n||0)).toLocaleString()}
+function save(){localStorage.setItem('kansaiExpenses',JSON.stringify(expenses))}
+function addExpense(){const d=date.value,c=cat.value,it=item.value.trim()||'未命名消費';let y=Number(jpy.value||0);let t=Number(twd.value||0);if(!t&&y)t=Math.round(y*RATE);expenses.unshift({id:Date.now(),date:d,cat:c,item:it,jpy:y,twd:t,pay:pay.value});save();item.value='';jpy.value='';twd.value='';render()}
+function removeExpense(id){expenses=expenses.filter(e=>e.id!==id);save();render()}
+function render(){const f=filterDate.value;const rows=expenses.filter(e=>f==='all'||e.date===f);let sj=rows.reduce((a,e)=>a+Number(e.jpy||0),0);let st=rows.reduce((a,e)=>a+Number(e.twd||0),0);sumJpy.textContent=moneyJPY(sj);sumTwd.textContent=moneyTWD(st);list.innerHTML=rows.length?`<table><tr><th>日期</th><th>類別</th><th>項目</th><th>金額</th><th>付款</th><th></th></tr>${rows.map(e=>`<tr><td>${e.date}</td><td><span class="tag">${e.cat}</span></td><td>${e.item}</td><td>${moneyJPY(e.jpy)}<br>${moneyTWD(e.twd)}</td><td>${e.pay}</td><td><button class="danger" onclick="removeExpense(${e.id})">刪除</button></td></tr>`).join('')}</table>`:'<p>目前沒有消費紀錄。</p>';const days=['7/23','7/24','7/25','7/26','7/27','7/28','7/29','7/30','7/31'];daily.innerHTML=`<table><tr><th>日期</th><th>日圓</th><th>台幣</th></tr>${days.map(d=>{let r=expenses.filter(e=>e.date===d);return `<tr><td>${d}</td><td>${moneyJPY(r.reduce((a,e)=>a+Number(e.jpy||0),0))}</td><td>${moneyTWD(r.reduce((a,e)=>a+Number(e.twd||0),0))}</td></tr>`}).join('')}</table>`}
+function exportCSV(){const header='日期,類別,項目,日圓,台幣,付款方式\n';const body=expenses.map(e=>[e.date,e.cat,e.item,e.jpy,e.twd,e.pay].map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\n');const blob=new Blob(['\ufeff'+header+body],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kansai-expenses.csv';a.click()}
+function clearAll(){if(confirm('確定清空所有消費紀錄？')){expenses=[];save();render()}}
+if('serviceWorker'in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{})}
+render();
+</script>
+</body>
+</html>
