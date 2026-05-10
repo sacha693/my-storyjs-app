@@ -3,122 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>一家四口日本關西旅程</title>
-
+<title>一家四口日本關西旅程｜展開式主頁</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7fd3df">
 <style>
-body{
-  margin:0;
-  font-family:'Noto Sans TC',sans-serif;
-  background:linear-gradient(#bdeef5,#f7fdff);
-  color:#12323a;
-}
-
-.wrap{
-  max-width:900px;
-  margin:auto;
-  padding:12px;
-}
-
-.card{
-  background:#fff;
-  border:3px solid #12323a;
-  border-radius:16px;
-  padding:16px;
-  margin:12px 0;
-  box-shadow:4px 4px 0 #12323a;
-}
-
-h1{text-align:center}
-h2{margin:10px 0}
-
-.item{
-  border-top:1px dashed #aaa;
-  padding:8px 0;
-}
-
-/* 浮動按鈕 */
-.floating{
-  position:fixed;
-  right:12px;
-  z-index:9999;
-  border:3px solid #12323a;
-  border-radius:999px;
-  padding:12px;
-  font-weight:bold;
-  text-decoration:none;
-  color:#12323a;
-  box-shadow:3px 3px 0 #12323a;
-}
-
-.quick{bottom:130px;background:#7fd3df;}
-.today{bottom:70px;background:#f4c95d;}
-.top{bottom:10px;background:white;}
+:root{--ink:#12323a;--line:#12323a;--blue:#7fd3df;--blue2:#e7fbff;--paper:#f7fdff;--sun:#f4c95d;--rose:#ffd7e5;--mint:#d8f5ec}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:radial-gradient(circle at 10% 5%,#fff2a8 0 5%,transparent 12%),linear-gradient(180deg,#bdeef5,#f7fdff 55%,#e7fbff);color:var(--ink);line-height:1.65}.wrap{max-width:1080px;margin:auto;padding:14px 14px 100px}.hero,.card,details{background:rgba(247,253,255,.96);border:4px solid var(--line);border-radius:24px;padding:16px;margin:16px 0;box-shadow:6px 6px 0 rgba(18,50,58,.22)}.hero{text-align:center}.title{font-size:clamp(30px,7vw,58px);line-height:1.1;margin:8px 0}.subtitle{font-weight:850}.quickbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:12px}.btn,.pill{display:inline-block;border:3px solid var(--line);background:#fff;color:var(--ink);text-decoration:none;border-radius:999px;padding:9px 12px;font-weight:900;box-shadow:3px 3px 0 var(--line);text-align:center}.btn{background:var(--blue);border-radius:14px;margin:4px}.btn.sun{background:var(--sun)}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.summary .card{margin:0}.section-title{font-size:28px;display:inline-block;border-bottom:4px solid var(--line);margin:26px 0 8px}details{padding:0;overflow:hidden}summary{cursor:pointer;list-style:none;padding:16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:linear-gradient(135deg,#f7fdff,#dff8fb)}summary::-webkit-details-marker{display:none}.day-title{font-size:23px;font-weight:1000;line-height:1.25}.day-sub{font-size:14px;opacity:.9;margin-top:4px}.badge{background:var(--sun);border:3px solid var(--line);border-radius:999px;padding:5px 10px;font-weight:900;white-space:nowrap}.content{padding:14px 16px 18px}.route{background:var(--blue2);border:3px dashed var(--line);border-radius:18px;padding:10px;margin:8px 0 12px;font-weight:850}.stop{display:grid;grid-template-columns:92px 1fr;gap:10px;padding:11px 0;border-top:2px dashed rgba(18,50,58,.65)}.stop:first-child{border-top:0}.time{font-weight:1000;background:white;border:2px solid var(--line);border-radius:12px;text-align:center;padding:7px;height:max-content}.spot-title{font-size:18px;font-weight:1000}.desc{font-size:15px;margin:3px 0}.tag{border:2px solid var(--line);border-radius:999px;padding:3px 8px;font-size:13px;font-weight:900;display:inline-block;margin:2px 3px 2px 0}.photo{background:var(--rose)}.save{background:var(--mint)}.warn{background:#fff2b8}.actions{margin-top:8px}.float{position:fixed;right:12px;z-index:9999;border:3px solid var(--line);border-radius:999px;padding:12px 14px;font-weight:900;text-decoration:none;color:var(--ink);box-shadow:3px 3px 0 var(--line)}.f1{bottom:252px;background:#fff}.f2{bottom:192px;background:var(--blue)}.f3{bottom:132px;background:var(--sun)}.f4{bottom:72px;background:#fff}.f5{bottom:12px;background:#fff}table{width:100%;border-collapse:collapse;background:white;border:4px solid var(--line);box-shadow:5px 5px 0 rgba(18,50,58,.2);margin:12px 0}th,td{border:2px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:var(--blue)}@media(max-width:700px){.wrap{padding:10px 10px 100px}summary{display:block}.badge{display:inline-block;margin-top:8px}.stop{grid-template-columns:1fr}.time{text-align:left}.btn{width:100%}.float{right:8px;padding:9px 11px;font-size:13px}.quickbar{grid-template-columns:repeat(2,1fr)}}@media print{.float,.quickbar,.actions,.btn{display:none}.card,details,.hero,table{box-shadow:none}body{background:white}details{break-inside:avoid}details:not([open]) .content{display:block}}
 </style>
 </head>
-
 <body id="top">
-
-<!-- 浮動按鈕 -->
-<a href="quick.html" class="floating quick">📍</a>
-<a href="today.html" class="floating today">📅</a>
-<a href="#top" class="floating top">⬆️</a>
-
-<div class="wrap">
-
-<h1>一家四口日本關西旅程</h1>
-
-<div class="card">
-<h2>✈ 去程</h2>
-7/24 桃園 → 神戶
-</div>
-
-<div class="card">
-<h2>✈ 回程</h2>
-7/31 關西 → 桃園
-</div>
-
-<div class="card">
-<h2>Day 1｜神戶牛＋天神祭</h2>
-<div class="item">04:20 機場報到</div>
-<div class="item">10:00 抵達神戶</div>
-<div class="item">12:30 神戶牛</div>
-<div class="item">15:30 飯店</div>
-</div>
-
-<div class="card">
-<h2>Day 2｜童書之森＋天神祭</h2>
-<div class="item">童書之森</div>
-<div class="item">北浜午餐</div>
-<div class="item">天神祭</div>
-</div>
-
-<div class="card">
-<h2>Day 3｜海遊館</h2>
-<div class="item">海遊館</div>
-<div class="item">天保山午餐</div>
-</div>
-
-<div class="card">
-<h2>Day 4｜USJ</h2>
-<div class="item">任天堂世界</div>
-<div class="item">小小兵</div>
-<div class="item">哈利波特</div>
-</div>
-
-<div class="card">
-<h2>Day 5｜心齋橋購物</h2>
-</div>
-
-<div class="card">
-<h2>Day 6｜京都 teamLab</h2>
-</div>
-
-<div class="card">
-<h2>Day 7｜回程</h2>
-</div>
-
-</div>
-
-</body>
-</html>
+<a class="float f1" href="guide.html">🎧 導覽</a>
+<a class="float f2" href="quick.html">📍 快速</a>
+<a class="float f3" href="today.html">📅 今天</a>
+<a class="float f4" href="usj.html">🎢 USJ</a>
+<a class="float f5" href="#top">⬆️</a>
+<main class="wrap">
+<section class="hero"><h1 class="title">一家四口日本關西旅程</h1><p class="subtitle">所有行程細節都在這一頁，可展開／縮小，不用切分頁。</p><div class="quickbar"><a class="pill" href="#days">每日行程</a><a class="pill" href="#flight">班機資訊</a><a class="pill" href="#hotels">住宿訂單</a><a class="pill" href="#budget">預算控管</a><button class="pill" onclick="openAll()">全部展開</button><button class="pill" onclick="closeAll()">全部縮小</button></div></section>
+<section class="summary"><div class="card"><h3>✈ 去程</h3><p><b>2026/7/24 BR134</b><br>06:20 桃園 T2 → 10:00 神戶 T2<br>PNR：<b>FP5WJ4</b></p></div><div class="card"><h3>✈ 回程</h3><p><b>2026/7/31 BR177</b><br>11:10 關西 T1 → 13:05 桃園 T2<br>Trip訂單：<b>1616329870509999</b></p></div><div class="card"><h3>🎯 規劃原則</h3><p>每天一個主軸，熱門景點早到，下午保留休息，不折返、不暴走。</p></div></section>
+<h2 id="days" class="section-title">每日行程細節</h2>
+<details open><summary><div><div class="day-title">Day 0｜7/23 台中 → 桃園機場過夜</div><div class="day-sub">省預算、避開凌晨趕車風險。</div></div><span class="badge">機場休息日</span></summary><div class="content"><div class="route">台中火車站 → 統聯客運 → 桃園機場 T2 → 5F 美食街外圍休息</div><div class="stop"><div class="time">20:20</div><div><div class="spot-title">台中火車站附近集合</div><div class="desc">提早到站，準備搭 21:00 客運。</div><span class="tag save">省錢：客運比高鐵＋機捷便宜</span></div></div><div class="stop"><div class="time">21:00</div><div><div class="spot-title">搭客運前往桃園機場</div><div class="desc">車程約 2–2.5 小時，孩子可先睡。</div></div></div><div class="stop"><div class="time">23:30</div><div><div class="spot-title">抵達桃園機場 T2</div><div class="desc">建議到 5F 美食街外圍找無扶手長椅。</div><span class="tag photo">可拍：出國前機場合照</span></div></div></div></details>
+<details open><summary><div><div class="day-title">Day 1｜7/24 神戶牛＋大阪天神祭宵宮</div><div class="day-sub">順利入境、吃神戶牛、晚上輕鬆感受祭典。</div></div><span class="badge">神戶進・大阪住</span></summary><div class="content"><div class="route">桃園 T2 → 神戶機場 → 三宮 → Mouriya 本店 → APA 天滿橋 → 天神祭宵宮</div><div class="stop"><div class="time">04:20</div><div><div class="spot-title">桃園機場 T2 報到</div><div class="desc">長榮 BR134，06:20 起飛，PNR：FP5WJ4。</div></div></div><div class="stop"><div class="time">10:00</div><div><div class="spot-title">抵達神戶機場</div><div class="desc">出關後搭 Port Liner 到三宮，神戶機場小，動線較輕鬆。</div></div></div><div class="stop"><div class="time">12:30</div><div><div class="spot-title">Mouriya 本店神戶牛午餐</div><div class="desc">這天唯一重點餐，建議慢慢吃，不再加神戶景點。</div><span class="tag photo">可拍：鐵板、神戶牛、餐廳門口</span></div></div><div class="stop"><div class="time">15:30</div><div><div class="spot-title">APA 天滿橋入住休息</div><div class="desc">晚上只走天滿橋河岸，感受天神祭宵宮氣氛。</div><span class="tag warn">避雷：第一天不要排北野或神戶港</span></div></div></div></details>
+<details><summary><div><div class="day-title">Day 2｜7/25 童書之森＋天神祭本宮</div><div class="day-sub">白天輕鬆室內，晚上看祭典。</div></div><span class="badge">祭典日</span></summary><div class="content"><div class="route">APA天滿橋 → 童書之森 → 北浜午餐 → 飯店午休 → 天滿橋觀賞點</div><div class="stop"><div class="time">09:30</div><div><div class="spot-title">童書之森 中之島</div><div class="desc">安藤忠雄清水模建築，適合親子與室內拍照。</div><span class="tag photo">可拍：書牆、清水模、入口建築</span></div></div><div class="stop"><div class="time">11:30</div><div><div class="spot-title">北浜咖啡午餐</div><div class="desc">河岸咖啡廳多，氣氛安靜，比心齋橋舒服。</div></div></div><div class="stop"><div class="time">13:30</div><div><div class="spot-title">回飯店午休</div><div class="desc">晚上人潮多，午休是成功關鍵。</div></div></div><div class="stop"><div class="time">17:30</div><div><div class="spot-title">天神祭本宮</div><div class="desc">選天滿橋南側河岸，保留撤退路線，不擠橋中央。</div><span class="tag warn">避雷：不要 18:30 後才出門</span></div></div></div></details>
+<details><summary><div><div class="day-title">Day 3｜7/26 海遊館主軸＋移動到 USJ 區</div><div class="day-sub">一個主景點，不消耗隔天 USJ 體力。</div></div><span class="badge">親子療癒日</span></summary><div class="content"><div class="route">天滿橋 → 海遊館 → 天保山午餐 → Liber Hotel</div><div class="stop"><div class="time">09:30</div><div><div class="spot-title">退房前往海遊館</div><div class="desc">以海遊館為主，不再塞其他大景點。</div></div></div><div class="stop"><div class="time">10:30</div><div><div class="spot-title">大阪海遊館</div><div class="desc">主看鯨鯊大水槽、水母區、觸摸區。</div><span class="tag photo">可拍：鯨鯊、水母藍光、孩子背影</span></div></div><div class="stop"><div class="time">13:30</div><div><div class="spot-title">天保山 Market Place 午餐</div><div class="desc">就在旁邊，省力又不折返。</div></div></div><div class="stop"><div class="time">15:30</div><div><div class="spot-title">Liber Hotel 入住休息</div><div class="desc">洗澡、整理、早點睡，為 USJ 存體力。</div></div></div></div></details>
+<details><summary><div><div class="day-title">Day 4｜7/27 USJ 環球影城</div><div class="day-sub">早上熱門、下午表演與輕鬆設施。</div></div><span class="badge">重點日</span></summary><div class="content"><div class="route">Liber → USJ入口 → 哈利波特/任天堂 → 蘑菇餐廳 → 水世界 → 經典設施 → CityWalk</div><div class="actions"><a class="btn sun" href="usj.html">打開 USJ 專屬攻略</a></div><div class="stop"><div class="time">07:35</div><div><div class="spot-title">入園</div><div class="desc">不要先逛商店，直接進熱門區。</div></div></div><div class="stop"><div class="time">08:20</div><div><div class="spot-title">鷹馬飛行</div><div class="desc">小型雲霄飛車，熱身剛好。</div></div></div><div class="stop"><div class="time">08:55</div><div><div class="spot-title">禁忌之旅</div><div class="desc">4D效果強，畫面暗、晃動大，孩子要評估。</div></div></div><div class="stop"><div class="time">09:45</div><div><div class="spot-title">咚奇剛瘋狂礦車</div><div class="desc">刺激好玩，排隊過長就保留彈性。</div></div></div><div class="stop"><div class="time">10:15</div><div><div class="spot-title">耀西冒險＋酷霸王挑戰書</div><div class="desc">親子友善、任天堂感強、好拍照。</div></div></div><div class="stop"><div class="time">11:00</div><div><div class="spot-title">拍照＋蘑菇餐廳</div><div class="desc">補體力時間，不要壓太緊。</div></div></div><div class="stop"><div class="time">14:30</div><div><div class="spot-title">未來水世界</div><div class="desc">坐著看表演，下午恢復體力。</div></div></div><div class="stop"><div class="time">15:15</div><div><div class="spot-title">大白鯊、飛天史努比</div><div class="desc">大白鯊經典，史努比輕鬆吹風。</div></div></div><div class="stop"><div class="time">16:20</div><div><div class="spot-title">刺激設施選擇制</div><div class="desc">好萊塢美夢、冰凍雷射、鬧劇、飛天翼龍選 2–3 個，不全塞。</div><span class="tag warn">單人通道會分開，不適合一定要陪孩子坐</span></div></div><div class="stop"><div class="time">19:15</div><div><div class="spot-title">吃飯＋逛商店</div><div class="desc">21:00 回飯店，不再加夜間行程。</div></div></div></div></details>
+<details><summary><div><div class="day-title">Day 5｜7/28 換飯店＋心齋橋購物恢復日</div><div class="day-sub">USJ隔天恢復體力，慢慢逛。</div></div><span class="badge">恢復日</span></summary><div class="content"><div class="route">Liber → OASIS NANIWA → 難波午餐 → シモジマ → 咖啡 → 道頓堀</div><div class="stop"><div class="time">10:30</div><div><div class="spot-title">移動到 OASIS NANIWA</div><div class="desc">寄放行李或入住，別趕。</div></div></div><div class="stop"><div class="time">12:00</div><div><div class="spot-title">難波午餐</div><div class="desc">一蘭或やよい軒，後者更親民穩定。</div></div></div><div class="stop"><div class="time">14:00</div><div><div class="spot-title">シモジマ 心齋橋店</div><div class="desc">文具、包材、品牌素材靈感。</div><span class="tag photo">可拍：戰利品平拍</span></div></div><div class="stop"><div class="time">18:30</div><div><div class="spot-title">道頓堀晚餐</div><div class="desc">大阪燒、章魚燒、拉麵，避開過長排隊。</div></div></div></div></details>
+<details><summary><div><div class="day-title">Day 6｜7/29 京都 teamLab</div><div class="day-sub">一主一副，看光影、走河邊，不暴走京都。</div></div><span class="badge">京都療癒日</span></summary><div class="content"><div class="route">大阪 → 京都車站 → 拉麵小路 → teamLab → 鴨川或祇園 → 回大阪</div><div class="stop"><div class="time">10:00</div><div><div class="spot-title">大阪出發前往京都</div><div class="desc">約 45–70 分鐘，依當日路線選 JR/阪急/京阪。</div></div></div><div class="stop"><div class="time">11:30</div><div><div class="spot-title">京都拉麵小路</div><div class="desc">車站內最順，不為吃飯多走路。</div></div></div><div class="stop"><div class="time">13:30</div><div><div class="spot-title">teamLab Biovortex Kyoto</div><div class="desc">沉浸式光影主行程，留時間感受，不只拍照。</div><span class="tag photo">可拍：光影剪影、親子互動</span></div></div><div class="stop"><div class="time">16:00</div><div><div class="spot-title">鴨川或祇園二選一</div><div class="desc">想放鬆選鴨川，想傳統街景選祇園。</div><span class="tag warn">不要再加清水寺、伏見稻荷、嵐山</span></div></div></div></details>
+<details><summary><div><div class="day-title">Day 7｜7/30 自由購物＋補買日</div><div class="day-sub">整理行李、補買伴手禮、保持回程前穩定。</div></div><span class="badge">彈性日</span></summary><div class="content"><div class="route">OASIS → Joshin Super Kids Land → 黑門市場/難波 → 飯店整理</div><div class="stop"><div class="time">上午</div><div><div class="spot-title">睡晚一點＋整理行李</div><div class="desc">前幾天行程多，今天保留彈性。</div></div></div><div class="stop"><div class="time">中午</div><div><div class="spot-title">Joshin Super Kids Land 本店</div><div class="desc">玩具、模型、電器，日本橋電電街。</div></div></div><div class="stop"><div class="time">下午</div><div><div class="spot-title">黑門市場或難波補買</div><div class="desc">黑門市場偏觀光價，適合少量吃與拍照，不建議主餐全押。</div></div></div></div></details>
+<details><summary><div><div class="day-title">Day 8｜7/31 關西機場回台灣</div><div class="day-sub">不趕、不漏、準時回家。</div></div><span class="badge">回程日</span></summary><div class="content"><div class="route">OASIS/難波 → 南海電鐵 → 關西機場 T1 → 桃園 T2</div><div class="stop"><div class="time">08:00</div><div><div class="spot-title">出發前往關西機場</div><div class="desc">建議南海空港急行省錢，Rapi:t較舒適。</div></div></div><div class="stop"><div class="time">09:00</div><div><div class="spot-title">抵達 KIX T1</div><div class="desc">報到、安檢、補買伴手禮。</div></div></div><div class="stop"><div class="time">11:10</div><div><div class="spot-title">BR177 起飛</div><div class="desc">13:05 抵達桃園 T2，PNR：FP5WJ4。</div></div></div></div></details>
+<h2 id="flight" class="section-title">班機資訊</h2><section class="card"><table><tr><th>項目</th><th>去程</th><th>回程</th></tr><tr><td>Trip訂單</td><td colspan="2">1616329870509999｜航空公司訂位代號 PNR：FP5WJ4</td></tr><tr><td>航班</td><td>長榮 BR134</td><td>長榮 BR177</td></tr><tr><td>時間</td><td>2026/7/24 06:20 TPE T2 → 10:00 UKB T2</td><td>2026/7/31 11:10 KIX T1 → 13:05 TPE T2</td></tr><tr><td>機型</td><td>空中巴士 A321</td><td>波音 787-10</td></tr></table></section>
+<h2 id="hotels" class="section-title">住宿訂單</h2><section class="card"><table><tr><th>日期</th><th>住宿</th><th>平台/訂單</th><th>金額</th></tr><tr><td>7/24–7/26</td><td>APA Hotel Osaka Temmabashi Ekimae</td><td>Agoda 1715112246</td><td>¥48,544 / 約 NT$10,680</td></tr><tr><td>7/26–7/28</td><td>Liber Hotel Osaka</td><td>Trip 1616329233185585<br>飯店確認：8RAXG31G</td><td>¥53,300 / 約 NT$11,970</td></tr><tr><td>7/28–7/31</td><td>OASIS NANIWA</td><td>易遊網 ORD0029621149</td><td>¥24,345 / 約 NT$5,356</td></tr></table></section>
+<h2 id="budget" class="section-title">預算控管</h2><section class="card"><p><b>核心策略：</b>每天只安排一餐特色餐，其餘用定食、拉麵、便利商店平衡；門票優先 USJ、海遊館、teamLab；購物集中 Day 7。</p><table><tr><th>類型</th><th>建議</th></tr><tr><td>交通</td><td>大阪市區以地鐵/JR為主，少搭計程車。</td></tr><tr><td>餐食</td><td>神戶牛是重點餐，其餘以 ¥1,000–2,000/人控制。</td></tr><tr><td>門票</td><td>USJ 及 Express Pass 依日期評估，海遊館與 teamLab 先確認票價。</td></tr><tr><td>購物</td><td>先列清單再買，藥妝與文具設定上限。</td></tr></table></section>
+</main><script>function openAll(){document.querySelectorAll('details').forEach(d=>d.open=true)}function closeAll(){document.querySelectorAll('details').forEach(d=>d.open=false)}if('serviceWorker'in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{})}</script></body></html>
