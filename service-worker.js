@@ -1,7 +1,7 @@
 const CACHE_NAME='kansai-trip-pwa-v12';
 const urlsToCache=[
 './',
-'./main.html',
+'./index.html',
 './guide.html',
 './usj.html',
 './quick.html',
