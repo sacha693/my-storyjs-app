@@ -1,0 +1,26 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ],
+  "routes": [
+    { "src": "/$", "dest": "/index.html" },
+    { "src": "/index.html", "dest": "/index.html" },
+    { "src": "/expense.html", "dest": "/expense.html" },
+    { "src": "/quick.html", "dest": "/quick.html" },
+    { "src": "/today.html", "dest": "/today.html" },
+    { "src": "/reminders.html", "dest": "/reminders.html" },
+    { "src": "/transit-detail.html", "dest": "/transit-detail.html" },
+    { "src": "/usj.html", "dest": "/usj.html" },
+    { "src": "/guide.html", "dest": "/guide.html" },
+    { "src": "/manifest.json", "dest": "/manifest.json" },
+    { "src": "/reminders/(.*)", "dest": "/reminders/$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
