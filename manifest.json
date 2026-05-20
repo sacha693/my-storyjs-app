@@ -2,7 +2,7 @@
   "name": "一家四口日本關西旅程",
   "short_name": "關西旅程",
   "description": "神戶、大阪、USJ、京都 teamLab 親子自由行 App",
-  "start_url": "index.html",
+  "start_url": "index.html?v=3",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
