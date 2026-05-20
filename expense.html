@@ -52,14 +52,14 @@
   </head>
   <body>
     <a class="float f1" href="index.html">🏠 主頁</a>
-    <a class="float f2" href="index.html">📍 快速</a>
+    <a class="float f2" href="index.html#days">📍 快速</a>
     <a class="float f3" href="guide.html">🎧 導覽</a>
     <a class="float f4" href="#top">⬆️</a>
     <main class="wrap" id="top">
               <section class="card">
-                <h1>💰 旅費儀表板</h1><p>每日消費記帳＋預算控管。住宿費可一鍵匯入，資料會保存在這支手機瀏覽器裡。</p>
+                <h1>💰 旅費儀表板</h1><p>每日消費記帳＋預算控管。住宿費與機票費可一鍵匯入，資料會保存在這支手機瀏覽器裡。</p>
                 <p><a class="btn white" href="index.html">回主頁</a>
-                  <button class="sun" onclick="importLodging()">匯入住宿費</button>
+                  <button class="sun" onclick="importFixedCosts()">匯入住宿＋機票</button>
                   <button class="sun" onclick="exportCSV()">匯出CSV</button>
                   <button onclick="seedSample()">加入範例</button>
                   <button class="danger" onclick="clearAll()">清空全部</button>
@@ -68,7 +68,7 @@
               <section class="card">
                 <h2>預算設定</h2><div class="grid">
                   <div><label>總預算 JPY</label>
-                  <input id="budgetJpy" type="number" value="220000" onchange="saveBudget();render()">
+                  <input id="budgetJpy" type="number" value="425000" onchange="saveBudget();render()">
                   </div>
                   <div><label>匯率 TWD/JPY</label><input id="rate" type="number" step="0.001" value="0.22" onchange="saveBudget();render()"></div>
                   <div><label>日期篩選</label><select id="filterDate" onchange="render()"><option value="all">全部日期</option>
@@ -87,7 +87,7 @@
               </section>
               <section class="dash" id="dashboard">
               </section>
-              <section class="card"><h2>住宿費匯入狀態</h2>
+              <section class="card"><h2>固定費匯入狀態</h2>
                 <div id="lodgingStatus"></div>
               </section>
               <section class="card">
@@ -112,6 +112,7 @@
                       <option>門票</option>
                       <option>購物</option>
                       <option>住宿</option>
+                      <option>機票</option>
                       <option>便利商店</option>
                       <option>其他</option>
                     </select>
@@ -141,21 +142,23 @@
               </section>
             </main>
     <script>let expenses=JSON.parse(localStorage.getItem('kansaiExpenses')||'[]');
-      let settings=JSON.parse(localStorage.getItem('kansaiBudgetSettings')||'{"budgetJpy":220000,"rate":0.22}');
+      let settings=JSON.parse(localStorage.getItem('kansaiBudgetSettings')||'{"budgetJpy":425000,"rate":0.22}');
       const lodging=[{id:'lodging-apa',date:'7/24',cat:'住宿',
                       item:'APA Hotel Osaka Temmabashi Ekimae｜Agoda 1715112246｜7/24-7/26',jpy:48544,twd:10680,pay:'信用卡'},
                      {id:'lodging-liber',date:'7/26',cat:'住宿',
                       item:'Liber Hotel Osaka｜Trip 1616329233185585 / 8RAXG31G｜7/26-7/28',jpy:53300,twd:11970,pay:'信用卡'},
                      {id:'lodging-oasis',date:'7/28',cat:'住宿',item:'OASIS NANIWA｜易遊網 ORD0029621149｜7/28-7/31',jpy:24345,twd:5356,pay:'信用卡'}];
+      const fixedCosts=[...lodging,{id:'flight-trip',date:'7/24',cat:'機票',item:'長榮航空 BR134 / BR177｜Trip.com 1616329870509999｜4人來回機票',jpy:204491,twd:44988,pay:'信用卡'}];
       budgetJpy.value=settings.budgetJpy;rate.value=settings.rate;function saveBudget()
-      {settings={budgetJpy:Number(budgetJpy.value||220000),rate:Number(rate.value||0.22)};localStorage.
+      {settings={budgetJpy:Number(budgetJpy.value||425000),rate:Number(rate.value||0.22)};localStorage.
         setItem('kansaiBudgetSettings',JSON.stringify(settings))}
       function moneyJPY(n)
       {return '¥'+Math.round(Number(n||0)).
         toLocaleString()}
       function moneyTWD(n){return 'NT$'+Math.round(Number(n||0)).toLocaleString()}
       function save(){localStorage.setItem('kansaiExpenses',JSON.stringify(expenses))}
-      function importLodging(){lodging.forEach(l=>{if(!expenses.some(e=>e.id===l.id)){expenses.unshift({...l})}});save();render()}
+      function importFixedCosts(){fixedCosts.forEach(l=>{if(!expenses.some(e=>e.id===l.id)){expenses.unshift({...l})}});save();render()}
+      function importLodging(){importFixedCosts()}
       function addExpense()
       {saveBudget();const d=date.value,c=cat.value,it=item.value.trim()||'未命名消費';
        let y=Number(jpy.value||0);
@@ -171,7 +174,7 @@
                         let sj=rows.reduce((a,e)=>a+Number(e.jpy||0),0);
                         let st=rows.reduce((a,e)=>a+Number(e.twd||0),0);
                         let allJ=expenses.reduce((a,e)=>a+Number(e.jpy||0),0);
-                        let budget=Number(settings.budgetJpy||220000);
+                        let budget=Number(settings.budgetJpy||425000);
                         let remain=budget-allJ;
                         let pct=budget?Math.round(allJ/budget*100):0;
                         let status=pct<75?'ok':pct<100?'warnBox':'over';
@@ -188,11 +191,11 @@
                         <div class="tile"><span>剩餘預算</span><b>${moneyJPY(remain)}</b>
                         <span class="small">約 ${moneyTWD(remain*settings.rate)}</span>
                         </div>`;
-                        lodgingStatus.innerHTML=`<table><tr><th>住宿</th><th>金額</th><th>狀態</th></tr>
-                        ${lodging.map(l=>`<tr><td>${l.item}</td><td>${moneyJPY(l.jpy)}
+                        lodgingStatus.innerHTML=`<table><tr><th>固定費</th><th>金額</th><th>狀態</th></tr>
+                        ${fixedCosts.map(l=>`<tr><td>${l.item}</td><td>${moneyJPY(l.jpy)}
                         <br>${moneyTWD(l.twd)}</td><td>${expenses.some(e=>e.id===l.id)?'已匯入':'未匯入'}</td>
                         </tr>`).join('')}<tr><th>住宿合計</th>
-                        <th colspan="2">¥126,189 / NT$28,006</th></tr>
+                        <th colspan="2">¥126,189 / NT$28,006</th></tr><tr><th>機票合計</th><th colspan="2">¥204,491 / NT$44,988</th></tr><tr><th>固定費總計</th><th colspan="2">¥330,680 / NT$72,994</th></tr>
                         </table>`;list.innerHTML=rows.length?`
                         <table><tr><th>日期</th><th>類別</th><th>項目</th><th>金額</th><th>付款</th><th></th></tr>
                         ${rows.map(e=>`<tr><td>${e.date}</td><td><span class="tag">
@@ -204,11 +207,11 @@
                         daily.innerHTML=`<table><tr><th>日期</th><th>日圓</th><th>台幣</th><th>狀態</th></tr>
                         ${days.map(d=>{let r=expenses.filter(e=>e.date===d);
                                        let y=r.reduce((a,e)=>a+Number(e.jpy||0),0);
-                                       let avg=Number(settings.budgetJpy||220000)/9;
+                                       let avg=Number(settings.budgetJpy||425000)/9;
                                        let s=y>avg*1.3?'偏高':y>0?'正常':'未記錄';
                                        return `<tr><td>${d}</td><td>${moneyJPY(y)}</td><td>${moneyTWD(r.reduce((a,e)=>a+Number(e.twd||0),0))}
                                        </td><td>${s}</td></tr>`}).join('')}</table>`;
-                        const cats=['餐食','交通','門票','購物','住宿','便利商店','其他'];
+                        const cats=['餐食','交通','門票','購物','住宿','機票','便利商店','其他'];
                         let total=expenses.reduce((a,e)=>a+Number(e.jpy||0),0)||1;categoryBars.innerHTML=cats.map(c=>{let v=expenses.filter(e=>e.cat===c).
                           reduce((a,e)=>a+Number(e.jpy||0),0);let p=Math.round(v/total*100);return `<div><b>${c}｜${moneyJPY(v)}｜${p}%</b>
                           <div class="bar"><div class="fill" style="width:${p}%"></div>
@@ -222,7 +225,7 @@
       function seedSample(){expenses.unshift({id:Date.now()+1,date:'7/24',cat:'餐食',item:'神戶牛午餐',jpy:38000,twd:8360,pay:'信用卡'},
                                              {id:Date.now()+2,date:'7/26',cat:'門票',item:'海遊館門票',jpy:8000,twd:1760,pay:'信用卡'},
                                              {id:Date.now()+3,date:'7/28',cat:'購物',item:'心齋橋文具',jpy:6000,twd:1320,pay:'現金'});
-                            save();render()}importLodging();
+                            save();render()}importFixedCosts();
       if('serviceWorker'in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{})}render();
 </script>
 </body>
