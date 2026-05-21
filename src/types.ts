@@ -5,6 +5,8 @@ export type NavItem = {
   href: string
 }
 
+export type MemberName = '固定費' | 'sacha' | 'yang'
+
 export type FixedCost = {
   date: string
   category: '住宿' | '機票'
@@ -23,6 +25,6 @@ export type Expense = {
   jpy: number
   twd: number
   pay: string
-  createdBy: 'sacha' | 'yang' | '固定費'
+  createdBy: MemberName
   fixed?: boolean
 }
