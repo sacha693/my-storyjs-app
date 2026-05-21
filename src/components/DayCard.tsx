@@ -1,10 +1,14 @@
-import type { DayPlan } from '../data/days'
+import type { DayPlan, TransitPoint } from '../data/days'
 import { QuickNav } from './QuickNav'
 import { TicketAccordion } from './TicketAccordion'
 import { TransitAccordion } from './TransitAccordion'
 
 type DayCardProps = {
   day: DayPlan
+}
+
+function mapUrl(point: TransitPoint) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(point.query)}`
 }
 
 export function DayCard({ day }: DayCardProps) {
@@ -25,7 +29,15 @@ export function DayCard({ day }: DayCardProps) {
 
       <div className="routeLine">
         {day.route.map((stop) => (
-          <span key={stop}>{stop}</span>
+          <a
+            key={stop.label}
+            className="routeChip"
+            href={mapUrl(stop)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {stop.label}
+          </a>
         ))}
       </div>
 
