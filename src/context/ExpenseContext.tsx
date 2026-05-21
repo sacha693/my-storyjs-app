@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -23,6 +24,7 @@ export type ExpenseInput = {
 type ExpenseContextValue = {
   expenses: Expense[]
   loading: boolean
+  realtimeStatus: 'connecting' | 'connected' | 'disconnected'
   error: string | null
   reload: () => Promise<void>
   addExpense: (input: ExpenseInput) => Promise<void>
@@ -50,8 +52,11 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   const [cloudExpenses, setCloudExpenses] = useState<Expense[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [realtimeStatus, setRealtimeStatus] = useState<
+    'connecting' | 'connected' | 'disconnected'
+  >('connecting')
 
-  async function reload() {
+  const reload = useCallback(async () => {
     setLoading(true)
     setError(null)
 
@@ -69,7 +74,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
 
     setCloudExpenses((data ?? []).map(mapRow))
     setLoading(false)
-  }
+  }, [])
 
   async function addExpense(input: ExpenseInput) {
     setError(null)
@@ -137,7 +142,40 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     reload()
-  }, [])
+  }, [reload])
+
+  useEffect(() => {
+    setRealtimeStatus('connecting')
+
+    const channel = supabase
+      .channel(`expenses-${TRIP_ID}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'expenses',
+          filter: `trip_id=eq.${TRIP_ID}`
+        },
+        () => {
+          reload()
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') {
+          setRealtimeStatus('connected')
+          return
+        }
+
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          setRealtimeStatus('disconnected')
+        }
+      })
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [reload])
 
   const expenses = useMemo(
     () => [
@@ -151,13 +189,14 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     () => ({
       expenses,
       loading,
+      realtimeStatus,
       error,
       reload,
       addExpense,
       updateExpense,
       deleteExpense
     }),
-    [expenses, loading, error]
+    [expenses, loading, realtimeStatus, error, reload]
   )
 
   return (
