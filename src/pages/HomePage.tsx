@@ -1,6 +1,7 @@
 import { Hero } from '../components/Hero'
 import { NavGrid } from '../components/NavGrid'
 import { ExpenseSummary } from '../components/ExpenseSummary'
+import { DaySection } from '../components/DaySection'
 import { navigationItems } from '../data/navigation'
 
 export function HomePage() {
@@ -12,6 +13,8 @@ export function HomePage() {
       />
 
       <NavGrid items={navigationItems} />
+
+      <DaySection />
 
       <ExpenseSummary />
     </main>
