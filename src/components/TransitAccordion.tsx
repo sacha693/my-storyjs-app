@@ -1,8 +1,25 @@
-import type { TransitStep } from '../data/days'
+import type { TransitPoint, TransitStep } from '../data/days'
 
 type TransitAccordionProps = {
   outbound: TransitStep[]
   inbound: TransitStep[]
+}
+
+function mapUrl(point: TransitPoint) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(point.query)}`
+}
+
+function MapButton({ point }: { point: TransitPoint }) {
+  return (
+    <a
+      className="mapButton"
+      href={mapUrl(point)}
+      target="_blank"
+      rel="noreferrer"
+    >
+      📍 {point.label}
+    </a>
+  )
 }
 
 function TransitList({ title, steps }: { title: string; steps: TransitStep[] }) {
@@ -12,9 +29,32 @@ function TransitList({ title, steps }: { title: string; steps: TransitStep[] }) 
 
       {steps.map((step) => (
         <article key={step.text} className="transitStep">
-          <p>{step.text}</p>
+          {step.lineName ? (
+            <div
+              className="lineBadge"
+              style={{ backgroundColor: step.lineColor ?? '#12323a' }}
+            >
+              {step.lineName}
+            </div>
+          ) : null}
 
-          {step.exit ? <span>最近出口：{step.exit}</span> : null}
+          <p className="transitText">{step.text}</p>
+
+          {step.direction ? (
+            <div className="directionBox">
+              <strong>搭乘方向</strong>
+              <span>{step.direction}</span>
+            </div>
+          ) : null}
+
+          {(step.from || step.to) ? (
+            <div className="stationLinks">
+              {step.from ? <MapButton point={step.from} /> : null}
+              {step.to ? <MapButton point={step.to} /> : null}
+            </div>
+          ) : null}
+
+          {step.exit ? <span className="exitHint">最近出口：{step.exit}</span> : null}
         </article>
       ))}
     </div>
