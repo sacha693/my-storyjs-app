@@ -1,13 +1,6 @@
-const CACHE_NAME='kansai-trip-pwa-v12';
+const CACHE_NAME='kansai-trip-pwa-v13-no-html-cache';
 const urlsToCache=[
 './',
-'./index.html',
-'./guide.html',
-'./usj.html',
-'./quick.html',
-'./today.html',
-'./reminders.html',
-'./expense.html',
 './manifest.json'
 ];
 
@@ -22,21 +15,29 @@ self.addEventListener('install',event=>{
 self.addEventListener('activate',event=>{
  event.waitUntil(
   caches.keys().then(keys=>Promise.all(
-   keys.filter(key=>key!==CACHE_NAME).map(key=>caches.delete(key))
+   keys.map(key=>caches.delete(key))
   ))
  );
  self.clients.claim();
 });
 
 self.addEventListener('fetch',event=>{
+ const req=event.request;
+ const url=new URL(req.url);
+ const isHtml=req.mode==='navigate'||url.pathname.endsWith('.html')||url.pathname.endsWith('/');
+
+ if(isHtml){
+  event.respondWith(
+   fetch(req,{cache:'no-store'}).catch(()=>caches.match('./'))
+  );
+  return;
+ }
+
  event.respondWith(
-  caches.match(event.request)
-   .then(response=>response||fetch(event.request)
-    .then(networkResponse=>{
-      const responseClone=networkResponse.clone();
-      caches.open(CACHE_NAME).then(cache=>cache.put(event.request,responseClone));
-      return networkResponse;
-    })
-   ).catch(()=>caches.match('./main.html'))
+  fetch(req).then(networkResponse=>{
+   const responseClone=networkResponse.clone();
+   caches.open(CACHE_NAME).then(cache=>cache.put(req,responseClone));
+   return networkResponse;
+  }).catch(()=>caches.match(req))
  );
 });
