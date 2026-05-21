@@ -3,10 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>金童家關西旅程｜Vite React</title>
+
+    <meta
+      name="description"
+      content="金童家 2026 關西親子自由行旅程、交通與旅費管理 App"
+    />
+
+    <meta name="theme-color" content="#7fd3df" />
+
+    <link rel="manifest" href="/my-storyjs-app/manifest.webmanifest" />
+    <link rel="icon" href="/my-storyjs-app/icons/icon-192.svg" />
   </head>
+
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/my-storyjs-app/sw.js')
+        })
+      }
+    </script>
   </body>
 </html>
