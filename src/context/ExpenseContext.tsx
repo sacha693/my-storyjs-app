@@ -56,8 +56,8 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     'connecting' | 'connected' | 'disconnected'
   >('connecting')
 
-  const reload = useCallback(async () => {
-    setLoading(true)
+  const reload = useCallback(async (showLoading = false) => {
+    if (showLoading) setLoading(true)
     setError(null)
 
     const { data, error: supabaseError } = await supabase
@@ -124,9 +124,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       ])
     }
 
-    window.setTimeout(() => {
-      reload()
-    }, 400)
+    window.setTimeout(() => reload(), 300)
   }
 
   async function updateExpense(id: string, input: ExpenseInput) {
@@ -171,9 +169,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       throw supabaseError
     }
 
-    window.setTimeout(() => {
-      reload()
-    }, 400)
+    window.setTimeout(() => reload(), 300)
   }
 
   async function deleteExpense(id: string) {
@@ -197,21 +193,39 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       throw supabaseError
     }
 
-    window.setTimeout(() => {
-      reload()
-    }, 400)
+    window.setTimeout(() => reload(), 300)
   }
 
   useEffect(() => {
-    reload()
+    reload(true)
   }, [reload])
 
   useEffect(() => {
     const timer = window.setInterval(() => {
       reload()
-    }, 5000)
+    }, 2000)
 
     return () => window.clearInterval(timer)
+  }, [reload])
+
+  useEffect(() => {
+    function handleFocus() {
+      reload()
+    }
+
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'visible') {
+        reload()
+      }
+    }
+
+    window.addEventListener('focus', handleFocus)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+      window.removeEventListener('focus', handleFocus)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [reload])
 
   useEffect(() => {
@@ -261,7 +275,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       loading,
       realtimeStatus,
       error,
-      reload,
+      reload: () => reload(true),
       addExpense,
       updateExpense,
       deleteExpense
