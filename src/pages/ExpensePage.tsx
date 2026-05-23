@@ -76,6 +76,8 @@ function ExpenseContent() {
             </span>
           </div>
 
+          <p className="miniHint">提示：手機可用瀏覽器重新整理或點「重新同步」取得最新旅費。</p>
+
           {!isOnline ? (
             <div className="inlineToast toastError" role="alert">
               目前離線，新增或同步可能會失敗；恢復網路後會自動重新同步。
