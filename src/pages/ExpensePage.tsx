@@ -1,4 +1,5 @@
 import { ExpenseCharts } from '../components/ExpenseCharts'
+import { ExpenseExport } from '../components/ExpenseExport'
 import { ExpenseForm } from '../components/ExpenseForm'
 import { ExpenseStats } from '../components/ExpenseStats'
 import { ExpenseTable } from '../components/ExpenseTable'
@@ -36,6 +37,8 @@ function ExpenseContent() {
       <ExpenseCharts />
 
       <ExpenseForm />
+
+      <ExpenseExport />
 
       <ExpenseTable />
     </main>
