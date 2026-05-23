@@ -40,11 +40,23 @@ function ExpenseContent() {
 
       <ExpenseCharts />
 
-      <ExpenseForm />
+      <div id="add-expense">
+        <ExpenseForm />
+      </div>
 
-      <ExpenseExport />
+      <div id="expense-export">
+        <ExpenseExport />
+      </div>
 
-      <ExpenseTable />
+      <div id="expense-details">
+        <ExpenseTable />
+      </div>
+
+      <nav className="expenseQuickBar" aria-label="旅費快捷操作">
+        <a href="#add-expense">＋新增</a>
+        <a href="#expense-details">明細</a>
+        <a href="#expense-export">匯出</a>
+      </nav>
     </main>
   )
 }
