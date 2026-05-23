@@ -352,19 +352,19 @@ export const dayPlans: DayPlan[] = [
     ],
     outbound: [
       {
-        text: '櫻島站／環球城站 → 西九條站 → 大阪難波站',
+        text: '櫻島站／環球城站 → 西九條站轉阪神難波線 → 大阪難波站',
         lineName: 'JR 夢咲線＋阪神難波線',
         lineColor: '#e87511',
-        direction: '往西九條，再往大阪難波方向',
+        direction: '先搭 JR 夢咲線往西九條方向；在西九條站轉阪神難波線，搭往大阪難波／近鐵奈良方向',
         from: { label: '櫻島站／環球城站', query: '桜島駅' },
         to: { label: '大阪難波站', query: '大阪難波駅' },
-        exit: '往 OASIS NANIWA 依地圖出口；難波商圈可用 14、15-B 方向。'
+        exit: '抵達大阪難波站後，依 OASIS NANIWA 地圖選擇最近出口；若先逛難波商圈，可往 14、15-B 方向。'
       },
       {
-        text: '大阪難波／難波站 → 心齋橋站',
+        text: '大阪難波／なんば站 → 心齋橋站',
         lineName: 'Osaka Metro 御堂筋線',
         lineColor: '#e5171f',
-        direction: '往心齋橋／梅田方向',
+        direction: '從 Osaka Metro なんば站搭御堂筋線，往梅田／新大阪方向，1 站到心齋橋站',
         from: { label: '大阪難波／難波站', query: 'なんば駅' },
         to: { label: '心齋橋站', query: '心斎橋駅' },
         exit: '心齋橋站 5、6 號出口往心齋橋筋與シモジマ方向。'
