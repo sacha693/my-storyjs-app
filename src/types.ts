@@ -19,6 +19,7 @@ export type FixedCost = {
 
 export type Expense = {
   id?: string
+  createdAt?: string
   date: string
   category: string
   item: string
