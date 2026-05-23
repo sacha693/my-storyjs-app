@@ -10,6 +10,11 @@ function twd(value: number) {
   return `NT$${value.toLocaleString()}`
 }
 
+function sanitizeAmount(value: string) {
+  const amount = Number(value)
+  return Number.isFinite(amount) && amount > 0 ? amount : 0
+}
+
 function toInput(expense: Expense): ExpenseInput {
   return {
     date: expense.date,
@@ -26,24 +31,49 @@ export function ExpenseTable() {
   const { expenses, deleteExpense, updateExpense } = useExpenses()
   const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState<ExpenseInput | null>(null)
+  const [message, setMessage] = useState('')
 
   function startEdit(expense: Expense) {
     if (!expense.id || expense.fixed) return
+    setMessage('')
     setEditingId(expense.id)
     setDraft(toInput(expense))
   }
 
   async function saveEdit() {
     if (!editingId || !draft) return
+
+    if (!draft.item.trim()) {
+      setMessage('請輸入消費項目後再儲存。')
+      return
+    }
+
+    if (draft.jpy <= 0 && draft.twd <= 0) {
+      setMessage('請至少保留一種有效金額。')
+      return
+    }
+
     await updateExpense(editingId, draft)
     setEditingId(null)
     setDraft(null)
+    setMessage('已儲存修改。')
+  }
+
+  async function handleDelete(expense: Expense) {
+    if (!expense.id || expense.fixed) return
+
+    const confirmed = window.confirm(`確定要刪除「${expense.item}」嗎？`)
+    if (!confirmed) return
+
+    await deleteExpense(expense.id)
+    setMessage('已刪除消費。')
   }
 
   return (
     <section className="card expensePanel">
       <span className="badge">家庭旅費明細</span>
       <h2>📋 消費明細</h2>
+      {message ? <p className="miniHint">{message}</p> : null}
 
       <table className="expenseTable">
         <thead>
@@ -103,10 +133,12 @@ export function ExpenseTable() {
                 <td>
                   {isEditing ? (
                     <input
+                      inputMode="numeric"
                       type="number"
-                      value={draft.jpy}
+                      min="0"
+                      value={draft.jpy || ''}
                       onChange={(event) =>
-                        setDraft({ ...draft, jpy: Number(event.target.value) })
+                        setDraft({ ...draft, jpy: sanitizeAmount(event.target.value) })
                       }
                     />
                   ) : (
@@ -116,10 +148,12 @@ export function ExpenseTable() {
                 <td>
                   {isEditing ? (
                     <input
+                      inputMode="numeric"
                       type="number"
-                      value={draft.twd}
+                      min="0"
+                      value={draft.twd || ''}
                       onChange={(event) =>
-                        setDraft({ ...draft, twd: Number(event.target.value) })
+                        setDraft({ ...draft, twd: sanitizeAmount(event.target.value) })
                       }
                     />
                   ) : (
@@ -155,6 +189,7 @@ export function ExpenseTable() {
                         onClick={() => {
                           setEditingId(null)
                           setDraft(null)
+                          setMessage('')
                         }}
                       >
                         取消
@@ -165,7 +200,7 @@ export function ExpenseTable() {
                       <button onClick={() => startEdit(expense)}>修改</button>
                       <button
                         className="dangerButton"
-                        onClick={() => deleteExpense(expense.id!)}
+                        onClick={() => handleDelete(expense)}
                       >
                         刪除
                       </button>
