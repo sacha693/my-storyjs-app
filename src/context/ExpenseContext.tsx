@@ -248,11 +248,15 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       if (event.key === 'kansai-expense-sync') reload()
     }
 
-    syncChannel?.addEventListener('message', reload)
+    function handleBroadcast() {
+      reload()
+    }
+
+    syncChannel?.addEventListener('message', handleBroadcast)
     window.addEventListener('storage', handleStorage)
 
     return () => {
-      syncChannel?.removeEventListener('message', reload)
+      syncChannel?.removeEventListener('message', handleBroadcast)
       window.removeEventListener('storage', handleStorage)
     }
   }, [reload])
