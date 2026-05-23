@@ -45,6 +45,7 @@ export function ExpenseTable() {
   const [message, setMessage] = useState('')
   const [busyId, setBusyId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [savedId, setSavedId] = useState<string | null>(null)
   const editableCount = expenses.filter((expense) => !expense.fixed).length
   const fixedCount = expenses.length - editableCount
 
@@ -58,9 +59,20 @@ export function ExpenseTable() {
     return () => window.clearTimeout(timer)
   }, [message])
 
+  useEffect(() => {
+    if (!savedId) return
+
+    const timer = window.setTimeout(() => {
+      setSavedId(null)
+    }, 1200)
+
+    return () => window.clearTimeout(timer)
+  }, [savedId])
+
   function startEdit(expense: Expense) {
     if (!expense.id || expense.fixed || busyId) return
     setMessage('')
+    setSavedId(null)
     setEditingId(expense.id)
     setDraft(toInput(expense))
   }
@@ -78,11 +90,14 @@ export function ExpenseTable() {
       return
     }
 
+    const savedExpenseId = editingId
+
     try {
       setBusyId(editingId)
       await updateExpense(editingId, draft)
       setEditingId(null)
       setDraft(null)
+      setSavedId(savedExpenseId)
       setMessage('已儲存修改。')
     } catch {
       setMessage('儲存失敗，請稍後再試。')
@@ -137,10 +152,11 @@ export function ExpenseTable() {
             const isEditing = editingId === expense.id && draft
             const isBusy = busyId === expense.id
             const isDeleting = deletingId === expense.id
+            const isSaved = savedId === expense.id
 
             return (
               <tr
-                className={isDeleting ? 'expenseRowDeleting' : ''}
+                className={`${isDeleting ? 'expenseRowDeleting' : ''} ${isSaved ? 'expenseRowSaved' : ''}`.trim()}
                 key={`${expense.id}-${expense.item}`}
               >
                 <td>
