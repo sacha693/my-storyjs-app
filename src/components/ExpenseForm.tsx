@@ -32,7 +32,8 @@ export function ExpenseForm() {
   }
 
   return (
-    <section className="card">
+    <section className="card expensePanel">
+      <span className="badge">新增一筆旅費</span>
       <h2>➕ 新增消費</h2>
 
       <form className="expenseForm" onSubmit={handleSubmit}>
@@ -66,8 +67,29 @@ export function ExpenseForm() {
           onChange={(event) =>
             setForm({ ...form, jpy: Number(event.target.value) })
           }
-          placeholder="JPY"
+          placeholder="日幣 JPY"
         />
+
+        <input
+          type="number"
+          value={form.twd}
+          onChange={(event) =>
+            setForm({ ...form, twd: Number(event.target.value) })
+          }
+          placeholder="台幣 TWD"
+        />
+
+        <select
+          value={form.pay}
+          onChange={(event) =>
+            setForm({ ...form, pay: event.target.value })
+          }
+        >
+          <option value="現金">現金</option>
+          <option value="信用卡">信用卡</option>
+          <option value="電子支付">電子支付</option>
+          <option value="已預付">已預付</option>
+        </select>
 
         <select
           value={form.createdBy}
