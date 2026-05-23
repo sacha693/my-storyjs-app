@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Expense } from '../types'
 import { type ExpenseInput, useExpenses } from '../context/ExpenseContext'
 
@@ -45,6 +45,16 @@ export function ExpenseTable() {
   const [message, setMessage] = useState('')
   const [busyId, setBusyId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!message) return
+
+    const timer = window.setTimeout(() => {
+      setMessage('')
+    }, 2600)
+
+    return () => window.clearTimeout(timer)
+  }, [message])
 
   function startEdit(expense: Expense) {
     if (!expense.id || expense.fixed || busyId) return
