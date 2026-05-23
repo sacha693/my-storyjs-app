@@ -5,37 +5,52 @@ const categories = ['餐食', '交通', '門票', '購物', '住宿', '機票', 
 const days = ['7/23', '7/24', '7/25', '7/26', '7/27', '7/28', '7/29', '7/30', '7/31']
 const members = ['固定費', 'sacha', 'yang']
 
+function safeAmount(value: number) {
+  return Number.isFinite(value) ? value : 0
+}
+
 function yen(value: number) {
   return `¥${Math.round(value).toLocaleString()}`
+}
+
+function twd(value: number) {
+  return `NT$${Math.round(value).toLocaleString()}`
 }
 
 type BarChartProps = {
   title: string
   rows: Array<{
     label: string
-    value: number
+    jpy: number
+    twd: number
   }>
 }
 
 function BarChart({ title, rows }: BarChartProps) {
-  const max = Math.max(...rows.map((row) => row.value), 1)
+  const safeRows = rows.map((row) => ({
+    ...row,
+    jpy: safeAmount(row.jpy),
+    twd: safeAmount(row.twd)
+  }))
+  const max = Math.max(...safeRows.map((row) => row.jpy), 1)
 
   return (
     <article className="card chartCard">
       <h2>{title}</h2>
 
       <div className="chartRows">
-        {rows.map((row) => {
-          const percent = Math.round((row.value / max) * 100)
+        {safeRows.map((row) => {
+          const percent = Math.max(0, Math.min(100, Math.round((row.jpy / max) * 100)))
 
           return (
             <div className="chartRow" key={row.label}>
               <div className="chartLabel">
                 <span>{row.label}</span>
-                <strong>{yen(row.value)}</strong>
+                <strong>{yen(row.jpy)}</strong>
               </div>
+              <p className="miniHint">{twd(row.twd)}</p>
 
-              <div className="chartTrack">
+              <div className="chartTrack" aria-label={`${row.label} ${yen(row.jpy)} ${twd(row.twd)}`}>
                 <div
                   className="chartFill"
                   style={{ width: `${percent}%` }}
@@ -49,6 +64,18 @@ function BarChart({ title, rows }: BarChartProps) {
   )
 }
 
+function sumBy(rows: ReturnType<typeof useExpenses>['expenses'], predicate: (expense: ReturnType<typeof useExpenses>['expenses'][number]) => boolean) {
+  return rows
+    .filter(predicate)
+    .reduce(
+      (sum, expense) => ({
+        jpy: sum.jpy + safeAmount(expense.jpy),
+        twd: sum.twd + safeAmount(expense.twd)
+      }),
+      { jpy: 0, twd: 0 }
+    )
+}
+
 export function ExpenseCharts() {
   const { expenses } = useExpenses()
 
@@ -56,9 +83,7 @@ export function ExpenseCharts() {
     () =>
       categories.map((category) => ({
         label: category,
-        value: expenses
-          .filter((expense) => expense.category === category)
-          .reduce((sum, expense) => sum + expense.jpy, 0)
+        ...sumBy(expenses, (expense) => expense.category === category)
       })),
     [expenses]
   )
@@ -67,9 +92,7 @@ export function ExpenseCharts() {
     () =>
       members.map((member) => ({
         label: member,
-        value: expenses
-          .filter((expense) => expense.createdBy === member)
-          .reduce((sum, expense) => sum + expense.jpy, 0)
+        ...sumBy(expenses, (expense) => expense.createdBy === member)
       })),
     [expenses]
   )
@@ -78,9 +101,7 @@ export function ExpenseCharts() {
     () =>
       days.map((day) => ({
         label: day,
-        value: expenses
-          .filter((expense) => expense.date === day)
-          .reduce((sum, expense) => sum + expense.jpy, 0)
+        ...sumBy(expenses, (expense) => expense.date === day)
       })),
     [expenses]
   )
