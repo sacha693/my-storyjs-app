@@ -9,5 +9,6 @@
 @import './components/ExpenseTable.css';
 @import './components/ExpenseForm.css';
 @import './components/TransitAccordion.css';
+@import './components/TicketAccordion.css';
 @import './mobile.css';
 @import './pwa.css';
