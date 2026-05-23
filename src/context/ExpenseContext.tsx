@@ -124,7 +124,9 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       ])
     }
 
-    await reload()
+    window.setTimeout(() => {
+      reload()
+    }, 400)
   }
 
   async function updateExpense(id: string, input: ExpenseInput) {
@@ -169,7 +171,9 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       throw supabaseError
     }
 
-    await reload()
+    window.setTimeout(() => {
+      reload()
+    }, 400)
   }
 
   async function deleteExpense(id: string) {
@@ -193,11 +197,21 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       throw supabaseError
     }
 
-    await reload()
+    window.setTimeout(() => {
+      reload()
+    }, 400)
   }
 
   useEffect(() => {
     reload()
+  }, [reload])
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      reload()
+    }, 5000)
+
+    return () => window.clearInterval(timer)
   }, [reload])
 
   useEffect(() => {
