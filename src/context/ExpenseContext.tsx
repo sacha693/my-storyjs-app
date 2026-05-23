@@ -40,6 +40,7 @@ const syncChannel = typeof BroadcastChannel !== 'undefined'
 function mapRow(row: any): Expense {
   return {
     id: row.id,
+    createdAt: row.created_at,
     date: row.date,
     category: row.category,
     item: row.item,
@@ -52,7 +53,11 @@ function mapRow(row: any): Expense {
 }
 
 function sortNewestFirst(expenses: Expense[]) {
-  return [...expenses].sort((a, b) => String(b.id).localeCompare(String(a.id)))
+  return [...expenses].sort((a, b) => {
+    const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0
+    const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0
+    return bTime - aTime
+  })
 }
 
 function broadcastSync() {
@@ -94,6 +99,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     const optimisticId = `local-${Date.now()}`
     const optimisticExpense: Expense = {
       id: optimisticId,
+      createdAt: new Date().toISOString(),
       date: input.date,
       category: input.category,
       item: input.item,
@@ -130,14 +136,16 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (data) {
-      setCloudExpenses((current) => [
-        mapRow(data),
-        ...current.filter((expense) => expense.id !== optimisticId)
-      ])
+      setCloudExpenses((current) =>
+        sortNewestFirst([
+          mapRow(data),
+          ...current.filter((expense) => expense.id !== optimisticId)
+        ])
+      )
     }
 
     broadcastSync()
-    window.setTimeout(() => reload(), 300)
+    window.setTimeout(() => reload(), 500)
   }
 
   async function updateExpense(id: string, input: ExpenseInput) {
@@ -146,19 +154,21 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     const previous = cloudExpenses
 
     setCloudExpenses((current) =>
-      current.map((expense) =>
-        expense.id === id
-          ? {
-              ...expense,
-              date: input.date,
-              category: input.category,
-              item: input.item,
-              jpy: input.jpy,
-              twd: input.twd,
-              pay: input.pay,
-              createdBy: input.createdBy
-            }
-          : expense
+      sortNewestFirst(
+        current.map((expense) =>
+          expense.id === id
+            ? {
+                ...expense,
+                date: input.date,
+                category: input.category,
+                item: input.item,
+                jpy: input.jpy,
+                twd: input.twd,
+                pay: input.pay,
+                createdBy: input.createdBy
+              }
+            : expense
+        )
       )
     )
 
@@ -183,7 +193,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     }
 
     broadcastSync()
-    window.setTimeout(() => reload(), 300)
+    window.setTimeout(() => reload(), 500)
   }
 
   async function deleteExpense(id: string) {
@@ -208,7 +218,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     }
 
     broadcastSync()
-    window.setTimeout(() => reload(), 300)
+    window.setTimeout(() => reload(), 500)
   }
 
   useEffect(() => {
@@ -218,7 +228,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const timer = window.setInterval(() => {
       reload()
-    }, 2000)
+    }, 5000)
 
     return () => window.clearInterval(timer)
   }, [reload])
