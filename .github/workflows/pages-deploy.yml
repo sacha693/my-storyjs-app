@@ -31,8 +31,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Type check
+        run: npm run typecheck
+
       - name: Build app
         run: npm run build
+
+      - name: Verify dist output
+        run: test -f dist/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
