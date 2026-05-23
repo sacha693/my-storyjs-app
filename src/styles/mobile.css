@@ -1,0 +1,112 @@
+@media (max-width: 720px) {
+  .topbarInner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wrap {
+    padding: 12px;
+    padding-bottom: calc(96px + var(--safe-bottom));
+  }
+
+  .appVisualHero,
+  .expenseHero {
+    grid-template-columns: 1fr;
+  }
+
+  .appVisualImage,
+  .expenseHeroPhoto {
+    min-height: 220px;
+  }
+
+  .dayHeader,
+  .summaryTotal {
+    flex-direction: column;
+  }
+
+  .departBox {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .routeLine,
+  .quickNav,
+  .stationLinks,
+  .buttonRow {
+    flex-direction: column;
+  }
+
+  .routeChip,
+  .quickButton,
+  .mapButton,
+  button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .routeChip {
+    line-height: 1.4;
+  }
+
+  .accordion {
+    scroll-margin-top: 110px;
+    contain: layout;
+  }
+
+  .transitGrid,
+  .chartGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .floatingActions {
+    right: 10px;
+    bottom: calc(10px + var(--safe-bottom));
+  }
+
+  .expenseTable,
+  .expenseTable thead,
+  .expenseTable tbody,
+  .expenseTable th,
+  .expenseTable td,
+  .expenseTable tr {
+    display: block;
+    width: 100%;
+  }
+
+  .expenseTable thead {
+    display: none;
+  }
+
+  .expenseTable {
+    border: none;
+    background: transparent;
+  }
+
+  .expenseTable tbody {
+    display: grid;
+    gap: 14px;
+  }
+
+  .expenseTable tr {
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    background: #fff;
+    padding: 10px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 rgba(18, 50, 58, 0.14);
+  }
+
+  .expenseTable td {
+    border: none;
+    padding: 8px 6px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px dashed rgba(18, 50, 58, 0.18);
+  }
+
+  .expenseTable td:last-child {
+    border-bottom: none;
+  }
+}
