@@ -27,19 +27,22 @@ export function DayCard({ day }: DayCardProps) {
         </div>
       </div>
 
-      <div className="routeLine">
-        {day.route.map((stop) => (
-          <a
-            key={stop.label}
-            className="routeChip"
-            href={mapUrl(stop)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {stop.label}
-          </a>
-        ))}
-      </div>
+      <section className="dayOverview">
+        <strong>每日行程總覽</strong>
+        <div className="routeLine">
+          {day.route.map((stop) => (
+            <a
+              key={stop.label}
+              className="routeChip"
+              href={mapUrl(stop)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {stop.label}
+            </a>
+          ))}
+        </div>
+      </section>
 
       <QuickNav items={day.quickLinks} />
 
