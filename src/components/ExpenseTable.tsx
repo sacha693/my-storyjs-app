@@ -45,6 +45,8 @@ export function ExpenseTable() {
   const [message, setMessage] = useState('')
   const [busyId, setBusyId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const editableCount = expenses.filter((expense) => !expense.fixed).length
+  const fixedCount = expenses.length - editableCount
 
   useEffect(() => {
     if (!message) return
@@ -112,6 +114,9 @@ export function ExpenseTable() {
     <section className="card expensePanel">
       <span className="badge">家庭旅費明細</span>
       <h2>📋 消費明細</h2>
+      <p className="miniHint">
+        固定費 {fixedCount} 筆不可刪除；自行新增 {editableCount} 筆可修改或刪除。
+      </p>
       {message ? <div className={`inlineToast ${messageType(message)}`}>{message}</div> : null}
 
       <table className="expenseTable">
