@@ -6,5 +6,6 @@
 @import './expense.css';
 @import './day.css';
 @import './components/DayCard.css';
+@import './components/ExpenseTable.css';
 @import './mobile.css';
 @import './pwa.css';
