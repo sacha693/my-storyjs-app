@@ -22,39 +22,33 @@ function iconForStep(step?: TransitStep) {
   return '➡️'
 }
 
-function labelForStep(step?: TransitStep) {
-  if (!step?.lineName) return '移動'
-  return step.lineName
-}
-
 export function RouteFlow({ route, outbound }: RouteFlowProps) {
   return (
-    <section className="dayOverview routeFlowPanel">
+    <section className="dayOverview">
       <strong>每日行程總覽</strong>
 
-      <div className="routeFlow" aria-label="每日移動路線">
+      <div className="routeLine safeRouteLine" aria-label="每日移動路線">
         {route.map((stop, index) => {
           const step = outbound[index - 1] ?? outbound[index]
 
           return (
-            <div className="routeFlowItem" key={`${stop.label}-${index}`}>
+            <span className="safeRouteGroup" key={`${stop.label}-${index}`}>
               {index > 0 ? (
-                <div className="routeMove">
-                  <span className="moveIcon">{iconForStep(step)}</span>
-                  <span className="moveLine">{labelForStep(step)}</span>
-                  <span className="moveArrow">→</span>
-                </div>
+                <span className="safeMoveHint">
+                  <span>{iconForStep(step)}</span>
+                  <span>→</span>
+                </span>
               ) : null}
 
               <a
-                className="routeChip routeStop"
+                className="routeChip"
                 href={mapUrl(stop)}
                 target="_blank"
                 rel="noreferrer"
               >
                 {stop.label}
               </a>
-            </div>
+            </span>
           )
         })}
       </div>
