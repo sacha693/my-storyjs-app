@@ -3,6 +3,7 @@
 
 @import './base.css';
 @import './layout.css';
+@import './utility.css';
 @import './expense.css';
 @import './day.css';
 @import './components/DayCard.css';
