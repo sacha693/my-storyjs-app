@@ -29,6 +29,7 @@ function parseAmount(value: string) {
 export function ExpenseForm() {
   const { addExpense } = useExpenses()
   const [message, setMessage] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
 
   const [form, setForm] = useState({
     date: '7/24',
@@ -42,6 +43,7 @@ export function ExpenseForm() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
+    if (isSaving) return
     setMessage('')
 
     if (!form.item.trim()) {
@@ -54,16 +56,23 @@ export function ExpenseForm() {
       return
     }
 
-    await addExpense(form)
+    try {
+      setIsSaving(true)
+      await addExpense(form)
 
-    setForm({
-      ...form,
-      item: '',
-      jpy: 0,
-      twd: 0
-    })
+      setForm({
+        ...form,
+        item: '',
+        jpy: 0,
+        twd: 0
+      })
 
-    setMessage('已新增消費。')
+      setMessage('已新增消費。')
+    } catch {
+      setMessage('新增失敗，請稍後再試。')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -75,6 +84,7 @@ export function ExpenseForm() {
       <form className="expenseForm" onSubmit={handleSubmit}>
         <input
           value={form.date}
+          disabled={isSaving}
           onChange={(event) =>
             setForm({ ...form, date: event.target.value })
           }
@@ -83,6 +93,7 @@ export function ExpenseForm() {
 
         <input
           value={form.item}
+          disabled={isSaving}
           onChange={(event) => {
             const item = event.target.value
             setForm({ ...form, item, category: autoCategory(item) })
@@ -92,6 +103,7 @@ export function ExpenseForm() {
 
         <input
           value={form.category}
+          disabled={isSaving}
           onChange={(event) =>
             setForm({ ...form, category: event.target.value })
           }
@@ -103,6 +115,7 @@ export function ExpenseForm() {
           type="number"
           min="0"
           value={form.jpy || ''}
+          disabled={isSaving}
           onChange={(event) => {
             const jpy = parseAmount(event.target.value)
             setForm({ ...form, jpy, twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0 })
@@ -115,6 +128,7 @@ export function ExpenseForm() {
           type="number"
           min="0"
           value={form.twd || ''}
+          disabled={isSaving}
           onChange={(event) => {
             const twd = parseAmount(event.target.value)
             setForm({ ...form, twd, jpy: twd > 0 ? round(twd / JPY_TO_TWD) : 0 })
@@ -124,6 +138,7 @@ export function ExpenseForm() {
 
         <select
           value={form.pay}
+          disabled={isSaving}
           onChange={(event) =>
             setForm({ ...form, pay: event.target.value })
           }
@@ -136,6 +151,7 @@ export function ExpenseForm() {
 
         <select
           value={form.createdBy}
+          disabled={isSaving}
           onChange={(event) =>
             setForm({
               ...form,
@@ -147,7 +163,9 @@ export function ExpenseForm() {
           <option value="yang">yang</option>
         </select>
 
-        <button type="submit">新增</button>
+        <button type="submit" disabled={isSaving}>
+          {isSaving ? '新增中...' : '新增'}
+        </button>
       </form>
 
       <div className="calcPreview">
