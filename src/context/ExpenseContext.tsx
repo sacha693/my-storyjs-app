@@ -96,6 +96,8 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const scheduleReload = useCallback((delay = 450) => {
+    if (document.visibilityState !== 'visible') return
+
     if (reloadTimerRef.current) {
       window.clearTimeout(reloadTimerRef.current)
     }
@@ -253,7 +255,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
 
     function handleVisibilityChange() {
       if (document.visibilityState === 'visible') {
-        scheduleReload()
+        scheduleReload(0)
       }
     }
 
