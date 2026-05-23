@@ -19,580 +19,63 @@ body {
   color: var(--ink);
 }
 
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(247, 253, 255, 0.88);
-  backdrop-filter: blur(16px);
-  border-bottom: 3px solid var(--line);
-}
-
-.topbarInner {
-  max-width: 1100px;
-  margin: auto;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand {
-  text-decoration: none;
-  color: inherit;
-  font-weight: 950;
-  font-size: 21px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.brandIcon {
-  font-size: 22px;
-}
-
-.topnav {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.topnav a {
-  text-decoration: none;
-  color: inherit;
-  border: 2px solid var(--line);
-  background: white;
-  border-radius: 999px;
-  padding: 8px 12px;
-  font-weight: 900;
-  transition: transform 0.15s ease;
-}
-
-.topnav a:hover,
-.quickButton:hover,
-.routeChip:hover,
-.mapButton:hover,
-.navCard:hover {
-  transform: translateY(-2px);
-}
-
-.wrap {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-}
-
-.hero {
-  text-align: center;
-  background:
-    radial-gradient(circle at top right, rgba(244, 201, 93, 0.28), transparent 25%),
-    var(--paper);
-}
-
-.badge {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: white;
-  border: 2px solid var(--line);
-  font-weight: 800;
-}
-
-.grid,
-.chartGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
-}
-
-.card {
-  background: var(--paper);
-  border: 4px solid var(--line);
-  border-radius: 24px;
-  padding: 18px;
-  margin: 14px 0;
-  box-shadow: 5px 5px 0 rgba(18, 50, 58, 0.2);
-}
-
-.navCard {
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.16s ease;
-}
-
-.navIcon {
-  font-size: 32px;
-}
-
-.summaryTotal {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
-  border: 3px solid var(--line);
-  border-radius: 18px;
-  padding: 14px;
-  margin: 14px 0;
-}
-
-.summaryTotal strong {
-  font-size: 28px;
-}
-
-.expenseWrap {
+.appVisualWrap {
   position: relative;
 }
 
-.expenseWrap::before {
+.appVisualWrap::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
-    linear-gradient(rgba(255,255,255,0.74), rgba(255,255,255,0.88)),
-    url('https://images.unsplash.com/photo-1526481280695-3c4691f82b08?q=80&w=1600&auto=format&fit=crop');
+    linear-gradient(rgba(255,255,255,0.74), rgba(255,255,255,0.9)),
+    url('/my-storyjs-app/family_q1.png');
   background-size: cover;
   background-position: center;
-  opacity: 0.34;
+  opacity: 0.16;
   pointer-events: none;
   z-index: -1;
 }
 
-.expenseHero {
+.appVisualHero {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 18px;
   align-items: center;
   overflow: hidden;
   position: relative;
-  text-align: left;
+  min-height: 360px;
 }
 
-.expenseHeroText {
-  position: relative;
-  z-index: 1;
+.appVisualHero h1 {
+  font-size: clamp(38px, 6vw, 64px);
+  margin: 12px 0;
 }
 
-.expenseHero h1 {
-  font-size: clamp(34px, 5vw, 54px);
-  margin-bottom: 10px;
+.appVisualHero p {
+  font-size: 18px;
+  line-height: 1.8;
 }
 
-.expenseHero p {
-  font-size: 17px;
-  line-height: 1.7;
-  max-width: 620px;
-}
-
-.expenseHeroPhoto {
-  min-height: 300px;
+.appVisualImage {
+  min-height: 320px;
   border-radius: 28px;
   border: 4px solid var(--line);
   background:
-    linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.12)),
-    url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1400&auto=format&fit=crop');
+    linear-gradient(rgba(0,0,0,0.06), rgba(0,0,0,0.14)),
+    url('/my-storyjs-app/family_q1.png');
   background-size: cover;
   background-position: center;
   box-shadow: 10px 10px 0 rgba(18,50,58,0.18);
 }
 
-.expensePanel,
-.chartCard {
-  backdrop-filter: blur(8px);
-  background: rgba(255,255,255,0.92);
-}
-
-.expensePanel h2 {
-  margin-top: 6px;
-}
-
-.expenseForm {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
-}
-
-input,
-select,
-button {
-  font: inherit;
-  border: 3px solid var(--line);
-  border-radius: 14px;
-  padding: 10px 12px;
-  background: white;
-}
-
-button {
-  cursor: pointer;
-  font-weight: 950;
-  background: var(--sun);
-  box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.18);
-}
-
-.buttonRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-.statusPill {
-  display: inline-block;
-  background: #eefaf6;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  padding: 8px 12px;
-  font-weight: 900;
-}
-
-.dangerButton {
-  background: #ffd6d6;
-}
-
-.chartRows {
-  display: grid;
-  gap: 12px;
-}
-
-.chartLabel {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  font-weight: 900;
-  margin-bottom: 5px;
-}
-
-.chartTrack {
-  height: 16px;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  background: #fff;
-  overflow: hidden;
-}
-
-.chartFill {
-  height: 100%;
-  min-width: 4px;
-  background: linear-gradient(90deg, var(--blue), var(--sun));
-}
-
-.dayCard {
-  background: white;
-}
-
-.dayHeader {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-.dayDate {
-  display: inline-block;
-  background: var(--blue);
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-weight: 900;
-}
-
-.departBox,
-.dayOverview {
-  background: var(--soft);
-  border: 3px solid var(--line);
-  border-radius: 18px;
-  padding: 12px;
-}
-
-.departBox {
-  min-width: 240px;
-}
-
-.dayOverview {
-  margin: 14px 0;
-}
-
-.departBox span {
-  display: block;
-  font-size: 13px;
-  opacity: 0.8;
-}
-
-.routeLine {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 12px 0 0;
-}
-
-.routeChip,
-.routeLine span {
-  background: white;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  padding: 7px 11px;
-  font-weight: 900;
-  color: inherit;
-  text-decoration: none;
-  box-shadow: 2px 2px 0 rgba(18, 50, 58, 0.15);
-}
-
-.routeChip::after {
-  content: ' ↗';
-  font-size: 12px;
-}
-
-.quickNav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.quickButton {
-  text-decoration: none;
-  color: inherit;
-  background: white;
-  border: 3px solid var(--line);
-  border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 900;
-  box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.15);
-}
-
-.accordion {
-  border: 3px solid var(--line);
-  border-radius: 18px;
-  background: white;
-  margin: 12px 0;
-  overflow: hidden;
-}
-
-.accordion summary {
-  list-style: none;
-  cursor: pointer;
-  padding: 14px;
-  background: var(--soft);
-  font-weight: 900;
-}
-
-.accordionBody {
-  padding: 14px;
-}
-
-.ticketCard {
-  border: 2px solid var(--line);
-  border-radius: 14px;
-  padding: 12px;
-  margin-bottom: 10px;
-  background: #fff;
-}
-
-.transitGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-}
-
-.transitColumn h4 {
-  margin-top: 0;
-}
-
-.transitStep {
-  position: relative;
-  border: 3px solid var(--line);
-  border-radius: 18px;
-  padding: 14px;
-  margin-bottom: 12px;
-  background: #fff;
-  box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.14);
-}
-
-.lineBadge {
-  display: inline-block;
-  color: white;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-weight: 950;
-  margin-bottom: 10px;
-  box-shadow: 2px 2px 0 rgba(18, 50, 58, 0.28);
-}
-
-.transitText {
-  margin: 4px 0 10px;
-  font-weight: 900;
-  font-size: 16px;
-}
-
-.directionBox {
-  background: #fff7da;
-  border: 3px dashed var(--line);
-  border-radius: 16px;
-  padding: 10px;
-  margin: 10px 0;
-}
-
-.directionBox strong {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 3px;
-}
-
-.directionBox span {
-  display: block;
-  margin-top: 0;
-  font-size: 15px;
-  font-weight: 950;
-}
-
-.stationLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 10px 0;
-}
-
-.mapButton {
-  display: inline-block;
-  color: inherit;
-  text-decoration: none;
-  background: var(--soft);
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  padding: 7px 10px;
-  font-weight: 900;
-  box-shadow: 2px 2px 0 rgba(18, 50, 58, 0.12);
-}
-
-.exitHint {
-  display: block;
-  margin-top: 10px;
-  font-size: 13px;
-  font-weight: 900;
-  background: #eefaf6;
-  border-left: 6px solid #16a34a;
-  border-radius: 12px;
-  padding: 9px 10px;
-}
-
-.dayNote {
-  background: #fff7da;
-  border: 3px solid var(--line);
-  border-radius: 18px;
-  padding: 14px;
-  margin-top: 14px;
-}
-
-.floatingActions {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 150;
-}
-
-.floatingActions a {
-  text-decoration: none;
-  color: inherit;
-  background: white;
-  border: 3px solid var(--line);
-  border-radius: 999px;
-  padding: 12px 14px;
-  font-weight: 950;
-  box-shadow: 4px 4px 0 rgba(18, 50, 58, 0.18);
-}
-
-h1,
-h2,
-h3,
-h4 {
-  line-height: 1.2;
-}
-
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  overflow: hidden;
-  border: 3px solid var(--line);
-  border-radius: 18px;
-  background: white;
-}
-
-th,
-td {
-  border-bottom: 2px solid var(--line);
-  padding: 10px;
-  text-align: left;
-}
-
-th {
-  background: var(--blue);
-}
-
 @media (max-width: 720px) {
-  .topbarInner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .wrap {
-    padding: 12px;
-    padding-bottom: 92px;
-  }
-
-  .expenseHero {
+  .appVisualHero {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 
-  .expenseHeroPhoto {
-    min-height: 220px;
-  }
-
-  .dayHeader,
-  .summaryTotal {
-    flex-direction: column;
-  }
-
-  .departBox {
-    min-width: auto;
-    width: 100%;
-  }
-
-  .routeLine,
-  .quickNav,
-  .stationLinks,
-  .buttonRow {
-    flex-direction: column;
-  }
-
-  .routeChip,
-  .quickButton,
-  .mapButton,
-  button {
-    width: 100%;
-    text-align: center;
-  }
-
-  .transitGrid,
-  .chartGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .transitStep {
-    padding: 12px;
-  }
-
-  .floatingActions {
-    right: 10px;
-    bottom: 10px;
-  }
-
-  table {
-    display: block;
-    overflow-x: auto;
+  .appVisualImage {
+    min-height: 240px;
   }
 }
