@@ -1,0 +1,26 @@
+{
+  "name": "金童家關西旅程",
+  "short_name": "關西旅程",
+  "description": "金童家 2026 關西親子自由行旅程、交通與旅費管理 App",
+  "start_url": "/my-storyjs-app/",
+  "scope": "/my-storyjs-app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7fdff",
+  "theme_color": "#7fd3df",
+  "lang": "zh-Hant",
+  "icons": [
+    {
+      "src": "/my-storyjs-app/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/my-storyjs-app/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
