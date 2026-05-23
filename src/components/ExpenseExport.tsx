@@ -3,7 +3,7 @@ import { useExpenses } from '../context/ExpenseContext'
 function safeCsvCell(value: unknown) {
   const text = String(value ?? '')
   const safeText = /^[=+\-@]/.test(text) ? `'${text}` : text
-  return `"${safeText.replaceAll('"', '""')}"`
+  return `"${safeText.replace(/"/g, '""')}"`
 }
 
 export function ExpenseExport() {
