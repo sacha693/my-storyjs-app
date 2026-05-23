@@ -76,94 +76,115 @@ export function ExpenseForm() {
   }
 
   return (
-    <section className="card expensePanel">
+    <section className="card expensePanel expenseFormPanel">
       <span className="badge">新增一筆旅費</span>
       <h2>➕ 新增消費</h2>
-      <p className="miniHint">匯率暫以 1 JPY ≈ NT$0.22 估算，可手動覆蓋。</p>
+      <p className="miniHint">先填項目，再輸入日幣或台幣其中一種，系統會自動分類與換算。</p>
 
       <form className="expenseForm" onSubmit={handleSubmit}>
-        <input
-          value={form.date}
-          disabled={isSaving}
-          onChange={(event) =>
-            setForm({ ...form, date: event.target.value })
-          }
-          placeholder="日期"
-        />
+        <label className="fieldGroup">
+          <span>日期</span>
+          <input
+            value={form.date}
+            disabled={isSaving}
+            onChange={(event) =>
+              setForm({ ...form, date: event.target.value })
+            }
+            placeholder="日期"
+          />
+        </label>
 
-        <input
-          value={form.item}
-          disabled={isSaving}
-          onChange={(event) => {
-            const item = event.target.value
-            setForm({ ...form, item, category: autoCategory(item) })
-          }}
-          placeholder="項目，例如：拉麵、USJ門票、Rapi:t"
-        />
+        <label className="fieldGroup fieldWide">
+          <span>消費項目</span>
+          <input
+            value={form.item}
+            disabled={isSaving}
+            onChange={(event) => {
+              const item = event.target.value
+              setForm({ ...form, item, category: autoCategory(item) })
+            }}
+            placeholder="項目，例如：拉麵、USJ門票、Rapi:t"
+          />
+        </label>
 
-        <input
-          value={form.category}
-          disabled={isSaving}
-          onChange={(event) =>
-            setForm({ ...form, category: event.target.value })
-          }
-          placeholder="自動分類"
-        />
+        <label className="fieldGroup">
+          <span>類別</span>
+          <input
+            value={form.category}
+            disabled={isSaving}
+            onChange={(event) =>
+              setForm({ ...form, category: event.target.value })
+            }
+            placeholder="自動分類"
+          />
+        </label>
 
-        <input
-          inputMode="numeric"
-          type="number"
-          min="0"
-          value={form.jpy || ''}
-          disabled={isSaving}
-          onChange={(event) => {
-            const jpy = parseAmount(event.target.value)
-            setForm({ ...form, jpy, twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0 })
-          }}
-          placeholder="輸入日幣 JPY"
-        />
+        <label className="fieldGroup">
+          <span>日幣 JPY</span>
+          <input
+            inputMode="numeric"
+            type="number"
+            min="0"
+            value={form.jpy || ''}
+            disabled={isSaving}
+            onChange={(event) => {
+              const jpy = parseAmount(event.target.value)
+              setForm({ ...form, jpy, twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0 })
+            }}
+            placeholder="輸入日幣"
+          />
+        </label>
 
-        <input
-          inputMode="numeric"
-          type="number"
-          min="0"
-          value={form.twd || ''}
-          disabled={isSaving}
-          onChange={(event) => {
-            const twd = parseAmount(event.target.value)
-            setForm({ ...form, twd, jpy: twd > 0 ? round(twd / JPY_TO_TWD) : 0 })
-          }}
-          placeholder="或輸入台幣 TWD"
-        />
+        <label className="fieldGroup">
+          <span>台幣 TWD</span>
+          <input
+            inputMode="numeric"
+            type="number"
+            min="0"
+            value={form.twd || ''}
+            disabled={isSaving}
+            onChange={(event) => {
+              const twd = parseAmount(event.target.value)
+              setForm({ ...form, twd, jpy: twd > 0 ? round(twd / JPY_TO_TWD) : 0 })
+            }}
+            placeholder="或輸入台幣"
+          />
+        </label>
 
-        <select
-          value={form.pay}
-          disabled={isSaving}
-          onChange={(event) =>
-            setForm({ ...form, pay: event.target.value })
-          }
-        >
-          <option value="現金">現金</option>
-          <option value="信用卡">信用卡</option>
-          <option value="電子支付">電子支付</option>
-          <option value="已預付">已預付</option>
-        </select>
+        <label className="fieldGroup">
+          <span>付款方式</span>
+          <select
+            value={form.pay}
+            disabled={isSaving}
+            onChange={(event) =>
+              setForm({ ...form, pay: event.target.value })
+            }
+          >
+            <option value="現金">現金</option>
+            <option value="信用卡">信用卡</option>
+            <option value="電子支付">電子支付</option>
+            <option value="已預付">已預付</option>
+          </select>
+        </label>
 
-        <select
-          value={form.createdBy}
-          disabled={isSaving}
-          onChange={(event) =>
-            setForm({
-              ...form,
-              createdBy: event.target.value as 'sacha' | 'yang'
-            })
-          }
-        >
-          <option value="sacha">sacha</option>
-          <option value="yang">yang</option>
-        </select>
+        <label className="fieldGroup">
+          <span>記帳人</span>
+          <select
+            value={form.createdBy}
+            disabled={isSaving}
+            onChange={(event) =>
+              setForm({
+                ...form,
+                createdBy: event.target.value as 'sacha' | 'yang'
+              })
+            }
+          >
+            <option value="sacha">sacha</option>
+            <option value="yang">yang</option>
+          </select>
+        </label>
 
-        <button type="submit" disabled={isSaving}>
+        <button className="fieldSubmit" type="submit" disabled={isSaving}>
           {isSaving ? '新增中...' : '新增'}
         </button>
       </form>
