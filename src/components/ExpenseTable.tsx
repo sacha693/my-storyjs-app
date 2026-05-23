@@ -173,7 +173,7 @@ export function ExpenseTable() {
                   )}
                 </td>
               </tr>
-            )}
+            )
           })}
         </tbody>
       </table>
