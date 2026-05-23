@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useExpenses } from '../context/ExpenseContext'
 
 const JPY_TO_TWD = 0.22
@@ -45,6 +45,16 @@ export function ExpenseForm() {
     pay: '現金',
     createdBy: 'sacha' as 'sacha' | 'yang'
   })
+
+  useEffect(() => {
+    if (!message) return
+
+    const timer = window.setTimeout(() => {
+      setMessage('')
+    }, 2600)
+
+    return () => window.clearTimeout(timer)
+  }, [message])
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
