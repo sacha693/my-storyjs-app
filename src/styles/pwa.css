@@ -1,0 +1,61 @@
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --app-min-height: 100dvh;
+}
+
+html {
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: var(--app-min-height);
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.topbar {
+  padding-top: var(--safe-top);
+}
+
+.wrap {
+  padding-bottom: calc(24px + var(--safe-bottom));
+}
+
+.floatingActions {
+  bottom: calc(16px + var(--safe-bottom));
+}
+
+a,
+button,
+summary,
+.routeChip,
+.quickButton,
+.mapButton,
+.navCard {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+select,
+textarea {
+  font-size: 16px;
+  scroll-margin-bottom: calc(150px + var(--safe-bottom));
+}
+
+@media (display-mode: standalone) {
+  body {
+    overscroll-behavior: none;
+  }
+
+  .topbar {
+    background: rgba(247, 253, 255, 0.96);
+  }
+
+  .wrap {
+    min-height: calc(100dvh - var(--safe-top));
+  }
+}
