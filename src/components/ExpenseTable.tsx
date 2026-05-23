@@ -21,6 +21,11 @@ function sanitizeAmount(value: string) {
   return Number.isFinite(amount) && amount > 0 ? amount : 0
 }
 
+function messageType(message: string) {
+  if (!message) return ''
+  return message.includes('失敗') || message.includes('請') ? 'toastError' : 'toastSuccess'
+}
+
 function toInput(expense: Expense): ExpenseInput {
   return {
     date: expense.date,
@@ -94,7 +99,7 @@ export function ExpenseTable() {
     <section className="card expensePanel">
       <span className="badge">家庭旅費明細</span>
       <h2>📋 消費明細</h2>
-      {message ? <p className="miniHint">{message}</p> : null}
+      {message ? <div className={`inlineToast ${messageType(message)}`}>{message}</div> : null}
 
       <table className="expenseTable">
         <thead>
