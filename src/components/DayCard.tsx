@@ -1,11 +1,14 @@
-import type { DayPlan } from '../data/days'
+import type { DayPlan, TransitPoint } from '../data/days'
 import { QuickNav } from './QuickNav'
-import { RouteFlow } from './RouteFlow'
 import { TicketAccordion } from './TicketAccordion'
 import { TransitAccordion } from './TransitAccordion'
 
 type DayCardProps = {
   day: DayPlan
+}
+
+function mapUrl(point: TransitPoint) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(point.query)}`
 }
 
 export function DayCard({ day }: DayCardProps) {
@@ -24,7 +27,23 @@ export function DayCard({ day }: DayCardProps) {
         </div>
       </div>
 
-      <RouteFlow route={day.route} outbound={day.outbound} />
+      <section className="dayOverview">
+        <strong>每日行程總覽</strong>
+
+        <div className="routeLine routeLineWithArrows">
+          {day.route.map((stop) => (
+            <a
+              key={stop.label}
+              className="routeChip"
+              href={mapUrl(stop)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {stop.label}
+            </a>
+          ))}
+        </div>
+      </section>
 
       <QuickNav items={day.quickLinks} />
 
