@@ -1,5 +1,7 @@
 @import './base.css';
 @import './layout.css';
+@import './expense.css';
+@import './day.css';
 
 /* Temporary fallback during modular migration */
 @import '../styles.css';
