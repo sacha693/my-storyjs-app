@@ -31,13 +31,14 @@ export function DayCard({ day }: DayCardProps) {
         <strong>每日行程總覽</strong>
 
         <div className="routeLine routeLineWithArrows">
-          {day.route.map((stop) => (
+          {day.route.map((stop, index) => (
             <a
-              key={stop.label}
+              key={`${day.id}-${index}-${stop.label}-${stop.query}`}
               className="routeChip"
               href={mapUrl(stop)}
               target="_blank"
               rel="noreferrer"
+              aria-label={`在 Google Maps 開啟 ${stop.label}`}
             >
               {stop.label}
             </a>
