@@ -24,9 +24,13 @@ function ExpenseContent() {
             </span>
           </div>
 
-          {loading ? <p>同步中...</p> : null}
+          {loading ? <p className="miniHint">同步中，正在取得最新旅費資料...</p> : null}
 
-          {error ? <p>錯誤：{error}</p> : null}
+          {error ? (
+            <p className="errorHint" role="alert">
+              同步錯誤：{error}
+            </p>
+          ) : null}
         </div>
 
         <div className="expenseHeroPhoto" aria-hidden="true" />
