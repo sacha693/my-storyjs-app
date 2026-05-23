@@ -230,22 +230,22 @@ export const dayPlans: DayPlan[] = [
     ],
     outbound: [
       {
-        text: '天滿橋站 → 大阪港站 → 海遊館',
+        text: '天滿橋站 → 谷町四丁目站轉車 → 大阪港站 → 海遊館',
         lineName: 'Osaka Metro 谷町線＋中央線',
         lineColor: '#019a66',
-        direction: '中央線往大阪港／夢洲方向',
+        direction: '先搭谷町線往八尾南方向到谷町四丁目，再轉中央線往大阪港／夢洲方向',
         from: { label: '天滿橋站', query: '天満橋駅' },
         to: { label: '大阪港站', query: '大阪港駅' },
-        exit: '大阪港站 1 號出口，最接近海遊館與天保山 Market Place。'
+        exit: '大阪港站 1 號出口，出站後步行約 5～8 分鐘到海遊館與天保山 Market Place。'
       },
       {
-        text: '大阪港站 → 弁天町 → 西九條 → 櫻島站 → Liber Hotel',
-        lineName: '中央線＋JR 大阪環狀線＋JR 夢咲線',
+        text: '大阪港站 → 弁天町站轉 JR → 西九條站轉 JR 夢咲線 → 櫻島站 → Liber Hotel',
+        lineName: 'Osaka Metro 中央線＋JR 大阪環狀線＋JR 夢咲線',
         lineColor: '#e87511',
-        direction: '往櫻島方向',
+        direction: '中央線往弁天町，轉 JR 往西九條，再轉 JR 夢咲線往櫻島方向',
         from: { label: '大阪港站', query: '大阪港駅' },
         to: { label: '櫻島站', query: '桜島駅' },
-        exit: '櫻島站出站後依 Liber Hotel 指標步行。'
+        exit: '櫻島站出站後步行約 2～5 分鐘，依 Liber Hotel 指標或地圖前往。'
       }
     ],
     inbound: [
