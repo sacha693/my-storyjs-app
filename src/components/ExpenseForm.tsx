@@ -20,8 +20,15 @@ function round(value: number) {
   return Math.round(value)
 }
 
+function parseAmount(value: string) {
+  if (value.trim() === '') return 0
+  const amount = Number(value)
+  return Number.isFinite(amount) && amount > 0 ? amount : 0
+}
+
 export function ExpenseForm() {
   const { addExpense } = useExpenses()
+  const [message, setMessage] = useState('')
 
   const [form, setForm] = useState({
     date: '7/24',
@@ -35,8 +42,15 @@ export function ExpenseForm() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
+    setMessage('')
 
     if (!form.item.trim()) {
+      setMessage('請先輸入消費項目。')
+      return
+    }
+
+    if (form.jpy <= 0 && form.twd <= 0) {
+      setMessage('請至少輸入日幣或台幣其中一種金額。')
       return
     }
 
@@ -48,6 +62,8 @@ export function ExpenseForm() {
       jpy: 0,
       twd: 0
     })
+
+    setMessage('已新增消費。')
   }
 
   return (
@@ -83,21 +99,25 @@ export function ExpenseForm() {
         />
 
         <input
+          inputMode="numeric"
           type="number"
+          min="0"
           value={form.jpy || ''}
           onChange={(event) => {
-            const jpy = Number(event.target.value)
-            setForm({ ...form, jpy, twd: round(jpy * JPY_TO_TWD) })
+            const jpy = parseAmount(event.target.value)
+            setForm({ ...form, jpy, twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0 })
           }}
           placeholder="輸入日幣 JPY"
         />
 
         <input
+          inputMode="numeric"
           type="number"
+          min="0"
           value={form.twd || ''}
           onChange={(event) => {
-            const twd = Number(event.target.value)
-            setForm({ ...form, twd, jpy: round(twd / JPY_TO_TWD) })
+            const twd = parseAmount(event.target.value)
+            setForm({ ...form, twd, jpy: twd > 0 ? round(twd / JPY_TO_TWD) : 0 })
           }}
           placeholder="或輸入台幣 TWD"
         />
@@ -134,6 +154,7 @@ export function ExpenseForm() {
         <strong>即時換算</strong>
         <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
         <span>自動分類：{form.category}</span>
+        {message ? <span>{message}</span> : null}
       </div>
     </section>
   )
