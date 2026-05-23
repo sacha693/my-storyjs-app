@@ -33,6 +33,9 @@ type ExpenseContextValue = {
 }
 
 const ExpenseContext = createContext<ExpenseContextValue | null>(null)
+const syncChannel = typeof BroadcastChannel !== 'undefined'
+  ? new BroadcastChannel('kansai-expense-sync')
+  : null
 
 function mapRow(row: any): Expense {
   return {
@@ -46,6 +49,15 @@ function mapRow(row: any): Expense {
     createdBy: row.created_by,
     fixed: false
   }
+}
+
+function sortNewestFirst(expenses: Expense[]) {
+  return [...expenses].sort((a, b) => String(b.id).localeCompare(String(a.id)))
+}
+
+function broadcastSync() {
+  syncChannel?.postMessage({ type: 'expense-sync', time: Date.now() })
+  window.localStorage.setItem('kansai-expense-sync', String(Date.now()))
 }
 
 export function ExpenseProvider({ children }: { children: React.ReactNode }) {
@@ -72,7 +84,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
-    setCloudExpenses((data ?? []).map(mapRow))
+    setCloudExpenses(sortNewestFirst((data ?? []).map(mapRow)))
     setLoading(false)
   }, [])
 
@@ -124,6 +136,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       ])
     }
 
+    broadcastSync()
     window.setTimeout(() => reload(), 300)
   }
 
@@ -169,6 +182,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       throw supabaseError
     }
 
+    broadcastSync()
     window.setTimeout(() => reload(), 300)
   }
 
@@ -193,6 +207,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       throw supabaseError
     }
 
+    broadcastSync()
     window.setTimeout(() => reload(), 300)
   }
 
@@ -225,6 +240,20 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     return () => {
       window.removeEventListener('focus', handleFocus)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [reload])
+
+  useEffect(() => {
+    function handleStorage(event: StorageEvent) {
+      if (event.key === 'kansai-expense-sync') reload()
+    }
+
+    syncChannel?.addEventListener('message', reload)
+    window.addEventListener('storage', handleStorage)
+
+    return () => {
+      syncChannel?.removeEventListener('message', reload)
+      window.removeEventListener('storage', handleStorage)
     }
   }, [reload])
 
@@ -264,7 +293,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   const expenses = useMemo(
     () => [
       ...fixedCosts.map((cost) => ({ ...cost, fixed: true })),
-      ...cloudExpenses
+      ...sortNewestFirst(cloudExpenses)
     ],
     [cloudExpenses]
   )
