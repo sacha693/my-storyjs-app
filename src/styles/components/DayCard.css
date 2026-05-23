@@ -1,0 +1,49 @@
+.dayCard {
+  background: #fff;
+}
+
+.dayHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.dayDate {
+  display: inline-block;
+  background: var(--blue);
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 900;
+}
+
+.dayOverview,
+.departBox {
+  background: var(--soft);
+  border: 3px solid var(--line);
+  border-radius: 18px;
+  padding: 12px;
+}
+
+.dayOverview {
+  margin: 14px 0;
+}
+
+.departBox {
+  min-width: 240px;
+}
+
+.departBox span {
+  display: block;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.dayNote {
+  background: #fff7da;
+  border: 3px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+  margin-top: 14px;
+}
