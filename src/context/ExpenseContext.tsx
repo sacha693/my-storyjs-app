@@ -42,7 +42,7 @@ function mapRow(row: any): Expense {
     item: row.item,
     jpy: Number(row.jpy ?? 0),
     twd: Number(row.twd ?? 0),
-    pay: row.pay,
+    pay: row.pay ?? '現金',
     createdBy: row.created_by,
     fixed: false
   }
@@ -79,20 +79,49 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   async function addExpense(input: ExpenseInput) {
     setError(null)
 
-    const { error: supabaseError } = await supabase.from('expenses').insert({
-      trip_id: TRIP_ID,
+    const optimisticId = `local-${Date.now()}`
+    const optimisticExpense: Expense = {
+      id: optimisticId,
       date: input.date,
       category: input.category,
       item: input.item,
       jpy: input.jpy,
       twd: input.twd,
       pay: input.pay,
-      created_by: input.createdBy
-    })
+      createdBy: input.createdBy,
+      fixed: false
+    }
+
+    setCloudExpenses((current) => [optimisticExpense, ...current])
+
+    const { data, error: supabaseError } = await supabase
+      .from('expenses')
+      .insert({
+        trip_id: TRIP_ID,
+        date: input.date,
+        category: input.category,
+        item: input.item,
+        jpy: input.jpy,
+        twd: input.twd,
+        pay: input.pay,
+        created_by: input.createdBy
+      })
+      .select('*')
+      .single()
 
     if (supabaseError) {
+      setCloudExpenses((current) =>
+        current.filter((expense) => expense.id !== optimisticId)
+      )
       setError(supabaseError.message)
       throw supabaseError
+    }
+
+    if (data) {
+      setCloudExpenses((current) => [
+        mapRow(data),
+        ...current.filter((expense) => expense.id !== optimisticId)
+      ])
     }
 
     await reload()
@@ -100,6 +129,25 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
 
   async function updateExpense(id: string, input: ExpenseInput) {
     setError(null)
+
+    const previous = cloudExpenses
+
+    setCloudExpenses((current) =>
+      current.map((expense) =>
+        expense.id === id
+          ? {
+              ...expense,
+              date: input.date,
+              category: input.category,
+              item: input.item,
+              jpy: input.jpy,
+              twd: input.twd,
+              pay: input.pay,
+              createdBy: input.createdBy
+            }
+          : expense
+      )
+    )
 
     const { error: supabaseError } = await supabase
       .from('expenses')
@@ -116,6 +164,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       .eq('trip_id', TRIP_ID)
 
     if (supabaseError) {
+      setCloudExpenses(previous)
       setError(supabaseError.message)
       throw supabaseError
     }
@@ -126,6 +175,12 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   async function deleteExpense(id: string) {
     setError(null)
 
+    const previous = cloudExpenses
+
+    setCloudExpenses((current) =>
+      current.filter((expense) => expense.id !== id)
+    )
+
     const { error: supabaseError } = await supabase
       .from('expenses')
       .delete()
@@ -133,6 +188,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       .eq('trip_id', TRIP_ID)
 
     if (supabaseError) {
+      setCloudExpenses(previous)
       setError(supabaseError.message)
       throw supabaseError
     }
