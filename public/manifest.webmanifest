@@ -11,16 +11,22 @@
   "lang": "zh-Hant",
   "icons": [
     {
-      "src": "/my-storyjs-app/icons/icon-192.svg",
+      "src": "/my-storyjs-app/family_q1.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/my-storyjs-app/icons/icon-512.svg",
+      "src": "/my-storyjs-app/family_q1.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/my-storyjs-app/family_q1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
