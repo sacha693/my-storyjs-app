@@ -1,0 +1,27 @@
+:root {
+  --ink: #12323a;
+  --blue: #7fd3df;
+  --paper: #f7fdff;
+  --line: #12323a;
+  --soft: #e7fbff;
+  --sun: #f4c95d;
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', sans-serif;
+  background: linear-gradient(#bdeef5, #f7fdff);
+  color: var(--ink);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+}
