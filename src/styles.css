@@ -192,6 +192,11 @@ body {
   box-shadow: 2px 2px 0 rgba(18, 50, 58, 0.15);
 }
 
+.routeChip::after {
+  content: ' ↗';
+  font-size: 12px;
+}
+
 .quickNav {
   display: flex;
   flex-wrap: wrap;
@@ -208,6 +213,129 @@ body {
   padding: 10px 14px;
   font-weight: 900;
   box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.15);
+}
+
+.accordion {
+  border: 3px solid var(--line);
+  border-radius: 18px;
+  background: white;
+  margin: 12px 0;
+  overflow: hidden;
+}
+
+.accordion summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px;
+  background: var(--soft);
+  font-weight: 900;
+}
+
+.accordionBody {
+  padding: 14px;
+}
+
+.ticketCard {
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.transitGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.transitColumn h4 {
+  margin-top: 0;
+}
+
+.transitStep {
+  position: relative;
+  border: 3px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: #fff;
+  box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.14);
+}
+
+.lineBadge {
+  display: inline-block;
+  color: white;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 950;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 0 rgba(18, 50, 58, 0.28);
+}
+
+.transitText {
+  margin: 4px 0 10px;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.directionBox {
+  background: #fff7da;
+  border: 3px dashed var(--line);
+  border-radius: 16px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.directionBox strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.directionBox span {
+  display: block;
+  margin-top: 0;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.stationLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.mapButton {
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+  background: var(--soft);
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-weight: 900;
+  box-shadow: 2px 2px 0 rgba(18, 50, 58, 0.12);
+}
+
+.exitHint {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 900;
+  background: #eefaf6;
+  border-left: 6px solid #16a34a;
+  border-radius: 12px;
+  padding: 9px 10px;
+}
+
+.dayNote {
+  background: #fff7da;
+  border: 3px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+  margin-top: 14px;
 }
 
 .floatingActions {
@@ -229,6 +357,29 @@ body {
   padding: 12px 14px;
   font-weight: 950;
   box-shadow: 4px 4px 0 rgba(18, 50, 58, 0.18);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 2px solid var(--line);
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: var(--blue);
 }
 
 @media (max-width: 720px) {
@@ -266,6 +417,10 @@ body {
 
   .transitGrid {
     grid-template-columns: 1fr;
+  }
+
+  .transitStep {
+    padding: 12px;
   }
 
   .floatingActions {
