@@ -43,5 +43,7 @@
       "url": "/my-storyjs-app/expense",
       "description": "查看與新增旅費紀錄"
     }
-  ]
+  ],
+  "categories": ["travel", "productivity", "finance"],
+  "prefer_related_applications": false
 }
