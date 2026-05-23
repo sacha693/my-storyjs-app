@@ -27,8 +27,8 @@ function TransitList({ title, steps }: { title: string; steps: TransitStep[] }) 
     <div className="transitColumn">
       <h4>{title}</h4>
 
-      {steps.map((step) => (
-        <article key={step.text} className="transitStep">
+      {steps.map((step, index) => (
+        <article key={`${title}-${index}-${step.text}`} className="transitStep">
           {step.lineName ? (
             <div
               className="lineBadge"
@@ -47,7 +47,7 @@ function TransitList({ title, steps }: { title: string; steps: TransitStep[] }) 
             </div>
           ) : null}
 
-          {(step.from || step.to) ? (
+          {step.from || step.to ? (
             <div className="stationLinks">
               {step.from ? <MapButton point={step.from} /> : null}
               {step.to ? <MapButton point={step.to} /> : null}
@@ -64,7 +64,7 @@ function TransitList({ title, steps }: { title: string; steps: TransitStep[] }) 
 export function TransitAccordion({ outbound, inbound }: TransitAccordionProps) {
   return (
     <details className="accordion">
-      <summary>🚃 去回程交通</summary>
+      <summary>🚃 詳細交通、方向與出口</summary>
 
       <div className="accordionBody transitGrid">
         <TransitList title="去程" steps={outbound} />
