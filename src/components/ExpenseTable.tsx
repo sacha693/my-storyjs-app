@@ -38,16 +38,17 @@ export function ExpenseTable() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [draft, setDraft] = useState<ExpenseInput | null>(null)
   const [message, setMessage] = useState('')
+  const [busyId, setBusyId] = useState<string | null>(null)
 
   function startEdit(expense: Expense) {
-    if (!expense.id || expense.fixed) return
+    if (!expense.id || expense.fixed || busyId) return
     setMessage('')
     setEditingId(expense.id)
     setDraft(toInput(expense))
   }
 
   async function saveEdit() {
-    if (!editingId || !draft) return
+    if (!editingId || !draft || busyId) return
 
     if (!draft.item.trim()) {
       setMessage('請輸入消費項目後再儲存。')
@@ -59,20 +60,34 @@ export function ExpenseTable() {
       return
     }
 
-    await updateExpense(editingId, draft)
-    setEditingId(null)
-    setDraft(null)
-    setMessage('已儲存修改。')
+    try {
+      setBusyId(editingId)
+      await updateExpense(editingId, draft)
+      setEditingId(null)
+      setDraft(null)
+      setMessage('已儲存修改。')
+    } catch {
+      setMessage('儲存失敗，請稍後再試。')
+    } finally {
+      setBusyId(null)
+    }
   }
 
   async function handleDelete(expense: Expense) {
-    if (!expense.id || expense.fixed) return
+    if (!expense.id || expense.fixed || busyId) return
 
     const confirmed = window.confirm(`確定要刪除「${expense.item}」嗎？`)
     if (!confirmed) return
 
-    await deleteExpense(expense.id)
-    setMessage('已刪除消費。')
+    try {
+      setBusyId(expense.id)
+      await deleteExpense(expense.id)
+      setMessage('已刪除消費。')
+    } catch {
+      setMessage('刪除失敗，請稍後再試。')
+    } finally {
+      setBusyId(null)
+    }
   }
 
   return (
@@ -97,6 +112,7 @@ export function ExpenseTable() {
         <tbody>
           {expenses.map((expense) => {
             const isEditing = editingId === expense.id && draft
+            const isBusy = busyId === expense.id
 
             return (
               <tr key={`${expense.id}-${expense.item}`}>
@@ -104,6 +120,7 @@ export function ExpenseTable() {
                   {isEditing ? (
                     <input
                       value={draft.date}
+                      disabled={isBusy}
                       onChange={(event) =>
                         setDraft({ ...draft, date: event.target.value })
                       }
@@ -116,6 +133,7 @@ export function ExpenseTable() {
                   {isEditing ? (
                     <input
                       value={draft.category}
+                      disabled={isBusy}
                       onChange={(event) =>
                         setDraft({ ...draft, category: event.target.value })
                       }
@@ -128,6 +146,7 @@ export function ExpenseTable() {
                   {isEditing ? (
                     <input
                       value={draft.item}
+                      disabled={isBusy}
                       onChange={(event) =>
                         setDraft({ ...draft, item: event.target.value })
                       }
@@ -143,6 +162,7 @@ export function ExpenseTable() {
                       type="number"
                       min="0"
                       value={draft.jpy || ''}
+                      disabled={isBusy}
                       onChange={(event) => {
                         const jpy = sanitizeAmount(event.target.value)
                         setDraft({
@@ -163,6 +183,7 @@ export function ExpenseTable() {
                       type="number"
                       min="0"
                       value={draft.twd || ''}
+                      disabled={isBusy}
                       onChange={(event) => {
                         const twdAmount = sanitizeAmount(event.target.value)
                         setDraft({
@@ -180,6 +201,7 @@ export function ExpenseTable() {
                   {isEditing ? (
                     <select
                       value={draft.createdBy}
+                      disabled={isBusy}
                       onChange={(event) =>
                         setDraft({
                           ...draft,
@@ -199,9 +221,12 @@ export function ExpenseTable() {
                     '固定費'
                   ) : isEditing ? (
                     <div className="buttonRow">
-                      <button onClick={saveEdit}>儲存</button>
+                      <button onClick={saveEdit} disabled={isBusy}>
+                        {isBusy ? '儲存中...' : '儲存'}
+                      </button>
                       <button
                         type="button"
+                        disabled={isBusy}
                         onClick={() => {
                           setEditingId(null)
                           setDraft(null)
@@ -213,12 +238,15 @@ export function ExpenseTable() {
                     </div>
                   ) : (
                     <div className="buttonRow">
-                      <button onClick={() => startEdit(expense)}>修改</button>
+                      <button disabled={Boolean(busyId)} onClick={() => startEdit(expense)}>
+                        修改
+                      </button>
                       <button
                         className="dangerButton"
+                        disabled={Boolean(busyId)}
                         onClick={() => handleDelete(expense)}
                       >
-                        刪除
+                        {isBusy ? '刪除中...' : '刪除'}
                       </button>
                     </div>
                   )}
