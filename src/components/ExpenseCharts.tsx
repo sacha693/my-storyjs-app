@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useExpenses } from '../context/ExpenseContext'
+import type { Expense } from '../types'
 
 const categories = ['餐食', '交通', '門票', '購物', '住宿', '機票', '便利商店', '其他']
 const days = ['7/23', '7/24', '7/25', '7/26', '7/27', '7/28', '7/29', '7/30', '7/31']
@@ -64,7 +65,7 @@ function BarChart({ title, rows }: BarChartProps) {
   )
 }
 
-function sumBy(rows: ReturnType<typeof useExpenses>['expenses'], predicate: (expense: ReturnType<typeof useExpenses>['expenses'][number]) => boolean) {
+function sumBy(rows: Expense[], predicate: (expense: Expense) => boolean) {
   return rows
     .filter(predicate)
     .reduce(
