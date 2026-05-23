@@ -8,23 +8,27 @@ function ExpenseContent() {
   const { loading, error, reload, realtimeStatus } = useExpenses()
 
   return (
-    <main className="wrap">
-      <section className="card hero">
-        <span className="badge">旅費儀表板</span>
-        <h1>旅費記帳系統</h1>
-        <p>React + Supabase 即時同步架構。</p>
+    <main className="wrap expenseWrap">
+      <section className="card hero expenseHero">
+        <div className="expenseHeroText">
+          <span className="badge">旅費儀表板</span>
+          <h1>旅費記帳系統</h1>
+          <p>把金童家關西旅程的住宿、機票、餐食與購物支出集中管理。</p>
 
-        <div className="buttonRow">
-          <button onClick={reload}>重新同步</button>
+          <div className="buttonRow">
+            <button onClick={reload}>重新同步</button>
 
-          <span className="statusPill">
-            即時同步：{realtimeStatus}
-          </span>
+            <span className="statusPill">
+              即時同步：{realtimeStatus}
+            </span>
+          </div>
+
+          {loading ? <p>同步中...</p> : null}
+
+          {error ? <p>錯誤：{error}</p> : null}
         </div>
 
-        {loading ? <p>同步中...</p> : null}
-
-        {error ? <p>錯誤：{error}</p> : null}
+        <div className="expenseHeroPhoto" aria-hidden="true" />
       </section>
 
       <ExpenseStats />
