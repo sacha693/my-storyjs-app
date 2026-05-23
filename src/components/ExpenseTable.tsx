@@ -2,12 +2,18 @@ import { useState } from 'react'
 import type { Expense } from '../types'
 import { type ExpenseInput, useExpenses } from '../context/ExpenseContext'
 
+const JPY_TO_TWD = 0.22
+
 function yen(value: number) {
   return `¥${value.toLocaleString()}`
 }
 
 function twd(value: number) {
   return `NT$${value.toLocaleString()}`
+}
+
+function round(value: number) {
+  return Math.round(value)
 }
 
 function sanitizeAmount(value: string) {
@@ -137,9 +143,14 @@ export function ExpenseTable() {
                       type="number"
                       min="0"
                       value={draft.jpy || ''}
-                      onChange={(event) =>
-                        setDraft({ ...draft, jpy: sanitizeAmount(event.target.value) })
-                      }
+                      onChange={(event) => {
+                        const jpy = sanitizeAmount(event.target.value)
+                        setDraft({
+                          ...draft,
+                          jpy,
+                          twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0
+                        })
+                      }}
                     />
                   ) : (
                     yen(expense.jpy)
@@ -152,9 +163,14 @@ export function ExpenseTable() {
                       type="number"
                       min="0"
                       value={draft.twd || ''}
-                      onChange={(event) =>
-                        setDraft({ ...draft, twd: sanitizeAmount(event.target.value) })
-                      }
+                      onChange={(event) => {
+                        const twdAmount = sanitizeAmount(event.target.value)
+                        setDraft({
+                          ...draft,
+                          twd: twdAmount,
+                          jpy: twdAmount > 0 ? round(twdAmount / JPY_TO_TWD) : 0
+                        })
+                      }}
                     />
                   ) : (
                     twd(expense.twd)
