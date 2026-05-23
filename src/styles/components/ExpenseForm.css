@@ -1,0 +1,49 @@
+.expenseForm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.expenseForm input,
+.expenseForm select,
+.expenseForm button {
+  min-height: 46px;
+}
+
+.expenseForm input:focus,
+.expenseForm select:focus {
+  outline: 3px solid rgba(127, 211, 223, 0.55);
+  outline-offset: 2px;
+}
+
+.calcPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #fff7da;
+  border: 3px solid var(--line);
+  border-radius: 16px;
+  padding: 10px;
+  margin-top: 12px;
+}
+
+.calcPreview strong {
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .expenseForm {
+    grid-template-columns: 1fr;
+  }
+
+  .expenseForm input,
+  .expenseForm select,
+  .expenseForm button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .calcPreview {
+    flex-direction: column;
+  }
+}
