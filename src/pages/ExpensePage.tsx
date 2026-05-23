@@ -9,7 +9,7 @@ function ExpenseContent() {
   const { loading, error, reload, realtimeStatus } = useExpenses()
 
   return (
-    <main className="wrap expenseWrap">
+    <main className="wrap expenseWrap" id="expense-top">
       <section className="card hero expenseHero">
         <div className="expenseHeroText">
           <span className="badge">旅費儀表板</span>
@@ -36,7 +36,9 @@ function ExpenseContent() {
         <div className="expenseHeroPhoto" aria-hidden="true" />
       </section>
 
-      <ExpenseStats />
+      <div id="expense-summary">
+        <ExpenseStats />
+      </div>
 
       <ExpenseCharts />
 
@@ -53,6 +55,7 @@ function ExpenseContent() {
       </div>
 
       <nav className="expenseQuickBar" aria-label="旅費快捷操作">
+        <a href="#expense-summary">總額</a>
         <a href="#add-expense">＋新增</a>
         <a href="#expense-details">明細</a>
         <a href="#expense-export">匯出</a>
