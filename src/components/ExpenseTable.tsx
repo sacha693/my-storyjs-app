@@ -45,7 +45,7 @@ export function ExpenseTable() {
       <span className="badge">家庭旅費明細</span>
       <h2>📋 消費明細</h2>
 
-      <table>
+      <table className="expenseTable">
         <thead>
           <tr>
             <th>日期</th>
