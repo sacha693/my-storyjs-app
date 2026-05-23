@@ -1,0 +1,79 @@
+.expenseTable {
+  width: 100%;
+}
+
+.expenseTable input,
+.expenseTable select {
+  width: 100%;
+  min-width: 120px;
+}
+
+.expenseTable .buttonRow {
+  justify-content: flex-start;
+}
+
+.dangerButton {
+  background: #ffd6d6;
+}
+
+@media (max-width: 720px) {
+  .expenseTable,
+  .expenseTable thead,
+  .expenseTable tbody,
+  .expenseTable th,
+  .expenseTable td,
+  .expenseTable tr {
+    display: block;
+    width: 100%;
+  }
+
+  .expenseTable thead {
+    display: none;
+  }
+
+  .expenseTable {
+    border: none;
+    background: transparent;
+  }
+
+  .expenseTable tbody {
+    display: grid;
+    gap: 14px;
+  }
+
+  .expenseTable tr {
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    background: #fff;
+    padding: 10px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 rgba(18, 50, 58, 0.14);
+  }
+
+  .expenseTable td {
+    border: none;
+    padding: 8px 6px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px dashed rgba(18, 50, 58, 0.18);
+  }
+
+  .expenseTable td:last-child {
+    border-bottom: none;
+  }
+
+  .expenseTable td::before {
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .expenseTable td:nth-child(1)::before { content: '日期'; }
+  .expenseTable td:nth-child(2)::before { content: '類別'; }
+  .expenseTable td:nth-child(3)::before { content: '項目'; }
+  .expenseTable td:nth-child(4)::before { content: 'JPY'; }
+  .expenseTable td:nth-child(5)::before { content: 'TWD'; }
+  .expenseTable td:nth-child(6)::before { content: '記帳'; }
+  .expenseTable td:nth-child(7)::before { content: '操作'; }
+}
