@@ -1,9 +1,9 @@
+/* Legacy fallback first: modular layers below intentionally override it. */
+@import '../styles.css';
+
 @import './base.css';
 @import './layout.css';
 @import './expense.css';
 @import './day.css';
 @import './mobile.css';
 @import './pwa.css';
-
-/* Temporary fallback during modular migration */
-@import '../styles.css';
