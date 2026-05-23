@@ -99,7 +99,8 @@ body {
   font-weight: 800;
 }
 
-.grid {
+.grid,
+.chartGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 14px;
@@ -139,6 +140,79 @@ body {
   font-size: 28px;
 }
 
+.expenseForm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  border: 3px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: white;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 950;
+  background: var(--sun);
+  box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.18);
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.statusPill {
+  display: inline-block;
+  background: #eefaf6;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 900;
+}
+
+.dangerButton {
+  background: #ffd6d6;
+}
+
+.chartCard {
+  background: white;
+}
+
+.chartRows {
+  display: grid;
+  gap: 12px;
+}
+
+.chartLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.chartTrack {
+  height: 16px;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.chartFill {
+  height: 100%;
+  min-width: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--sun));
+}
+
 .dayCard {
   background: white;
 }
@@ -159,12 +233,20 @@ body {
   font-weight: 900;
 }
 
-.departBox {
-  min-width: 240px;
+.departBox,
+.dayOverview {
   background: var(--soft);
   border: 3px solid var(--line);
   border-radius: 18px;
   padding: 12px;
+}
+
+.departBox {
+  min-width: 240px;
+}
+
+.dayOverview {
+  margin: 14px 0;
 }
 
 .departBox span {
@@ -177,12 +259,12 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 18px 0;
+  margin: 12px 0 0;
 }
 
 .routeChip,
 .routeLine span {
-  background: var(--soft);
+  background: white;
   border: 2px solid var(--line);
   border-radius: 999px;
   padding: 7px 11px;
@@ -240,6 +322,7 @@ body {
   border-radius: 14px;
   padding: 12px;
   margin-bottom: 10px;
+  background: #fff;
 }
 
 .transitGrid {
@@ -368,12 +451,17 @@ h4 {
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 3px solid var(--line);
+  border-radius: 18px;
+  background: white;
 }
 
 th,
 td {
-  border: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
   padding: 10px;
   text-align: left;
 }
@@ -393,7 +481,8 @@ th {
     padding-bottom: 92px;
   }
 
-  .dayHeader {
+  .dayHeader,
+  .summaryTotal {
     flex-direction: column;
   }
 
@@ -404,18 +493,21 @@ th {
 
   .routeLine,
   .quickNav,
-  .stationLinks {
+  .stationLinks,
+  .buttonRow {
     flex-direction: column;
   }
 
   .routeChip,
   .quickButton,
-  .mapButton {
+  .mapButton,
+  button {
     width: 100%;
     text-align: center;
   }
 
-  .transitGrid {
+  .transitGrid,
+  .chartGrid {
     grid-template-columns: 1fr;
   }
 
@@ -426,5 +518,10 @@ th {
   .floatingActions {
     right: 10px;
     bottom: 10px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
   }
 }
