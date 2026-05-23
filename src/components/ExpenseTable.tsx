@@ -44,6 +44,7 @@ export function ExpenseTable() {
   const [draft, setDraft] = useState<ExpenseInput | null>(null)
   const [message, setMessage] = useState('')
   const [busyId, setBusyId] = useState<string | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   function startEdit(expense: Expense) {
     if (!expense.id || expense.fixed || busyId) return
@@ -86,10 +87,12 @@ export function ExpenseTable() {
 
     try {
       setBusyId(expense.id)
+      setDeletingId(expense.id)
       await deleteExpense(expense.id)
       setMessage('已刪除消費。')
     } catch {
       setMessage('刪除失敗，請稍後再試。')
+      setDeletingId(null)
     } finally {
       setBusyId(null)
     }
@@ -118,9 +121,13 @@ export function ExpenseTable() {
           {expenses.map((expense) => {
             const isEditing = editingId === expense.id && draft
             const isBusy = busyId === expense.id
+            const isDeleting = deletingId === expense.id
 
             return (
-              <tr key={`${expense.id}-${expense.item}`}>
+              <tr
+                className={isDeleting ? 'expenseRowDeleting' : ''}
+                key={`${expense.id}-${expense.item}`}
+              >
                 <td>
                   {isEditing ? (
                     <input
