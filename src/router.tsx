@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, type ReactNode } from 'react'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -52,33 +52,36 @@ function AppErrorBoundary() {
   )
 }
 
-function withSuspense(element: React.ReactNode) {
+function withSuspense(element: ReactNode) {
   return <Suspense fallback={<PageLoader />}>{element}</Suspense>
 }
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <AppLayout />,
+      errorElement: <AppErrorBoundary />,
+      children: [
+        {
+          index: true,
+          element: withSuspense(<HomePage />)
+        },
+        {
+          path: 'days',
+          element: withSuspense(<DaysPage />)
+        },
+        {
+          path: 'expense',
+          element: withSuspense(<ExpensePage />)
+        }
+      ]
+    }
+  ],
   {
-    path: '/',
-    element: <AppLayout />,
-    errorElement: <AppErrorBoundary />,
-    children: [
-      {
-        index: true,
-        element: withSuspense(<HomePage />)
-      },
-      {
-        path: 'days',
-        element: withSuspense(<DaysPage />)
-      },
-      {
-        path: 'expense',
-        element: withSuspense(<ExpensePage />)
-      }
-    ]
+    basename: '/my-storyjs-app'
   }
-], {
-  basename: '/my-storyjs-app'
-})
+)
 
 export function AppRouter() {
   return <RouterProvider router={router} />
