@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useExpenses } from '../context/ExpenseContext'
 
 const JPY_TO_TWD = 0.22
+const QUICK_AMOUNTS = [500, 1000, 3000, 5000]
 
 function autoCategory(item: string) {
   const text = item.toLowerCase()
@@ -208,6 +209,25 @@ export function ExpenseForm() {
         <strong>即時換算</strong>
         <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
         <span>自動分類：{form.category}</span>
+      </div>
+
+      <div className="buttonRow">
+        {QUICK_AMOUNTS.map((amount) => (
+          <button
+            key={amount}
+            type="button"
+            disabled={isSaving}
+            onClick={() =>
+              setForm({
+                ...form,
+                jpy: amount,
+                twd: round(amount * JPY_TO_TWD)
+              })
+            }
+          >
+            ¥{amount.toLocaleString()}
+          </button>
+        ))}
       </div>
 
       {message ? <div className={`inlineToast ${messageType(message)}`}>{message}</div> : null}
