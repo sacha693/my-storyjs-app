@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react'
 
@@ -72,6 +73,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   const [realtimeStatus, setRealtimeStatus] = useState<
     'connecting' | 'connected' | 'disconnected'
   >('connecting')
+  const reloadTimerRef = useRef<number | null>(null)
 
   const reload = useCallback(async (showLoading = false) => {
     if (showLoading) setLoading(true)
@@ -92,6 +94,17 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     setCloudExpenses(sortNewestFirst((data ?? []).map(mapRow)))
     setLoading(false)
   }, [])
+
+  const scheduleReload = useCallback((delay = 450) => {
+    if (reloadTimerRef.current) {
+      window.clearTimeout(reloadTimerRef.current)
+    }
+
+    reloadTimerRef.current = window.setTimeout(() => {
+      reloadTimerRef.current = null
+      reload()
+    }, delay)
+  }, [reload])
 
   async function addExpense(input: ExpenseInput) {
     setError(null)
@@ -145,7 +158,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     }
 
     broadcastSync()
-    window.setTimeout(() => reload(), 500)
+    scheduleReload(600)
   }
 
   async function updateExpense(id: string, input: ExpenseInput) {
@@ -193,7 +206,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     }
 
     broadcastSync()
-    window.setTimeout(() => reload(), 500)
+    scheduleReload(600)
   }
 
   async function deleteExpense(id: string) {
@@ -218,7 +231,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     }
 
     broadcastSync()
-    window.setTimeout(() => reload(), 500)
+    scheduleReload(600)
   }
 
   useEffect(() => {
@@ -227,20 +240,20 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      reload()
+      scheduleReload()
     }, 5000)
 
     return () => window.clearInterval(timer)
-  }, [reload])
+  }, [scheduleReload])
 
   useEffect(() => {
     function handleFocus() {
-      reload()
+      scheduleReload()
     }
 
     function handleVisibilityChange() {
       if (document.visibilityState === 'visible') {
-        reload()
+        scheduleReload()
       }
     }
 
@@ -251,15 +264,15 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener('focus', handleFocus)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
-  }, [reload])
+  }, [scheduleReload])
 
   useEffect(() => {
     function handleStorage(event: StorageEvent) {
-      if (event.key === 'kansai-expense-sync') reload()
+      if (event.key === 'kansai-expense-sync') scheduleReload()
     }
 
     function handleBroadcast() {
-      reload()
+      scheduleReload()
     }
 
     syncChannel?.addEventListener('message', handleBroadcast)
@@ -269,7 +282,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
       syncChannel?.removeEventListener('message', handleBroadcast)
       window.removeEventListener('storage', handleStorage)
     }
-  }, [reload])
+  }, [scheduleReload])
 
   useEffect(() => {
     setRealtimeStatus('connecting')
@@ -285,7 +298,7 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
           filter: `trip_id=eq.${TRIP_ID}`
         },
         () => {
-          reload()
+          scheduleReload()
         }
       )
       .subscribe((status) => {
@@ -302,7 +315,15 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [reload])
+  }, [scheduleReload])
+
+  useEffect(() => {
+    return () => {
+      if (reloadTimerRef.current) {
+        window.clearTimeout(reloadTimerRef.current)
+      }
+    }
+  }, [])
 
   const expenses = useMemo(
     () => [
