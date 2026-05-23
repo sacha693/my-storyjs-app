@@ -6,9 +6,17 @@ import { ExpenseStats } from '../components/ExpenseStats'
 import { ExpenseTable } from '../components/ExpenseTable'
 import { ExpenseProvider, useExpenses } from '../context/ExpenseContext'
 
+const QUICK_SECTIONS = [
+  { id: 'expense-summary', label: '總額' },
+  { id: 'add-expense', label: '＋新增' },
+  { id: 'expense-details', label: '明細' },
+  { id: 'expense-export', label: '匯出' }
+]
+
 function ExpenseContent() {
   const { loading, error, reload, realtimeStatus } = useExpenses()
   const [isOnline, setIsOnline] = useState(() => navigator.onLine)
+  const [activeSection, setActiveSection] = useState('expense-summary')
 
   useEffect(() => {
     function handleOnline() {
@@ -28,6 +36,25 @@ function ExpenseContent() {
       window.removeEventListener('offline', handleOffline)
     }
   }, [reload])
+
+  useEffect(() => {
+    function handleScroll() {
+      const nextSection = QUICK_SECTIONS.reduce((current, section) => {
+        const element = document.getElementById(section.id)
+        if (!element) return current
+
+        const top = element.getBoundingClientRect().top
+        return top <= 160 ? section.id : current
+      }, 'expense-summary')
+
+      setActiveSection(nextSection)
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <main className="wrap expenseWrap" id="expense-top">
@@ -86,10 +113,15 @@ function ExpenseContent() {
       </div>
 
       <nav className="expenseQuickBar" aria-label="旅費快捷操作">
-        <a href="#expense-summary">總額</a>
-        <a href="#add-expense">＋新增</a>
-        <a href="#expense-details">明細</a>
-        <a href="#expense-export">匯出</a>
+        {QUICK_SECTIONS.map((section) => (
+          <a
+            className={activeSection === section.id ? 'activeQuickLink' : ''}
+            href={`#${section.id}`}
+            key={section.id}
+          >
+            {section.label}
+          </a>
+        ))}
       </nav>
     </main>
   )
