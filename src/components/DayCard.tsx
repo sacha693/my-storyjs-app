@@ -1,5 +1,4 @@
 import type { DayPlan, TransitPoint } from '../data/days'
-import { QuickNav } from './QuickNav'
 import { TicketAccordion } from './TicketAccordion'
 import { TransitAccordion } from './TransitAccordion'
 
@@ -45,8 +44,6 @@ export function DayCard({ day }: DayCardProps) {
           ))}
         </div>
       </section>
-
-      <QuickNav items={day.quickLinks} />
 
       <TransitAccordion
         outbound={day.outbound}
