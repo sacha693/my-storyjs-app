@@ -1,4 +1,4 @@
-import type { DayPlan } from './days'
+import type { DayPlan } from './types'
 
 export const day6Plan: DayPlan = {
   id: 'day-6',
