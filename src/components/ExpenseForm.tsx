@@ -26,6 +26,11 @@ function parseAmount(value: string) {
   return Number.isFinite(amount) && amount > 0 ? amount : 0
 }
 
+function messageType(message: string) {
+  if (!message) return ''
+  return message.includes('失敗') || message.includes('請') ? 'toastError' : 'toastSuccess'
+}
+
 export function ExpenseForm() {
   const { addExpense } = useExpenses()
   const [message, setMessage] = useState('')
@@ -193,8 +198,9 @@ export function ExpenseForm() {
         <strong>即時換算</strong>
         <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
         <span>自動分類：{form.category}</span>
-        {message ? <span>{message}</span> : null}
       </div>
+
+      {message ? <div className={`inlineToast ${messageType(message)}`}>{message}</div> : null}
     </section>
   )
 }
