@@ -1,0 +1,79 @@
+.topnav a,
+.quickButton,
+.routeChip,
+.mapButton {
+  color: inherit;
+  text-decoration: none;
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 900;
+  box-shadow: 2px 2px 0 rgba(18, 50, 58, 0.14);
+}
+
+.routeChip::after {
+  content: ' ↗';
+  font-size: 12px;
+}
+
+.navCard {
+  color: inherit;
+  text-decoration: none;
+}
+
+.navIcon {
+  font-size: 32px;
+}
+
+.statusPill {
+  display: inline-block;
+  background: #eefaf6;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 900;
+}
+
+.miniHint {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 950;
+  background: var(--sun);
+  box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.18);
+}
+
+input,
+select,
+button {
+  font: inherit;
+  border: 3px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 3px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+
+th,
+td {
+  border-bottom: 2px solid var(--line);
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: var(--blue);
+}
