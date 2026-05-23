@@ -1,7 +1,8 @@
-const CACHE_NAME = 'kansai-trip-shell-v1'
+const CACHE_NAME = 'kansai-trip-shell-v2'
 const APP_SHELL = [
   '/my-storyjs-app/',
-  '/my-storyjs-app/manifest.webmanifest'
+  '/my-storyjs-app/manifest.webmanifest',
+  '/my-storyjs-app/family_q1.png'
 ]
 
 self.addEventListener('install', (event) => {
@@ -29,12 +30,19 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const request = event.request
 
-  if (request.method !== 'GET') {
-    return
-  }
+  if (request.method !== 'GET') return
 
-  if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match('/my-storyjs-app/')))
+  const url = new URL(request.url)
+  const isAppAsset = url.pathname.startsWith('/my-storyjs-app/assets/')
+  const isHtmlNavigation = request.mode === 'navigate'
+  const isCriticalFile = /\.(js|css|html)$/.test(url.pathname)
+
+  if (isHtmlNavigation || isAppAsset || isCriticalFile) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => response)
+        .catch(() => caches.match('/my-storyjs-app/'))
+    )
     return
   }
 
