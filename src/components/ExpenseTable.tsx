@@ -6,6 +6,10 @@ function yen(value: number) {
   return `¥${value.toLocaleString()}`
 }
 
+function twd(value: number) {
+  return `NT$${value.toLocaleString()}`
+}
+
 function toInput(expense: Expense): ExpenseInput {
   return {
     date: expense.date,
@@ -37,7 +41,8 @@ export function ExpenseTable() {
   }
 
   return (
-    <section className="card">
+    <section className="card expensePanel">
+      <span className="badge">家庭旅費明細</span>
       <h2>📋 消費明細</h2>
 
       <table>
@@ -47,6 +52,7 @@ export function ExpenseTable() {
             <th>類別</th>
             <th>項目</th>
             <th>JPY</th>
+            <th>TWD</th>
             <th>記帳人</th>
             <th>操作</th>
           </tr>
@@ -109,6 +115,19 @@ export function ExpenseTable() {
                 </td>
                 <td>
                   {isEditing ? (
+                    <input
+                      type="number"
+                      value={draft.twd}
+                      onChange={(event) =>
+                        setDraft({ ...draft, twd: Number(event.target.value) })
+                      }
+                    />
+                  ) : (
+                    twd(expense.twd)
+                  )}
+                </td>
+                <td>
+                  {isEditing ? (
                     <select
                       value={draft.createdBy}
                       onChange={(event) =>
@@ -154,7 +173,7 @@ export function ExpenseTable() {
                   )}
                 </td>
               </tr>
-            )
+            )}
           })}
         </tbody>
       </table>
