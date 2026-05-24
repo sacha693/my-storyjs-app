@@ -3,55 +3,78 @@ import type { DayPlan } from './types'
 export const day5Plan: DayPlan = {
   id: 'day-5',
   date: '7/28',
-  title: 'Day 5｜換飯店＋心齋橋購物恢復日',
-  subtitle: 'USJ隔天恢復體力，慢慢逛。',
-  suggestedDeparture: '10:30 退房移動到市區；14:00 前後安排心齋橋購物。',
+  title: 'Day 5｜換飯店＋難波神社＋心齋橋購物',
+  subtitle: '先寄放行李，再輕裝逛街。',
+  suggestedDeparture: '10:30 Liber Hotel 退房；搭大車計程車前往 OASIS NANIWA 寄放行李；下午前往難波神社、心齋橋與道頓堀。',
   route: [
-    { label: 'Liber/USJ區', query: 'Liber Hotel Osaka' },
-    { label: 'OASIS NANIWA', query: 'OASIS NANIWA Osaka' },
-    { label: '難波午餐', query: 'なんば ランチ 大阪' },
+    { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
+    { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
+    { label: '岸里站', query: '岸里駅' },
+    { label: '難波神社', query: '難波神社' },
+    { label: '心齋橋', query: '心斎橋駅' },
     { label: 'シモジマ', query: 'Shimojima Shinsaibashi' },
     { label: '道頓堀', query: '道頓堀' }
   ],
   tickets: [
-    { title: 'OASIS NANIWA 住宿訂單', detail: '住宿訂單截圖。' },
+    { title: 'OASIS NANIWA 住宿訂單', detail: '住宿訂單截圖；抵達後先寄放行李。' },
+    { title: '計程車預估', detail: 'Liber Hotel → OASIS NANIWA 約 ¥3,500～¥6,000；依時段、塞車與車型浮動。' },
     { title: '購物退稅', detail: '可能需要護照，請放隨身包。' }
   ],
   quickLinks: [
-    { label: '🏨 OASIS NANIWA', query: 'OASIS NANIWA Osaka' },
+    { label: '🏨 OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
+    { label: '🚇 岸里站', query: '岸里駅' },
+    { label: '⛩ 難波神社', query: '難波神社' },
     { label: '✏ シモジマ', query: 'Shimojima Shinsaibashi' },
-    { label: '🥞 美津の大阪燒', query: 'Mizuno Okonomiyaki Osaka' }
+    { label: '🌉 道頓堀', query: '道頓堀' }
   ],
   outbound: [
     {
-      text: '櫻島站／環球城站 → 西九條站轉阪神難波線 → 大阪難波站',
-      lineName: 'JR 夢咲線＋阪神難波線',
-      lineColor: '#e87511',
-      direction: '先搭 JR 夢咲線往西九條方向；在西九條站轉阪神難波線，搭往大阪難波／近鐵奈良方向',
-      from: { label: '櫻島站／環球城站', query: '桜島駅' },
-      to: { label: '大阪難波站', query: '大阪難波駅' },
-      exit: '抵達大阪難波站後，依 OASIS NANIWA 地圖選擇最近出口；若先逛難波商圈，可往 14、15-B 方向。'
+      text: 'Liber Hotel → OASIS NANIWA 寄放行李',
+      lineName: '大車計程車',
+      lineColor: '#6b7280',
+      direction: '2 大 2 小加 2 件 28 吋行李，換飯店日建議請 Liber Hotel 協助叫大一點的計程車。',
+      from: { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
+      to: { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
+      exit: '日文：大人2人、子ども2人、28インチのスーツケースが2個あります。OASIS NANIWAまで行きたいです。大きめのタクシーを呼んでいただけますか？'
     },
     {
-      text: '大阪難波／なんば站 → 心齋橋站',
-      lineName: 'Osaka Metro 御堂筋線',
-      lineColor: '#e5171f',
-      direction: '從 Osaka Metro なんば站搭御堂筋線，往梅田／新大阪方向，1 站到心齋橋站',
-      from: { label: '大阪難波／難波站', query: 'なんば駅' },
-      to: { label: '心齋橋站', query: '心斎橋駅' },
-      exit: '心齋橋站 5、6 號出口往心齋橋筋與シモジマ方向。'
+      text: 'OASIS NANIWA → 岸里站 → 四ツ橋站／本町側 → 難波神社',
+      lineName: 'Osaka Metro 四つ橋線＋步行',
+      lineColor: '#0078ba',
+      direction: '寄放行李後輕裝出發。從岸里站搭四つ橋線往西梅田方向，依 Google Maps 於四ツ橋或本町側下車，再步行前往難波神社。',
+      from: { label: '岸里站', query: '岸里駅' },
+      to: { label: '難波神社', query: '難波神社' },
+      exit: '出口依 Google Maps 當日路線為準；難波神社作為逛街前的休息與轉場點。'
+    },
+    {
+      text: '難波神社 → 心齋橋 → シモジマ',
+      lineName: 'Google Maps 步行／地鐵',
+      lineColor: '#6b7280',
+      direction: '從難波神社依 Google Maps 前往心齋橋商圈與シモジマ，近距離段落以 Google Maps 建議為準。',
+      from: { label: '難波神社', query: '難波神社' },
+      to: { label: 'シモジマ', query: 'Shimojima Shinsaibashi' },
+      exit: '心齋橋與シモジマ逛街時間不要拉太滿，保留晚餐與回住宿體力。'
+    },
+    {
+      text: 'シモジマ → 道頓堀',
+      lineName: 'Google Maps 步行',
+      lineColor: '#6b7280',
+      direction: '依 Google Maps 從心齋橋／シモジマ往道頓堀移動，晚餐安排在道頓堀或周邊。',
+      from: { label: 'シモジマ', query: 'Shimojima Shinsaibashi' },
+      to: { label: '道頓堀', query: '道頓堀' },
+      exit: '人潮多時走外圍道路，不要穿越最擠的戎橋中央。'
     }
   ],
   inbound: [
     {
-      text: '道頓堀 → OASIS NANIWA',
-      lineName: '步行／Metro',
-      lineColor: '#6b7280',
-      direction: '往 OASIS NANIWA 方向',
+      text: '道頓堀 → なんば／四ツ橋側 → 岸里站 → OASIS NANIWA',
+      lineName: 'Osaka Metro 四つ橋線',
+      lineColor: '#0078ba',
+      direction: '晚餐後依 Google Maps 前往四つ橋線可搭乘站點，搭往住之江公園方向到岸里站，再步行回 OASIS NANIWA。',
       from: { label: '道頓堀', query: '道頓堀' },
-      to: { label: 'OASIS NANIWA', query: 'OASIS NANIWA Osaka' },
-      exit: '人潮多時走外圍道路，不要穿越最擠的戎橋。'
+      to: { label: '岸里站', query: '岸里駅' },
+      exit: '購物袋多、孩子累或下雨時，直接短程計程車回 OASIS NANIWA。'
     }
   ],
-  note: '購物要慢慢逛，咖啡休息不要省。'
+  note: 'Day 5 是恢復型購物日：先到 OASIS 寄放行李，再以岸里／四つ橋線為核心輕裝移動。晚上購物袋多或孩子累時，直接搭計程車回住宿。'
 }
