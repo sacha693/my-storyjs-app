@@ -54,7 +54,7 @@ function TransitList({ title, steps }: { title: string; steps: TransitStep[] }) 
             </div>
           ) : null}
 
-          {step.exit ? <span className="exitHint">最近出口：{step.exit}</span> : null}
+          {step.exit ? <span className="exitHint">提醒：{step.exit}</span> : null}
         </article>
       ))}
     </div>
@@ -64,7 +64,7 @@ function TransitList({ title, steps }: { title: string; steps: TransitStep[] }) 
 export function TransitAccordion({ outbound, inbound }: TransitAccordionProps) {
   return (
     <details className="accordion">
-      <summary>🚃 詳細交通、方向與出口</summary>
+      <summary>🚃 詳細交通與移動提醒</summary>
 
       <div className="accordionBody transitGrid">
         <TransitList title="去程" steps={outbound} />
