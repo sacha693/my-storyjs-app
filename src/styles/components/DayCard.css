@@ -1,5 +1,6 @@
 .dayCard {
   background: #fff;
+  border-top: 8px solid var(--day-theme, var(--blue));
 }
 
 .dayHeader {
@@ -11,7 +12,8 @@
 
 .dayDate {
   display: inline-block;
-  background: var(--blue);
+  background: var(--day-theme, var(--blue));
+  color: #fff;
   border: 2px solid var(--line);
   border-radius: 999px;
   padding: 4px 10px;
