@@ -19,6 +19,12 @@ const DaysPage = lazy(() =>
   }))
 )
 
+const DayDetailPage = lazy(() =>
+  import('./pages/DayDetailPage').then((module) => ({
+    default: module.DayDetailPage
+  }))
+)
+
 const ExpensePage = lazy(() =>
   import('./pages/ExpensePage').then((module) => ({
     default: module.ExpensePage
@@ -70,6 +76,10 @@ const router = createBrowserRouter(
         {
           path: 'days',
           element: withSuspense(<DaysPage />)
+        },
+        {
+          path: 'days/:dayId',
+          element: withSuspense(<DayDetailPage />)
         },
         {
           path: 'expense',
