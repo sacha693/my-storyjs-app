@@ -4,15 +4,17 @@ export const day6Plan: DayPlan = {
   id: 'day-6',
   date: '7/29',
   title: 'Day 6｜京都 teamLab',
-  subtitle: '一主一副，看光影、走河邊，不暴走京都。',
-  suggestedDeparture: '10:00 出發前往京都；11:30 京都車站午餐；13:00 teamLab 入場。',
+  subtitle: '大阪往返京都，一主一副，看光影、走河邊，不暴走。',
+  suggestedDeparture: '10:00 從 OASIS 出發；11:30 京都車站午餐；13:00 teamLab 入場。',
   route: [
-    { label: '大阪', query: '大阪駅' },
+    { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
+    { label: '岸里站', query: '岸里駅' },
+    { label: '大阪站', query: '大阪駅' },
     { label: '京都車站', query: 'Kyoto Station' },
     { label: '拉麵小路', query: 'Kyoto Ramen Street' },
     { label: 'teamLab Biovortex Kyoto', query: 'teamLab Biovortex Kyoto' },
-    { label: '鴨川或祇園', query: 'Kamo River Kyoto' },
-    { label: '回大阪', query: '大阪駅' }
+    { label: '祇園四条／鴨川', query: '祇園四条駅 Kamo River Kyoto' },
+    { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' }
   ],
   tickets: [
     { title: 'Klook 訂單', detail: 'TXM612450。' },
@@ -20,51 +22,52 @@ export const day6Plan: DayPlan = {
     { title: '票種', detail: '成人1、兒童1、傷殘人士優惠2；不可取消、退款或更改訂單。' }
   ],
   quickLinks: [
+    { label: '🚇 岸里站', query: '岸里駅' },
     { label: '🚉 京都車站', query: 'Kyoto Station' },
     { label: '🍜 京都拉麵小路', query: 'Kyoto Ramen Street' },
     { label: '✨ teamLab', query: 'teamLab Biovortex Kyoto' },
-    { label: '🌿 鴨川', query: 'Kamo River Kyoto' },
-    { label: '🏨 回OASIS', query: 'OASIS NANIWA Osaka' }
+    { label: '🌿 鴨川／祇園', query: '祇園四条駅 Kamo River Kyoto' },
+    { label: '🏨 回OASIS', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' }
   ],
   outbound: [
     {
-      text: '大阪站 → 京都站',
-      lineName: 'JR 京都線',
-      lineColor: '#0072bc',
-      direction: '從大阪站搭 JR 京都線新快速／快速，往京都方向，到京都站下車。',
-      from: { label: '大阪站', query: '大阪駅' },
+      text: 'OASIS NANIWA → 岸里站 → 西梅田／大阪站 → 京都站',
+      lineName: 'Osaka Metro 四つ橋線＋JR 京都線',
+      lineColor: '#0078ba',
+      direction: '從岸里站搭四つ橋線往西梅田方向，步行銜接大阪站，再搭 JR 京都線新快速／快速往京都。',
+      from: { label: '岸里站', query: '岸里駅' },
       to: { label: '京都站', query: 'Kyoto Station' },
-      exit: '京都站中央口適合車站午餐；前往 teamLab 建議往八條東口／東南側方向移動。'
+      exit: '大阪站轉乘時依 Google Maps 與站內指標前往 JR 京都線月台；京都站中央口適合午餐，前往 teamLab 再往八條東口／東南側方向。'
     },
     {
       text: '京都站 → teamLab Biovortex Kyoto',
-      lineName: '步行或短程計程車',
+      lineName: '京都市巴士／計程車',
       lineColor: '#6b7280',
-      direction: '從京都站八條東口出站，往東南側方向前往；若天氣熱、帶小孩或時間接近 13:00，建議改搭短程計程車。',
+      direction: '午餐後依 Google Maps 前往 teamLab。若巴士人多、天氣熱或接近 13:00，直接改短程計程車。',
       from: { label: '京都站', query: 'Kyoto Station' },
       to: { label: 'teamLab Biovortex Kyoto', query: 'teamLab Biovortex Kyoto' },
-      exit: '京都站八條東口；建議預留 20～30 分鐘緩衝。'
+      exit: '請預留 20～30 分鐘緩衝；13:00 入場不要壓線。'
     },
     {
-      text: 'teamLab Biovortex Kyoto → 祇園四条站／鴨川',
-      lineName: '計程車／公車／京阪線銜接',
+      text: 'teamLab Biovortex Kyoto → 祇園四条／鴨川',
+      lineName: '計程車優先／巴士備案',
       lineColor: '#009688',
-      direction: 'teamLab 結束後前往祇園四条或鴨川，親子行程建議優先用計程車；若搭大眾交通，依現場最近站點銜接京阪線往祇園四条方向。',
+      direction: 'teamLab 結束後若孩子累或天氣熱，優先短程計程車前往祇園四条或鴨川；體力足夠時依 Google Maps 搭巴士。',
       from: { label: 'teamLab Biovortex Kyoto', query: 'teamLab Biovortex Kyoto' },
-      to: { label: '祇園四条站／鴨川', query: '祇園四条駅 Kamo River Kyoto' },
-      exit: '祇園四条站 6、7 號出口可往鴨川與祇園方向。'
+      to: { label: '祇園四条／鴨川', query: '祇園四条駅 Kamo River Kyoto' },
+      exit: '祇園四条站 6、7 號出口可往鴨川與祇園方向；下午不要再追加太多景點。'
     }
   ],
   inbound: [
     {
-      text: '祇園四条／京都站 → 大阪站／難波',
-      lineName: '京阪＋Osaka Metro／阪急／JR 京都線',
+      text: '祇園四条 → 淀屋橋／北浜 → 四つ橋線 → 岸里站 → OASIS NANIWA',
+      lineName: '京阪電車＋Osaka Metro',
       lineColor: '#0072bc',
-      direction: '若從祇園四条出發，可搭京阪往大阪方向，再依住宿位置轉 Metro 回難波；若先回京都站，則搭 JR 京都線往大阪方向。',
-      from: { label: '祇園四条／京都站', query: '祇園四条駅 Kyoto Station' },
-      to: { label: '大阪站／難波', query: '大阪駅 なんば駅' },
-      exit: '人多或孩子累時，建議從祇園四条直接搭計程車回京都站，再搭 JR 回大阪，流程最單純。'
+      direction: '從祇園四条搭京阪往大阪方向，依 Google Maps 於淀屋橋／北浜銜接 Osaka Metro，再轉回四つ橋線到岸里站。',
+      from: { label: '祇園四条站', query: '祇園四条駅' },
+      to: { label: '岸里站', query: '岸里駅' },
+      exit: '晚上孩子累時，不必折返回京都站；若人潮或體力狀況不佳，可改計程車回京都站再搭 JR，或直接依 Google Maps 選最少轉乘路線。'
     }
   ],
-  note: 'teamLab 入場時間 13:00，鴨川/祇園二選一。'
+  note: 'Day 6 是京都體力管理日：teamLab 是主軸，鴨川／祇園只保留氛圍散步。京都市巴士暑假可能擁擠，teamLab 後往祇園可優先計程車。'
 }
