@@ -30,18 +30,18 @@ export const day8Plan: DayPlan = {
   outbound: [
     {
       text: 'OASIS NANIWA → 天下茶屋站',
-      lineName: '短程計程車',
+      lineName: '短程計程車｜約5～10分鐘',
       lineColor: '#6b7280',
-      direction: '回程日有行李，建議直接短程計程車到天下茶屋站，避免拖行李進難波地下街。',
+      direction: '回程日有行李，建議直接短程計程車到天下茶屋站，車程約 5～10 分鐘，避免拖行李進難波地下街。',
       from: { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
       to: { label: '天下茶屋站', query: '天下茶屋駅' },
       exit: '若想搭地鐵，也可依 Google Maps 從岸里／天下茶屋銜接；行李多時以計程車最穩。'
     },
     {
       text: '天下茶屋站 → 關西機場站',
-      lineName: '南海電鐵 Rapi:t／空港急行',
+      lineName: '南海電鐵 Rapi:t／空港急行｜約35～50分鐘',
       lineColor: '#1f4fa3',
-      direction: '從天下茶屋搭南海往關西空港方向。優先選 Rapi:t 或 Google Maps 推薦車次，並確認該班車停靠天下茶屋。',
+      direction: '從天下茶屋搭南海往關西空港方向。Rapi:t 約 35～40 分鐘；空港急行約 45～50 分鐘。優先選 Google Maps 推薦車次，並確認該班車停靠天下茶屋。',
       from: { label: '天下茶屋站', query: '天下茶屋駅' },
       to: { label: '關西機場站', query: '関西空港駅' },
       exit: '出閘後依 Terminal 1／國際線出發指標；目標 09:00 前抵達機場。'
@@ -50,7 +50,7 @@ export const day8Plan: DayPlan = {
   inbound: [
     {
       text: '關西機場 T1 → 桃園機場 T2',
-      lineName: '長榮航空 BR177',
+      lineName: '長榮航空 BR177｜飛行約1小時55分鐘',
       lineColor: '#00843d',
       direction: '往桃園機場 T2',
       from: { label: '關西機場 T1', query: 'Kansai International Airport Terminal 1' },
