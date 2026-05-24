@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import type { DayPlan, TransitPoint } from '../data/days'
 import { TicketAccordion } from './TicketAccordion'
 import { TransitAccordion } from './TransitAccordion'
@@ -6,13 +7,21 @@ type DayCardProps = {
   day: DayPlan
 }
 
+type DayCardStyle = CSSProperties & {
+  '--day-theme'?: string
+}
+
 function mapUrl(point: TransitPoint) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(point.query)}`
 }
 
 export function DayCard({ day }: DayCardProps) {
+  const dayStyle: DayCardStyle = day.themeColor
+    ? { '--day-theme': day.themeColor }
+    : {}
+
   return (
-    <article className="card dayCard" id={day.id}>
+    <article className="card dayCard" id={day.id} style={dayStyle}>
       <div className="dayHeader">
         <div>
           <span className="dayDate">{day.date}</span>
