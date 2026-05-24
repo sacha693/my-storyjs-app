@@ -8,6 +8,7 @@ export const day1Plan: DayPlan = {
   title: 'Day 1｜神戶牛＋大阪天神祭宵宮',
   subtitle: '神戶進、大阪住，第一天不塞太滿。',
   suggestedDeparture: '04:20 桃園機場 T2 報到；10:00 抵達神戶機場；15:30 前後到 APA 天滿橋休息。',
+  themeColor: '#b4533a',
   route: [
     { label: '桃園 T2', query: '桃園國際機場第二航廈' },
     { label: '神戶機場', query: '神戶機場' },
