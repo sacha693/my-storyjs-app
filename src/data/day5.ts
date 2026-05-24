@@ -6,6 +6,7 @@ export const day5Plan: DayPlan = {
   title: 'Day 5｜換飯店＋難波神社＋心齋橋購物',
   subtitle: '先寄放行李，再輕裝逛街。',
   suggestedDeparture: '10:30 Liber Hotel 退房；搭大車計程車前往 OASIS NANIWA 寄放行李；下午前往難波神社、心齋橋與道頓堀。',
+  themeColor: '#c26a6a',
   route: [
     { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
     { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
