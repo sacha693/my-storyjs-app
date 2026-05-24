@@ -32,27 +32,27 @@ export const day6Plan: DayPlan = {
   outbound: [
     {
       text: 'OASIS NANIWA → 岸里站 → 西梅田／大阪站 → 京都站',
-      lineName: 'Osaka Metro 四つ橋線＋JR 京都線',
+      lineName: 'Osaka Metro 四つ橋線＋JR 京都線｜約80～105分鐘',
       lineColor: '#0078ba',
-      direction: '從岸里站搭四つ橋線往西梅田方向，步行銜接大阪站，再搭 JR 京都線新快速／快速往京都。',
+      direction: '從 OASIS 步行到岸里站約 5～8 分鐘，搭四つ橋線往西梅田方向約 15～20 分鐘，步行銜接大阪站，再搭 JR 京都線新快速／快速往京都，整段約 80～105 分鐘。',
       from: { label: '岸里站', query: '岸里駅' },
       to: { label: '京都站', query: 'Kyoto Station' },
       exit: '大阪站轉乘時依 Google Maps 與站內指標前往 JR 京都線月台；京都站中央口適合午餐，前往 teamLab 再往八條東口／東南側方向。'
     },
     {
       text: '京都站 → teamLab Biovortex Kyoto',
-      lineName: '京都市巴士／計程車',
+      lineName: '京都市巴士／計程車｜約15～30分鐘',
       lineColor: '#6b7280',
-      direction: '午餐後依 Google Maps 前往 teamLab。若巴士人多、天氣熱或接近 13:00，直接改短程計程車。',
+      direction: '午餐後依 Google Maps 前往 teamLab，巴士或步行銜接約 20～30 分鐘；若巴士人多、天氣熱或接近 13:00，短程計程車約 10～15 分鐘。',
       from: { label: '京都站', query: 'Kyoto Station' },
       to: { label: 'teamLab Biovortex Kyoto', query: 'teamLab Biovortex Kyoto' },
       exit: '請預留 20～30 分鐘緩衝；13:00 入場不要壓線。'
     },
     {
       text: 'teamLab Biovortex Kyoto → 祇園四条／鴨川',
-      lineName: '計程車優先／巴士備案',
+      lineName: '計程車優先／巴士備案｜約15～35分鐘',
       lineColor: '#009688',
-      direction: 'teamLab 結束後若孩子累或天氣熱，優先短程計程車前往祇園四条或鴨川；體力足夠時依 Google Maps 搭巴士。',
+      direction: 'teamLab 結束後若孩子累或天氣熱，優先短程計程車前往祇園四条或鴨川，約 15～25 分鐘；體力足夠時依 Google Maps 搭巴士約 25～35 分鐘。',
       from: { label: 'teamLab Biovortex Kyoto', query: 'teamLab Biovortex Kyoto' },
       to: { label: '祇園四条／鴨川', query: '祇園四条駅 Kamo River Kyoto' },
       exit: '祇園四条站 6、7 號出口可往鴨川與祇園方向；下午不要再追加太多景點。'
@@ -61,9 +61,9 @@ export const day6Plan: DayPlan = {
   inbound: [
     {
       text: '祇園四条 → 淀屋橋／北浜 → 四つ橋線 → 岸里站 → OASIS NANIWA',
-      lineName: '京阪電車＋Osaka Metro',
+      lineName: '京阪電車＋Osaka Metro｜約80～110分鐘',
       lineColor: '#0072bc',
-      direction: '從祇園四条搭京阪往大阪方向，依 Google Maps 於淀屋橋／北浜銜接 Osaka Metro，再轉回四つ橋線到岸里站。',
+      direction: '從祇園四条搭京阪往大阪方向，依 Google Maps 於淀屋橋／北浜銜接 Osaka Metro，再轉回四つ橋線到岸里站，整段約 80～110 分鐘。',
       from: { label: '祇園四条站', query: '祇園四条駅' },
       to: { label: '岸里站', query: '岸里駅' },
       exit: '晚上孩子累時，不必折返回京都站；若人潮或體力狀況不佳，可改計程車回京都站再搭 JR，或直接依 Google Maps 選最少轉乘路線。'
