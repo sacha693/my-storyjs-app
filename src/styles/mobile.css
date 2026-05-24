@@ -6,7 +6,44 @@
 
   .wrap {
     padding: 12px;
-    padding-bottom: calc(96px + var(--safe-bottom));
+    padding-bottom: calc(140px + var(--safe-bottom));
+  }
+
+  .card {
+    border-radius: 18px;
+    padding: 14px;
+    margin: 10px 0;
+    box-shadow: 3px 3px 0 rgba(18, 50, 58, 0.16);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .navCard {
+    min-height: auto;
+    padding: 12px 10px;
+    display: grid;
+    gap: 4px;
+    align-content: center;
+  }
+
+  .navIcon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .navCard h2 {
+    font-size: 16px;
+    margin: 2px 0;
+    line-height: 1.25;
+  }
+
+  .navCard p {
+    font-size: 12px;
+    line-height: 1.35;
+    margin: 0;
   }
 
   .appVisualHero,
@@ -16,7 +53,7 @@
 
   .appVisualImage,
   .expenseHeroPhoto {
-    min-height: 220px;
+    min-height: 150px;
   }
 
   .dayHeader,
@@ -85,6 +122,7 @@
   .expenseTable tbody {
     display: grid;
     gap: 14px;
+    padding-bottom: calc(120px + var(--safe-bottom));
   }
 
   .expenseTable tr {
