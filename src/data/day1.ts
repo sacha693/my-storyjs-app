@@ -33,18 +33,18 @@ export const day1Plan: DayPlan = {
   outbound: [
     {
       text: '神戶機場站 → 三宮站',
-      lineName: 'Port Liner',
+      lineName: 'Port Liner｜約18～20分鐘',
       lineColor: '#00a7db',
-      direction: '往三宮站',
+      direction: '搭 Port Liner 往三宮站，車程約 18～20 分鐘。',
       from: { label: '神戶機場站', query: '神戸空港駅' },
       to: { label: '三宮站', query: '三宮駅' },
-      exit: '抵達三宮後，往西口／北野坂方向，依 Google Maps 步行到 Mouriya 本店。'
+      exit: '抵達三宮後，往西口／北野坂方向，依 Google Maps 步行約 5～8 分鐘到 Mouriya 本店。'
     },
     {
       text: '三宮站 → 大阪站 → 天滿橋站 → APA 天滿橋',
-      lineName: 'JR 神戶線＋Osaka Metro 谷町線',
+      lineName: 'JR 神戶線＋Osaka Metro 谷町線｜約60～80分鐘',
       lineColor: '#6a2c91',
-      direction: '三宮站搭 JR 神戶線新快速／快速往大阪；大阪站轉乘谷町線系統前往天滿橋方向，當日以 Google Maps 路線為準。',
+      direction: '三宮站搭 JR 神戶線新快速／快速往大阪，約 25～35 分鐘；大阪站轉乘谷町線系統前往天滿橋方向，含轉乘與步行約 60～80 分鐘。',
       from: { label: '三宮站', query: '三宮駅' },
       to: { label: '天滿橋站', query: '天満橋駅' },
       exit: '天滿橋站 4 號出口較接近 APA 天滿橋方向；帶行李時優先依 Google Maps 選擇電梯出口。'
@@ -53,18 +53,18 @@ export const day1Plan: DayPlan = {
   inbound: [
     {
       text: 'APA 天滿橋 → 天滿橋大川河岸',
-      lineName: '步行',
+      lineName: '步行｜約5～10分鐘',
       lineColor: '#6b7280',
-      direction: '往大川河岸／天神祭會場',
+      direction: '從 APA 步行前往大川河岸／天神祭會場，約 5～10 分鐘。',
       from: { label: 'APA 天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
       to: { label: '天滿橋大川河岸', query: '天満橋 大川' },
       exit: '祭典人潮多，依 Google Maps 與現場管制走外圍河岸，避免擠在橋中央。'
     },
     {
       text: '天滿橋河岸 → APA 天滿橋',
-      lineName: '步行',
+      lineName: '步行｜約5～10分鐘',
       lineColor: '#6b7280',
-      direction: '回 APA Hotel Osaka Temmabashi Ekimae',
+      direction: '沿河岸外側步行回 APA Hotel Osaka Temmabashi Ekimae，約 5～10 分鐘。',
       from: { label: '天滿橋河岸', query: '天満橋 大川' },
       to: { label: 'APA 天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
       exit: '回程建議沿河岸外側走；若人潮過多，依現場警備引導繞行。'
