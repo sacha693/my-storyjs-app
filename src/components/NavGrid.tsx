@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { NavItem } from '../types'
 
 type NavGridProps = {
@@ -8,11 +9,11 @@ export function NavGrid({ items }: NavGridProps) {
   return (
     <section className="grid">
       {items.map((item) => (
-        <a key={item.title} className="card navCard" href={item.href}>
+        <Link key={item.title} className="card navCard" to={item.href}>
           <div className="navIcon">{item.icon}</div>
           <h2>{item.title}</h2>
           <p>{item.description}</p>
-        </a>
+        </Link>
       ))}
     </section>
   )
