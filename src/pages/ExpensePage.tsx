@@ -58,11 +58,11 @@ function ExpenseContent() {
 
   return (
     <main className="wrap expenseWrap" id="expense-top">
-      <section className="card hero expenseHero">
+      <section className="card hero expenseHero compactHero">
         <div className="expenseHeroText">
           <span className="badge">旅費儀表板</span>
           <h1>旅費記帳系統</h1>
-          <p>把金童家關西旅程的住宿、機票、餐食與購物支出集中管理。</p>
+          <p>先看總額，需要時再展開新增、圖表、匯出與明細。</p>
 
           <div className="buttonRow">
             <button onClick={reload}>重新同步</button>
@@ -75,8 +75,6 @@ function ExpenseContent() {
               網路狀態：{isOnline ? 'online' : 'offline'}
             </span>
           </div>
-
-          <p className="miniHint">提示：手機可用瀏覽器重新整理或點「重新同步」取得最新旅費。</p>
 
           {!isOnline ? (
             <div className="inlineToast toastError" role="alert">
@@ -92,27 +90,39 @@ function ExpenseContent() {
             </p>
           ) : null}
         </div>
-
-        <div className="expenseHeroPhoto" aria-hidden="true" />
       </section>
 
       <div id="expense-summary">
         <ExpenseStats />
       </div>
 
-      <ExpenseCharts />
+      <details id="add-expense" className="accordion" open>
+        <summary>➕ 新增消費</summary>
+        <div className="accordionBody">
+          <ExpenseForm />
+        </div>
+      </details>
 
-      <div id="add-expense">
-        <ExpenseForm />
-      </div>
+      <details className="accordion">
+        <summary>📊 圖表分析</summary>
+        <div className="accordionBody">
+          <ExpenseCharts />
+        </div>
+      </details>
 
-      <div id="expense-export">
-        <ExpenseExport />
-      </div>
+      <details id="expense-export" className="accordion">
+        <summary>📤 匯出資料</summary>
+        <div className="accordionBody">
+          <ExpenseExport />
+        </div>
+      </details>
 
-      <div id="expense-details">
-        <ExpenseTable />
-      </div>
+      <details id="expense-details" className="accordion">
+        <summary>📋 消費明細</summary>
+        <div className="accordionBody">
+          <ExpenseTable />
+        </div>
+      </details>
 
       <nav className="expenseQuickBar" aria-label="旅費快捷操作">
         {QUICK_SECTIONS.map((section) => (
