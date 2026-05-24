@@ -6,6 +6,7 @@ export const day2Plan: DayPlan = {
   title: 'Day 2｜童書之森＋天神祭本宮',
   subtitle: '白天室內輕鬆，晚上看祭典。',
   suggestedDeparture: '09:10 從 APA 天滿橋出發；先搭京阪中之島線前往童書之森，17:30 出門前往天神祭觀賞點。',
+  themeColor: '#2563a9',
   route: [
     { label: 'APA天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
     { label: '天滿橋站', query: '天満橋駅' },
