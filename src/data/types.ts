@@ -35,4 +35,5 @@ export type DayPlan = {
   outbound: TransitStep[]
   inbound: TransitStep[]
   note: string
+  themeColor?: string
 }
