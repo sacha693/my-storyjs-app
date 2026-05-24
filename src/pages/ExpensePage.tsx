@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ExpenseCharts } from '../components/ExpenseCharts'
 import { ExpenseExport } from '../components/ExpenseExport'
 import { ExpenseForm } from '../components/ExpenseForm'
+import { RecentExpenseList } from '../components/RecentExpenseList'
 import { ExpenseStats } from '../components/ExpenseStats'
 import { ExpenseTable } from '../components/ExpenseTable'
 import { ExpenseProvider, useExpenses } from '../context/ExpenseContext'
@@ -62,7 +63,7 @@ function ExpenseContent() {
         <div className="expenseHeroText">
           <span className="badge">旅費儀表板</span>
           <h1>旅費記帳系統</h1>
-          <p>先看總額，需要時再展開新增、圖表、匯出與明細。</p>
+          <p>先看總額，需要時再展開新增、圖表、匯出與完整明細。</p>
 
           <div className="buttonRow">
             <button onClick={reload}>重新同步</button>
@@ -96,7 +97,9 @@ function ExpenseContent() {
         <ExpenseStats />
       </div>
 
-      <details id="add-expense" className="accordion" open>
+      <RecentExpenseList />
+
+      <details id="add-expense" className="accordion">
         <summary>➕ 新增消費</summary>
         <div className="accordionBody">
           <ExpenseForm />
@@ -118,7 +121,7 @@ function ExpenseContent() {
       </details>
 
       <details id="expense-details" className="accordion">
-        <summary>📋 消費明細</summary>
+        <summary>📋 完整消費明細</summary>
         <div className="accordionBody">
           <ExpenseTable />
         </div>
