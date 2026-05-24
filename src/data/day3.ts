@@ -32,27 +32,27 @@ export const day3Plan: DayPlan = {
   outbound: [
     {
       text: 'APA 天滿橋 → Liber Hotel 寄放行李',
-      lineName: '大車計程車',
+      lineName: '大車計程車｜約25～40分鐘',
       lineColor: '#6b7280',
-      direction: '換飯店日不拖 2 件 28 吋行李轉乘。請 APA 櫃台協助叫大一點的車，先到 Liber Hotel 寄放行李。',
+      direction: '換飯店日不拖 2 件 28 吋行李轉乘。請 APA 櫃台協助叫大一點的車，先到 Liber Hotel 寄放行李，車程約 25～40 分鐘。',
       from: { label: 'APA 天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
       to: { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
       exit: '日文：大人2人、子ども2人、28インチのスーツケースが2個あります。Liber Hotel Osakaまで行きたいです。大きめのタクシーを呼んでいただけますか？'
     },
     {
       text: 'Liber Hotel → Captain Line 乘船處 → 海遊館西はとば → 海遊館',
-      lineName: 'Captain Line',
+      lineName: 'Captain Line＋步行｜約20～35分鐘',
       lineColor: '#0072bc',
-      direction: '寄放行李後輕裝前往 USJ 區乘船處，搭 Captain Line 到海遊館西はとば，再步行到海遊館。',
+      direction: '寄放行李後輕裝前往 USJ 區乘船處，步行約 10～15 分鐘；Captain Line 船程約 10 分鐘，到海遊館西はとば後再步行到海遊館。',
       from: { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
       to: { label: '海遊館西はとば', query: '海遊館西はとば Captain Line' },
       exit: `船班受天候與營運日影響，出發前一天與當天早上確認官方時刻表：${captainLineTimetable}`
     },
     {
       text: '海遊館西はとば → 海遊館／天保山 Market Place',
-      lineName: '步行',
+      lineName: '步行｜約5～8分鐘',
       lineColor: '#6b7280',
-      direction: '下船後依 Google Maps 步行到海遊館，午餐可安排在天保山 Market Place。',
+      direction: '下船後依 Google Maps 步行到海遊館，約 5～8 分鐘；午餐可安排在天保山 Market Place。',
       from: { label: '海遊館西はとば', query: '海遊館西はとば Captain Line' },
       to: { label: '海遊館', query: 'Osaka Aquarium Kaiyukan' },
       exit: '若船班停航，備案為 Google Maps 推薦的大眾交通或計程車。'
@@ -61,18 +61,18 @@ export const day3Plan: DayPlan = {
   inbound: [
     {
       text: '海遊館 → Captain Line → Liber Hotel／USJ 區',
-      lineName: 'Captain Line／備案交通',
+      lineName: 'Captain Line／備案交通｜約20～35分鐘',
       lineColor: '#0072bc',
-      direction: '玩完後優先依 Captain Line 船班返回 USJ 區；若船班時間不合，改用 Google Maps 推薦路線。',
+      direction: '玩完後優先依 Captain Line 船班返回 USJ 區，船程約 10 分鐘，含步行約 20～35 分鐘；若船班時間不合，改用 Google Maps 推薦路線。',
       from: { label: '海遊館', query: 'Osaka Aquarium Kaiyukan' },
       to: { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
       exit: '回到 Liber 後休息，晚上只安排 CityWalk 輕鬆晚餐。'
     },
     {
       text: 'Liber Hotel → Universal CityWalk → Liber Hotel',
-      lineName: '步行',
+      lineName: '步行｜單程約10～15分鐘',
       lineColor: '#6b7280',
-      direction: '晚餐以 CityWalk 或飯店周邊為主，不再拉長行程。',
+      direction: '晚餐以 CityWalk 或飯店周邊為主，單程步行約 10～15 分鐘，不再拉長行程。',
       from: { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
       to: { label: 'Universal CityWalk', query: 'Universal CityWalk Osaka' },
       exit: '為隔天 USJ 存體力。'
