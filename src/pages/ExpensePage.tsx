@@ -15,26 +15,18 @@ const QUICK_SECTIONS = [
 ]
 
 function ExpenseContent() {
-  const { loading, error, reload, realtimeStatus } = useExpenses()
-  const [isOnline, setIsOnline] = useState(() => navigator.onLine)
+  const { loading, error, reload } = useExpenses()
   const [activeSection, setActiveSection] = useState('expense-summary')
 
   useEffect(() => {
     function handleOnline() {
-      setIsOnline(true)
       reload()
     }
 
-    function handleOffline() {
-      setIsOnline(false)
-    }
-
     window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
 
     return () => {
       window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
     }
   }, [reload])
 
@@ -59,39 +51,22 @@ function ExpenseContent() {
 
   return (
     <main className="wrap expenseWrap" id="expense-top">
-      <section className="card hero expenseHero compactHero">
-        <div className="expenseHeroText">
+      <section className="card expenseMiniHeader">
+        <div>
           <span className="badge">旅費儀表板</span>
           <h1>旅費記帳系統</h1>
-          <p>先看總額，需要時再展開新增、圖表、匯出與完整明細。</p>
-
-          <div className="buttonRow">
-            <button onClick={reload}>重新同步</button>
-
-            <span className="statusPill">
-              即時同步：{realtimeStatus}
-            </span>
-
-            <span className={`statusPill ${isOnline ? 'onlinePill' : 'offlinePill'}`}>
-              網路狀態：{isOnline ? 'online' : 'offline'}
-            </span>
-          </div>
-
-          {!isOnline ? (
-            <div className="inlineToast toastError" role="alert">
-              目前離線，新增或同步可能會失敗；恢復網路後會自動重新同步。
-            </div>
-          ) : null}
-
-          {loading ? <p className="miniHint">同步中，正在取得最新旅費資料...</p> : null}
-
-          {error ? (
-            <p className="errorHint" role="alert">
-              同步錯誤：{error}
-            </p>
-          ) : null}
         </div>
+
+        <button onClick={reload}>重新同步</button>
       </section>
+
+      {loading ? <p className="miniHint">同步中，正在取得最新旅費資料...</p> : null}
+
+      {error ? (
+        <p className="errorHint" role="alert">
+          同步錯誤：{error}
+        </p>
+      ) : null}
 
       <div id="expense-summary">
         <ExpenseStats />
