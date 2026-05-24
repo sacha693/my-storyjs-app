@@ -30,18 +30,18 @@ export const day2Plan: DayPlan = {
   outbound: [
     {
       text: 'APA 天滿橋 → 天滿橋站 → なにわ橋站 → 童書之森中之島',
-      lineName: '京阪中之島線／步行銜接',
+      lineName: '京阪中之島線＋步行｜約20～30分鐘',
       lineColor: '#0072bc',
-      direction: '09:10 從 APA 出發，步行到天滿橋站；搭京阪中之島線往中之島方向，なにわ橋站下車。',
+      direction: '09:10 從 APA 出發，步行到天滿橋站約 5～8 分鐘；搭京阪中之島線到なにわ橋站約 2～3 分鐘，含等車與步行約 20～30 分鐘。',
       from: { label: 'APA 天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
       to: { label: 'なにわ橋站', query: 'なにわ橋駅' },
-      exit: 'なにわ橋站 1 號出口，出站後依 Google Maps 步行前往中之島公園與童書之森；班次較少，出發前請再確認時刻。'
+      exit: 'なにわ橋站 1 號出口，出站後依 Google Maps 步行約 8～10 分鐘前往中之島公園與童書之森；班次較少，出發前請再確認時刻。'
     },
     {
       text: '童書之森中之島 → 北浜咖啡區',
-      lineName: '步行',
+      lineName: '步行｜約8～12分鐘',
       lineColor: '#6b7280',
-      direction: '依 Google Maps 往北浜站、土佐堀川河岸咖啡區步行。',
+      direction: '依 Google Maps 往北浜站、土佐堀川河岸咖啡區步行，約 8～12 分鐘。',
       from: { label: '童書之森中之島', query: 'こども本の森 中之島' },
       to: { label: '北浜咖啡區', query: '北浜 カフェ 大阪' },
       exit: '往北浜站、土佐堀川河岸咖啡區；天氣熱時找室內午餐或咖啡店休息。'
@@ -50,18 +50,18 @@ export const day2Plan: DayPlan = {
   inbound: [
     {
       text: '北浜 → APA 天滿橋',
-      lineName: '京阪／步行',
+      lineName: '京阪／步行｜約15～25分鐘',
       lineColor: '#0072bc',
-      direction: '以 Google Maps 當日路線為準；孩子累或天氣熱時可短程計程車回飯店午休。',
+      direction: '以 Google Maps 當日路線為準；搭京阪或步行回飯店約 15～25 分鐘，孩子累或天氣熱時可短程計程車回飯店午休。',
       from: { label: '北浜', query: '北浜駅 大阪' },
       to: { label: 'APA 天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
       exit: '若搭京阪回天滿橋，可由天滿橋站 4 號出口或依 Google Maps 導航回飯店。'
     },
     {
       text: 'APA 天滿橋 → 天滿橋觀賞點 → APA 天滿橋',
-      lineName: '步行',
+      lineName: '步行｜單程約5～10分鐘',
       lineColor: '#6b7280',
-      direction: '晚上看天神祭時，從飯店步行到天滿橋河岸觀賞點，再步行回飯店。',
+      direction: '晚上看天神祭時，從飯店步行到天滿橋河岸觀賞點，單程約 5～10 分鐘，再步行回飯店。',
       from: { label: 'APA 天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
       to: { label: '天滿橋觀賞點', query: '34.6923,135.5200' },
       exit: '祭典人潮多，請依 Google Maps 與現場管制走外圍路線，不要擠橋中央。'
