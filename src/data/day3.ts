@@ -8,6 +8,7 @@ export const day3Plan: DayPlan = {
   title: 'Day 3｜海遊館主軸＋移動到 USJ 區',
   subtitle: '先處理行李，再用 Captain Line 輕裝去海遊館。',
   suggestedDeparture: '09:30 APA 退房；請飯店叫大車計程車前往 Liber Hotel 寄放行李；再搭 Captain Line 前往海遊館。',
+  themeColor: '#0e7490',
   route: [
     { label: 'APA 天滿橋', query: 'APA Hotel Osaka Temmabashi Ekimae' },
     { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
