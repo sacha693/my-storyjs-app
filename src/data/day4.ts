@@ -6,6 +6,7 @@ export const day4Plan: DayPlan = {
   title: 'Day 4｜USJ 環球影城',
   subtitle: '早上熱門、下午表演與輕鬆設施。',
   suggestedDeparture: '07:20 從 Liber Hotel 步行出發；07:30～08:00 抵達 USJ 門口排隊。',
+  themeColor: '#d97706',
   route: [
     { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
     { label: 'Universal CityWalk', query: 'Universal CityWalk Osaka' },
