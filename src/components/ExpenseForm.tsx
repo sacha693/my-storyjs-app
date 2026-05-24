@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react'
 import { useExpenses } from '../context/ExpenseContext'
 
 const JPY_TO_TWD = 0.22
-const QUICK_AMOUNTS = [500, 1000, 3000, 5000]
+const QUICK_AMOUNTS = [500, 1000, 3000, 5000, 10000]
 const CATEGORY_OPTIONS = ['交通', '餐食', '住宿', '機票', '票券', '購物', '便利商店', '伴手禮', '其他']
+const DATE_OPTIONS = ['7/23', '7/24', '7/25', '7/26', '7/27', '7/28', '7/29', '7/30', '7/31']
+const QUICK_ITEMS = ['早餐', '午餐', '晚餐', '飲料', '便利商店', '計程車', '電車', '門票', '藥妝', '伴手禮']
 
 function autoCategory(item: string) {
   const text = item.toLowerCase()
 
   if (/飯店|住宿|hotel|apa|liber|oasis/.test(text)) return '住宿'
   if (/機票|航空|長榮|br134|br177|flight|airport/.test(text)) return '機票'
-  if (/餐|飯|拉麵|咖啡|牛|燒|市場|food|cafe|restaurant/.test(text)) return '餐食'
+  if (/餐|早餐|午餐|晚餐|飯|拉麵|咖啡|飲料|牛|燒|市場|food|cafe|restaurant/.test(text)) return '餐食'
   if (/票|門票|usj|teamlab|海遊館|klook|express/.test(text)) return '票券'
   if (/車|電車|jr|metro|rapi|交通|巴士|taxi|計程車/.test(text)) return '交通'
   if (/便利商店|超商|lawson|familymart|famima|7-11|seven/.test(text)) return '便利商店'
@@ -60,6 +62,18 @@ export function ExpenseForm() {
     return () => window.clearTimeout(timer)
   }, [message])
 
+  function applyItem(item: string) {
+    setForm({ ...form, item, category: autoCategory(item) })
+  }
+
+  function applyJpy(jpy: number) {
+    setForm({ ...form, jpy, twd: round(jpy * JPY_TO_TWD) })
+  }
+
+  function clearAmounts() {
+    setForm({ ...form, jpy: 0, twd: 0 })
+  }
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
     if (isSaving) return
@@ -86,7 +100,7 @@ export function ExpenseForm() {
         twd: 0
       })
 
-      setMessage('已新增消費。')
+      setMessage('已新增消費，最新明細會顯示在上方。')
     } catch {
       setMessage('新增失敗，請稍後再試。')
     } finally {
@@ -95,22 +109,33 @@ export function ExpenseForm() {
   }
 
   return (
-    <section className="card expensePanel expenseFormPanel">
-      <span className="badge">新增一筆旅費</span>
-      <h2>➕ 新增消費</h2>
-      <p className="miniHint">先填項目，再輸入日幣或台幣其中一種，系統會自動分類與換算。</p>
+    <section className="card expensePanel expenseFormPanel compactExpenseForm">
+      <div className="sectionTitleRow">
+        <div>
+          <span className="badge">快速記帳</span>
+          <h2>➕ 新增消費</h2>
+        </div>
+        <span className="statusPill">¥1 ≈ NT${JPY_TO_TWD}</span>
+      </div>
+
+      <p className="miniHint">旅行中先記項目與金額即可；類別會自動判斷，也可以手動調整。</p>
 
       <form className="expenseForm" onSubmit={handleSubmit}>
         <label className="fieldGroup">
           <span>日期</span>
-          <input
+          <select
             value={form.date}
             disabled={isSaving}
             onChange={(event) =>
               setForm({ ...form, date: event.target.value })
             }
-            placeholder="日期"
-          />
+          >
+            {DATE_OPTIONS.map((date) => (
+              <option key={date} value={date}>
+                {date}
+              </option>
+            ))}
+          </select>
         </label>
 
         <label className="fieldGroup fieldWide">
@@ -122,9 +147,23 @@ export function ExpenseForm() {
               const item = event.target.value
               setForm({ ...form, item, category: autoCategory(item) })
             }}
-            placeholder="項目，例如：拉麵、USJ門票、Rapi:t"
+            placeholder="例如：拉麵、USJ門票、Rapi:t"
           />
         </label>
+
+        <div className="quickChoiceRow fieldWide" aria-label="常用消費項目">
+          {QUICK_ITEMS.map((item) => (
+            <button
+              key={item}
+              type="button"
+              className="softChoiceButton"
+              disabled={isSaving}
+              onClick={() => applyItem(item)}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
 
         <label className="fieldGroup">
           <span>類別</span>
@@ -175,6 +214,28 @@ export function ExpenseForm() {
           />
         </label>
 
+        <div className="quickChoiceRow fieldWide" aria-label="常用金額">
+          {QUICK_AMOUNTS.map((amount) => (
+            <button
+              key={amount}
+              type="button"
+              className="softChoiceButton"
+              disabled={isSaving}
+              onClick={() => applyJpy(amount)}
+            >
+              ¥{amount.toLocaleString()}
+            </button>
+          ))}
+          <button
+            type="button"
+            className="softChoiceButton"
+            disabled={isSaving}
+            onClick={clearAmounts}
+          >
+            清空金額
+          </button>
+        </div>
+
         <label className="fieldGroup">
           <span>付款方式</span>
           <select
@@ -208,35 +269,16 @@ export function ExpenseForm() {
           </select>
         </label>
 
+        <div className="calcPreview fieldWide">
+          <strong>{form.item || '尚未輸入項目'}</strong>
+          <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
+          <span>{form.category}・{form.pay}・{form.createdBy}</span>
+        </div>
+
         <button className="fieldSubmit" type="submit" disabled={isSaving}>
-          {isSaving ? '新增中...' : '新增'}
+          {isSaving ? '新增中...' : '新增這筆消費'}
         </button>
       </form>
-
-      <div className="calcPreview">
-        <strong>即時換算</strong>
-        <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
-        <span>分類：{form.category}</span>
-      </div>
-
-      <div className="buttonRow">
-        {QUICK_AMOUNTS.map((amount) => (
-          <button
-            key={amount}
-            type="button"
-            disabled={isSaving}
-            onClick={() =>
-              setForm({
-                ...form,
-                jpy: amount,
-                twd: round(amount * JPY_TO_TWD)
-              })
-            }
-          >
-            ¥{amount.toLocaleString()}
-          </button>
-        ))}
-      </div>
 
       {message ? <div className={`inlineToast ${messageType(message)}`}>{message}</div> : null}
     </section>
