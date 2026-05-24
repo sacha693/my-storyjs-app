@@ -6,6 +6,7 @@ export const day6Plan: DayPlan = {
   title: 'Day 6｜京都 teamLab',
   subtitle: '大阪往返京都，一主一副，看光影、走河邊，不暴走。',
   suggestedDeparture: '10:00 從 OASIS 出發；11:30 京都車站午餐；13:00 teamLab 入場。',
+  themeColor: '#5f7f3a',
   route: [
     { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
     { label: '岸里站', query: '岸里駅' },
