@@ -8,6 +8,7 @@ export const day7Plan: DayPlan = {
   title: 'Day 7｜住吉大社＋日本橋補買日',
   subtitle: '上午安靜參拜，下午回難波／日本橋慢慢補買。',
   suggestedDeparture: '09:30 從 OASIS 出發前往住吉大社；下午安排日本橋、Joshin 與千日前道具屋筋；晚上回住宿整理行李。',
+  themeColor: '#b86b2f',
   route: [
     { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
     { label: '天下茶屋站', query: '天下茶屋駅' },
