@@ -30,27 +30,27 @@ export const day4Plan: DayPlan = {
   outbound: [
     {
       text: 'Liber Hotel → Universal CityWalk → USJ 正門',
-      lineName: '步行',
+      lineName: '步行｜約10～15分鐘',
       lineColor: '#6b7280',
-      direction: '從 Liber Hotel 直接步行前往 Universal CityWalk 與 USJ 正門，早上不用為 1 站 JR 進站等車。',
+      direction: '從 Liber Hotel 直接步行前往 Universal CityWalk 與 USJ 正門，約 10～15 分鐘，早上不用為 1 站 JR 進站等車。',
       from: { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
       to: { label: 'USJ入口', query: 'Universal Studios Japan entrance' },
-      exit: '依 Google Maps 步行約抓 10～15 分鐘；現場跟著人流與 USJ 入口指標。'
+      exit: '依 Google Maps 與現場人流前往 USJ 入口。'
     },
     {
       text: '下雨／孩子累備案：櫻島站 → 環球城站',
-      lineName: 'JR 夢咲線',
+      lineName: 'JR 夢咲線｜車程約2分鐘',
       lineColor: '#e87511',
-      direction: '若天氣不好或孩子體力不足，可從櫻島站搭 JR 夢咲線 1 站到環球城站。',
+      direction: '若天氣不好或孩子體力不足，可從櫻島站搭 JR 夢咲線 1 站到環球城站，車程約 2 分鐘，含進出站約 10～15 分鐘。',
       from: { label: '櫻島站', query: '桜島駅' },
       to: { label: '環球城站', query: 'ユニバーサルシティ駅' },
       exit: '環球城站出站後穿過 Universal CityWalk，跟著 USJ 入口指標。'
     },
     {
       text: 'USJ入口 → 園區步行 → 任天堂世界／哈利波特區',
-      lineName: '園區步行',
+      lineName: '園區步行｜約10～20分鐘',
       lineColor: '#16a34a',
-      direction: '入園後先確認 Express Pass 與整理券時段，熱門區優先，不要先逛商店。',
+      direction: '入園後先確認 Express Pass 與整理券時段，熱門區優先，不要先逛商店；園區內移動約抓 10～20 分鐘。',
       from: { label: 'USJ入口', query: 'Universal Studios Japan entrance' },
       to: { label: '任天堂世界', query: 'Super Nintendo World USJ' },
       exit: '依 App 與園區動線前往。'
@@ -59,9 +59,9 @@ export const day4Plan: DayPlan = {
   inbound: [
     {
       text: 'USJ入口 → Universal CityWalk → Liber Hotel',
-      lineName: '步行',
+      lineName: '步行｜約10～15分鐘',
       lineColor: '#6b7280',
-      direction: '出園後穿過 CityWalk，直接步行回 Liber Hotel。',
+      direction: '出園後穿過 CityWalk，直接步行回 Liber Hotel，約 10～15 分鐘。',
       from: { label: 'USJ入口', query: 'Universal Studios Japan entrance' },
       to: { label: 'Liber Hotel', query: 'Liber Hotel Osaka' },
       exit: '晚上很累時不要再加行程；若下雨可改搭 JR 夢咲線 1 站回櫻島站。'
