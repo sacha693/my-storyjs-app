@@ -6,6 +6,7 @@ export const day0Plan: DayPlan = {
   title: 'Day 0｜台中 → 桃園機場過夜',
   subtitle: '前一天晚上出發，降低凌晨趕車壓力。',
   suggestedDeparture: '20:20 台中火車站附近集合；21:00 搭客運前往桃園機場。',
+  themeColor: '#64748b',
   route: [
     { label: '台中火車站', query: '台中火車站' },
     { label: '客運', query: '台中轉運站' },
