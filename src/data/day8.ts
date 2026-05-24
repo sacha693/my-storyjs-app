@@ -8,6 +8,7 @@ export const day8Plan: DayPlan = {
   title: 'Day 8｜回程日',
   subtitle: '行李優先，從天下茶屋搭南海前往關西機場。',
   suggestedDeparture: '07:30 從 OASIS 出發；優先搭計程車到天下茶屋站；目標 09:00 前抵達關西機場 T1。',
+  themeColor: '#475569',
   route: [
     { label: 'OASIS NANIWA', query: '1 Chome-3-18 Shioji Nishinari Ward Osaka' },
     { label: '天下茶屋站', query: '天下茶屋駅' },
