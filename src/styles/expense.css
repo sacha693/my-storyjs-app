@@ -4,6 +4,23 @@
   backdrop-filter: blur(8px);
 }
 
+.expenseMiniHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.expenseMiniHeader h1 {
+  margin: 6px 0 0;
+  font-size: clamp(24px, 6vw, 36px);
+}
+
+.expenseMiniHeader button {
+  min-width: 140px;
+}
+
 .expenseForm {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -27,6 +44,34 @@
 
 .expenseTable {
   width: 100%;
+}
+
+.sectionTitleRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.recentExpenseTableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.recentExpenseTable {
+  width: 100%;
+  min-width: 520px;
+}
+
+.recentExpenseTable th,
+.recentExpenseTable td {
+  white-space: nowrap;
+}
+
+.recentExpenseTable td:nth-child(2) {
+  white-space: normal;
+  min-width: 160px;
 }
 
 .buttonRow {
@@ -57,4 +102,29 @@
   height: 100%;
   min-width: 4px;
   background: linear-gradient(90deg, var(--blue), var(--sun));
+}
+
+@media (max-width: 720px) {
+  .expenseMiniHeader {
+    padding: 12px;
+  }
+
+  .expenseMiniHeader h1 {
+    font-size: 24px;
+  }
+
+  .expenseMiniHeader button {
+    width: auto;
+    min-width: 116px;
+    padding: 9px 12px;
+  }
+
+  .sectionTitleRow {
+    align-items: flex-start;
+  }
+
+  .sectionTitleRow .quickButton {
+    width: auto;
+    white-space: nowrap;
+  }
 }
