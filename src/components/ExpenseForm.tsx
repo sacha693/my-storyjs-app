@@ -3,6 +3,7 @@ import { useExpenses } from '../context/ExpenseContext'
 
 const JPY_TO_TWD = 0.22
 const QUICK_AMOUNTS = [500, 1000, 3000, 5000]
+const CATEGORY_OPTIONS = ['交通', '餐食', '住宿', '機票', '票券', '購物', '便利商店', '伴手禮', '其他']
 
 function autoCategory(item: string) {
   const text = item.toLowerCase()
@@ -12,7 +13,9 @@ function autoCategory(item: string) {
   if (/餐|飯|拉麵|咖啡|牛|燒|市場|food|cafe|restaurant/.test(text)) return '餐食'
   if (/票|門票|usj|teamlab|海遊館|klook|express/.test(text)) return '票券'
   if (/車|電車|jr|metro|rapi|交通|巴士|taxi|計程車/.test(text)) return '交通'
-  if (/藥妝|伴手禮|購物|玩具|joshin|黑門|退稅/.test(text)) return '購物'
+  if (/便利商店|超商|lawson|familymart|famima|7-11|seven/.test(text)) return '便利商店'
+  if (/伴手禮|土產|禮物|souvenir/.test(text)) return '伴手禮'
+  if (/藥妝|購物|玩具|joshin|退稅/.test(text)) return '購物'
 
   return '其他'
 }
@@ -125,14 +128,19 @@ export function ExpenseForm() {
 
         <label className="fieldGroup">
           <span>類別</span>
-          <input
+          <select
             value={form.category}
             disabled={isSaving}
             onChange={(event) =>
               setForm({ ...form, category: event.target.value })
             }
-            placeholder="自動分類"
-          />
+          >
+            {CATEGORY_OPTIONS.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
         </label>
 
         <label className="fieldGroup">
@@ -208,7 +216,7 @@ export function ExpenseForm() {
       <div className="calcPreview">
         <strong>即時換算</strong>
         <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
-        <span>自動分類：{form.category}</span>
+        <span>分類：{form.category}</span>
       </div>
 
       <div className="buttonRow">
