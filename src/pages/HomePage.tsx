@@ -1,5 +1,5 @@
+import { Link } from 'react-router-dom'
 import { NavGrid } from '../components/NavGrid'
-import { ExpenseSummary } from '../components/ExpenseSummary'
 import { navigationItems } from '../data/navigation'
 import { dayPlans } from '../data/days'
 
@@ -25,7 +25,9 @@ function getJourneySummary() {
     return {
       label: `今日旅程｜${activeDay.title}`,
       line1: activeDay.subtitle,
-      line2: `建議出發：${activeDay.suggestedDeparture}`
+      line2: `建議出發：${activeDay.suggestedDeparture}`,
+      href: `/days/${activeDay.id}`,
+      action: '查看今日詳細行程'
     }
   }
 
@@ -34,7 +36,9 @@ function getJourneySummary() {
     return {
       label: `出門倒數｜還有 ${daysLeft} 天`,
       line1: `${dayPlans[0].title} 即將開始`,
-      line2: dayPlans[0].subtitle
+      line2: dayPlans[0].subtitle,
+      href: `/days/${dayPlans[0].id}`,
+      action: '查看出發日行程'
     }
   }
 
@@ -42,7 +46,9 @@ function getJourneySummary() {
     return {
       label: '旅程回顧｜關西親子自由行',
       line1: '旅程已完成，可以回來查看行程紀錄與消費明細。',
-      line2: `最後一天：${dayPlans[dayPlans.length - 1].title}`
+      line2: `最後一天：${dayPlans[dayPlans.length - 1].title}`,
+      href: '/days',
+      action: '查看全部行程'
     }
   }
 
@@ -51,7 +57,9 @@ function getJourneySummary() {
   return {
     label: nextDay ? `下一段旅程｜${nextDay.title}` : '旅程提醒',
     line1: nextDay?.subtitle ?? '今天沒有排定行程。',
-    line2: nextDay ? `建議出發：${nextDay.suggestedDeparture}` : '可以查看每日行程與旅費記錄。'
+    line2: nextDay ? `建議出發：${nextDay.suggestedDeparture}` : '可以查看每日行程與旅費記錄。',
+    href: nextDay ? `/days/${nextDay.id}` : '/days',
+    action: nextDay ? '查看下一段行程' : '查看每日行程'
   }
 }
 
@@ -70,6 +78,9 @@ export function HomePage() {
             <strong>{journeySummary.label}</strong>
             <span>{journeySummary.line1}</span>
             <span>{journeySummary.line2}</span>
+            <Link className="quickButton" to={journeySummary.href}>
+              {journeySummary.action}
+            </Link>
           </div>
         </div>
         <div
@@ -85,8 +96,6 @@ export function HomePage() {
       </section>
 
       <NavGrid items={navigationItems} />
-
-      <ExpenseSummary />
     </main>
   )
 }
