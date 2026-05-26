@@ -5,7 +5,6 @@
 @import './layout.css';
 @import './utility.css';
 @import './expense.css';
-@import './daily-expense.css';
 @import './day.css';
 @import './components/DayCard.css';
 @import './components/ExpenseTable.css';
@@ -13,4 +12,5 @@
 @import './components/TransitAccordion.css';
 @import './components/TicketAccordion.css';
 @import './mobile.css';
+@import './daily-expense.css';
 @import './pwa.css';
