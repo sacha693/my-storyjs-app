@@ -48,21 +48,24 @@
   display: none;
 }
 
-.dailyCalendarStrip .dailyCalendarButton {
-  width: auto;
-  max-width: 92px;
+.dailyCalendarButton {
   scroll-snap-align: center;
-  min-width: 78px;
-  flex: 0 0 auto;
-  border-radius: 24px;
-  padding: 12px 16px 11px;
-  border: 3px solid rgba(24, 51, 58, 0.08);
-  background: #fff;
-  display: inline-grid;
-  gap: 3px;
-  justify-items: center;
-  box-shadow: 8px 9px 0 rgba(24, 51, 58, 0.07);
+  width: auto !important;
+  min-width: 72px !important;
+  max-width: fit-content !important;
+  flex: 0 0 auto !important;
+  border-radius: 16px;
+  padding: 10px 16px !important;
+  border: 2px solid rgba(24, 51, 58, 0.12);
+  background: #fff !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px;
+  box-shadow: 4px 4px 0 rgba(24, 51, 58, 0.06);
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin: 0;
 }
 
 .dailyCalendarStrip .dailyCalendarButton:active {

@@ -69,15 +69,18 @@ export function DailyExpenseBoard() {
 
   function selectDay(id: string) {
     setSelectedDayId(id)
-
-    const btn = document.getElementById(`date-btn-${id}`)
-    if (btn) {
-      btn.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest'
-      })
-    }
+    // 讓選中的日期按鈕捲動到中心位置
+    setTimeout(() => {
+      const btn = document.getElementById(`date-btn-${id}`)
+      const container = btn?.parentElement
+      if (btn && container) {
+        const containerWidth = container.clientWidth
+        const btnWidth = btn.clientWidth
+        const btnLeft = btn.offsetLeft
+        const scrollLeft = btnLeft - (containerWidth / 2) + (btnWidth / 2)
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+      }
+    }, 50)
   }
 
   if (!selectedDay) return null
