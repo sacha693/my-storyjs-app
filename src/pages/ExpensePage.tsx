@@ -11,12 +11,7 @@ function ExpenseContent() {
       </section>
 
       <section className="expenseBottomSection">
-        <div className="card expenseCreateCard">
-          <span className="badge">新增花費</span>
-          <h2>新增消費</h2>
-          <p>新增後會立即同步到上方日期記錄。</p>
-          <ExpenseForm />
-        </div>
+        <ExpenseForm />
 
         <details className="accordion expenseAnalysisSection">
           <summary>📊 花費分析</summary>
