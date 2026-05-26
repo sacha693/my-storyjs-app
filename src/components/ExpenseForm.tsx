@@ -123,14 +123,22 @@ export function ExpenseForm() {
       </div>
 
       <form className="expenseForm" onSubmit={handleSubmit}>
-        <label className="fieldGroup">
+        <div className="fieldGroup fieldWide">
           <span>日期</span>
-          <select value={form.date} disabled={isSaving} onChange={(event) => setForm({ ...form, date: event.target.value })}>
+          <div className="dateCapsuleRow">
             {DATE_OPTIONS.map((date) => (
-              <option key={date} value={date}>{date}</option>
+              <button
+                key={date}
+                type="button"
+                className={`dateCapsule ${form.date === date ? 'active' : ''}`}
+                onClick={() => setForm({ ...form, date })}
+                disabled={isSaving}
+              >
+                {date}
+              </button>
             ))}
-          </select>
-        </label>
+          </div>
+        </div>
 
         <label className="fieldGroup fieldWide">
           <span>消費項目</span>

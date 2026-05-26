@@ -4,6 +4,43 @@
   gap: 10px;
 }
 
+.dateCapsuleRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dateCapsuleRow::-webkit-scrollbar {
+  display: none;
+}
+
+.dateCapsule {
+  flex: 0 0 auto;
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: auto !important;
+}
+
+.dateCapsule.active {
+  background: var(--sun);
+  box-shadow: 3px 3px 0 var(--line);
+  transform: translateY(-2px);
+}
+
+.dateCapsule:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .expenseForm input,
 .expenseForm select,
 .expenseForm button {

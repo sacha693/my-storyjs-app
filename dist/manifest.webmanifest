@@ -1,0 +1,49 @@
+{
+  "id": "/my-storyjs-app/",
+  "name": "金童家關西旅程",
+  "short_name": "關西旅程",
+  "description": "金童家 2026 關西親子自由行旅程、交通與旅費管理 App",
+  "start_url": "/my-storyjs-app/",
+  "scope": "/my-storyjs-app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7fdff",
+  "theme_color": "#7fd3df",
+  "lang": "zh-Hant",
+  "icons": [
+    {
+      "src": "/my-storyjs-app/family_q1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/my-storyjs-app/family_q1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/my-storyjs-app/family_q1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "每日行程",
+      "short_name": "行程",
+      "url": "/my-storyjs-app/days",
+      "description": "查看每日行程與交通指引"
+    },
+    {
+      "name": "旅費記帳",
+      "short_name": "記帳",
+      "url": "/my-storyjs-app/expense",
+      "description": "查看與新增旅費紀錄"
+    }
+  ],
+  "categories": ["travel", "productivity", "finance"],
+  "prefer_related_applications": false
+}

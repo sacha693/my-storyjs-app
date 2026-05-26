@@ -8,7 +8,7 @@ function yen(value: number) {
 }
 
 function twd(value: number) {
-  return `NT$${Math.round(value).toLocaleString()}`
+  return `NT$ ${Math.round(value).toLocaleString()}`
 }
 
 function safeAmount(value: number) {
@@ -66,6 +66,15 @@ export function DailyExpenseBoard() {
   }, [expenses])
 
   const selectedDay = groupedDays.find((day) => day.id === selectedDayId) ?? groupedDays[0]
+
+  function selectDay(id: string) {
+    setSelectedDayId(id)
+    // 讓選中的日期按鈕捲動到可視範圍
+    const btn = document.getElementById(`date-btn-${id}`)
+    if (btn) {
+      btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    }
+  }
 
   if (!selectedDay) return null
 
@@ -125,10 +134,11 @@ export function DailyExpenseBoard() {
       <div className="dailyCalendarStrip" aria-label="選擇消費日期">
         {groupedDays.map((day) => (
           <button
+            id={`date-btn-${day.id}`}
             className={`dailyCalendarButton ${day.id === selectedDay.id ? 'activeDailyCalendarButton' : ''}`}
             key={day.id}
             type="button"
-            onClick={() => setSelectedDayId(day.id)}
+            onClick={() => selectDay(day.id)}
           >
             <strong>{day.date}</strong>
             <small>{day.items.length} 筆</small>
@@ -142,10 +152,10 @@ export function DailyExpenseBoard() {
             <span className="dailyExpenseDate">{selectedDay.date}</span>
             <p>{selectedDay.items.length} 筆消費</p>
           </div>
-          <div className="dailyExpenseTotal">
-            <strong>{yen(selectedDay.totalJpy)}</strong>
-            <span>{twd(selectedDay.totalTwd)}</span>
-          </div>
+            <div className="dailyExpenseTotal">
+              <strong className="mainAmount">{yen(selectedDay.totalJpy)}</strong>
+              <span className="subAmount">{twd(selectedDay.totalTwd)}</span>
+            </div>
         </div>
 
         {selectedDay.items.length === 0 ? (
@@ -153,18 +163,20 @@ export function DailyExpenseBoard() {
         ) : (
           <div className="dailyExpenseReceiptList" aria-label={`${selectedDay.date} 消費明細`}>
             {selectedDay.items.map((expense) => (
-              <article className="dailyExpenseReceipt" key={`${expense.id}-${expense.item}`}>
-                <div className="expenseCategoryIcon" aria-hidden="true">
+              <article className={`dailyExpenseReceipt ${expense.fixed ? 'fixedReceipt' : ''}`} key={`${expense.id}-${expense.item}`}>
+                <div className={`expenseCategoryIcon cat-${expense.category}`} aria-hidden="true">
                   {categoryIcon(expense.category)}
                 </div>
                 <div className="expenseReceiptMain">
-                  <span className="expenseCategoryPill">{expense.category}</span>
-                  <strong>{expense.item}</strong>
-                  <span className="expenseReceiptMeta">{expense.pay}・{expense.createdBy}</span>
+                  <div className="expenseCategoryRow">
+                    <span className="expenseCategoryPill">{expense.category}</span>
+                    {expense.fixed ? null : <span className="expenseReceiptMeta">{expense.pay}・{expense.createdBy}</span>}
+                  </div>
+                  <strong className="expenseItemName">{expense.item}</strong>
                 </div>
                 <div className="expenseReceiptAmount">
-                  <strong>{yen(expense.jpy)}</strong>
-                  <span>{twd(expense.twd)}</span>
+                  <strong className="mainAmount">{yen(expense.jpy)}</strong>
+                  <span className="subAmount">{twd(expense.twd)}</span>
                   {!expense.fixed ? (
                     <div className="expenseReceiptActions">
                       <button type="button" disabled={Boolean(busyId)} onClick={() => handleEdit(expense)}>
