@@ -34,7 +34,8 @@ body {
 
 @media (max-width: 720px) {
   .wrap {
-    padding-bottom: calc(var(--bottom-ui-space) + var(--safe-bottom));
+    /* 增加底部間距，確保內容不被懸浮導覽列 (約 80px) 與安全區域遮擋 */
+    padding-bottom: calc(120px + var(--safe-bottom)) !important;
   }
 
   .expenseQuickBar {

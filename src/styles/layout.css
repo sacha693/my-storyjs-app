@@ -41,6 +41,8 @@
   max-width: 1100px;
   margin: auto;
   padding: 20px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .card {
@@ -108,7 +110,9 @@
   }
 
   .wrap {
-    padding: 14px;
+    padding: 16px 12px;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .card {
