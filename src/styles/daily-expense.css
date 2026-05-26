@@ -17,13 +17,10 @@
 .dailyCalendarStrip {
   display: flex;
   gap: 12px;
-  overflow-x: auto;
+  overflow-x: visible;
+  overflow-y: visible;
   padding-bottom: 4px;
-  scrollbar-width: none;
-}
-
-.dailyCalendarStrip::-webkit-scrollbar {
-  display: none;
+  flex-wrap: wrap;
 }
 
 .dailyCalendarButton {
@@ -58,7 +55,7 @@
   border-radius: 30px;
   border: 1px solid rgba(24, 51, 58, 0.08);
   box-shadow: var(--shadow-soft);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .dailyExpenseSelectedHeader {
@@ -155,6 +152,20 @@
   line-height: 1;
 }
 
+.expenseReceiptActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.expenseReceiptActions button {
+  width: auto;
+  min-height: 34px;
+  padding: 7px 10px;
+  font-size: 12px;
+}
+
 .dailyExpenseEmpty {
   padding: 0 20px 20px;
 }
@@ -176,6 +187,17 @@
     z-index: 10;
   }
 
+  .dailyCalendarStrip {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .dailyCalendarStrip::-webkit-scrollbar {
+    display: none;
+  }
+
   .dailyCalendarButton {
     min-width: 84px;
   }
@@ -195,5 +217,9 @@
 
   .expenseReceiptAmount {
     text-align: left;
+  }
+
+  .expenseReceiptActions {
+    justify-content: flex-start;
   }
 }
