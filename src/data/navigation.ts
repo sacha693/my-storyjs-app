@@ -10,7 +10,7 @@ export const navigationItems: NavItem[] = [
   {
     icon: '💰',
     title: '旅費記帳',
-    description: 'Supabase 雲端同步',
+    description: '記錄旅途中每一筆花費',
     href: '/expense'
   },
   {
