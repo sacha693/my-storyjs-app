@@ -8,7 +8,7 @@ function yen(value: number) {
 }
 
 function twd(value: number) {
-  return `NT$ ${Math.round(value).toLocaleString()}`
+  return `NT$${Math.round(value).toLocaleString()}`
 }
 
 function safeAmount(value: number) {
@@ -69,10 +69,14 @@ export function DailyExpenseBoard() {
 
   function selectDay(id: string) {
     setSelectedDayId(id)
-    // 讓選中的日期按鈕捲動到可視範圍
+
     const btn = document.getElementById(`date-btn-${id}`)
     if (btn) {
-      btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+      btn.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest'
+      })
     }
   }
 
@@ -94,6 +98,7 @@ export function DailyExpenseBoard() {
     if (nextTwd === null) return
 
     const input = toInput(expense)
+
     const updatedInput: ExpenseInput = {
       ...input,
       item,
@@ -102,6 +107,7 @@ export function DailyExpenseBoard() {
     }
 
     setBusyId(expense.id)
+
     try {
       await updateExpense(expense.id, updatedInput)
     } finally {
@@ -113,9 +119,11 @@ export function DailyExpenseBoard() {
     if (!expense.id || expense.fixed || busyId) return
 
     const confirmed = window.confirm(`確定要刪除「${expense.item}」嗎？`)
+
     if (!confirmed) return
 
     setBusyId(expense.id)
+
     try {
       await deleteExpense(expense.id)
     } finally {
@@ -135,9 +143,9 @@ export function DailyExpenseBoard() {
         {groupedDays.map((day) => (
           <button
             id={`date-btn-${day.id}`}
-            className={`dailyCalendarButton ${day.id === selectedDay.id ? 'activeDailyCalendarButton' : ''}`}
             key={day.id}
             type="button"
+            className={`dailyCalendarButton ${day.id === selectedDay.id ? 'activeDailyCalendarButton' : ''}`}
             onClick={() => selectDay(day.id)}
           >
             <strong>{day.date}</strong>
@@ -152,10 +160,11 @@ export function DailyExpenseBoard() {
             <span className="dailyExpenseDate">{selectedDay.date}</span>
             <p>{selectedDay.items.length} 筆消費</p>
           </div>
-            <div className="dailyExpenseTotal">
-              <strong className="mainAmount">{yen(selectedDay.totalJpy)}</strong>
-              <span className="subAmount">{twd(selectedDay.totalTwd)}</span>
-            </div>
+
+          <div className="dailyExpenseTotal">
+            <strong className="mainAmount">{yen(selectedDay.totalJpy)}</strong>
+            <span className="subAmount">{twd(selectedDay.totalTwd)}</span>
+          </div>
         </div>
 
         {selectedDay.items.length === 0 ? (
@@ -163,26 +172,48 @@ export function DailyExpenseBoard() {
         ) : (
           <div className="dailyExpenseReceiptList" aria-label={`${selectedDay.date} 消費明細`}>
             {selectedDay.items.map((expense) => (
-              <article className={`dailyExpenseReceipt ${expense.fixed ? 'fixedReceipt' : ''}`} key={`${expense.id}-${expense.item}`}>
+              <article
+                key={`${expense.id}-${expense.item}`}
+                className={`dailyExpenseReceipt ${expense.fixed ? 'fixedReceipt' : ''}`}
+              >
                 <div className={`expenseCategoryIcon cat-${expense.category}`} aria-hidden="true">
                   {categoryIcon(expense.category)}
                 </div>
+
                 <div className="expenseReceiptMain">
                   <div className="expenseCategoryRow">
                     <span className="expenseCategoryPill">{expense.category}</span>
-                    {expense.fixed ? null : <span className="expenseReceiptMeta">{expense.pay}・{expense.createdBy}</span>}
+
+                    {!expense.fixed ? (
+                      <span className="expenseReceiptMeta">
+                        {expense.pay}・{expense.createdBy}
+                      </span>
+                    ) : null}
                   </div>
+
                   <strong className="expenseItemName">{expense.item}</strong>
                 </div>
+
                 <div className="expenseReceiptAmount">
                   <strong className="mainAmount">{yen(expense.jpy)}</strong>
                   <span className="subAmount">{twd(expense.twd)}</span>
+
                   {!expense.fixed ? (
                     <div className="expenseReceiptActions">
-                      <button type="button" disabled={Boolean(busyId)} onClick={() => handleEdit(expense)}>
+                      <button
+                        type="button"
+                        disabled={Boolean(busyId)}
+                        onClick={() => handleEdit(expense)}
+                      >
                         修改
                       </button>
-                      <button type="button" className="dangerButton" disabled={Boolean(busyId)} onClick={() => handleDelete(expense)}>
+
+                      <button
+                        type="button"
+                        className="dangerButton"
+                        disabled={Boolean(busyId)}
+                        onClick={() => handleDelete(expense)}
+                      >
                         {busyId === expense.id ? '處理中' : '刪除'}
                       </button>
                     </div>
