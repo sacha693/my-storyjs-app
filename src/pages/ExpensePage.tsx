@@ -3,8 +3,9 @@ import { ExpenseCharts } from '../components/ExpenseCharts'
 import { ExpenseExport } from '../components/ExpenseExport'
 import { ExpenseForm } from '../components/ExpenseForm'
 import { RecentExpenseList } from '../components/RecentExpenseList'
-import { ExpenseStats } from '../components/ExpenseStats'
+import { ExpenseBreakdownStats, ExpenseTotalStats } from '../components/ExpenseStats'
 import { ExpenseTable } from '../components/ExpenseTable'
+import { ExpenseSummary } from '../components/ExpenseSummary'
 import { ExpenseProvider, useExpenses } from '../context/ExpenseContext'
 
 const QUICK_SECTIONS = [
@@ -69,10 +70,17 @@ function ExpenseContent() {
       ) : null}
 
       <div id="expense-summary">
-        <ExpenseStats />
+        <ExpenseTotalStats />
       </div>
 
       <RecentExpenseList />
+
+      <details id="expense-details" className="accordion" open>
+        <summary>📋 消費明細</summary>
+        <div className="accordionBody">
+          <ExpenseTable />
+        </div>
+      </details>
 
       <details id="add-expense" className="accordion">
         <summary>➕ 新增消費</summary>
@@ -88,17 +96,14 @@ function ExpenseContent() {
         </div>
       </details>
 
+      <ExpenseSummary />
+
+      <ExpenseBreakdownStats />
+
       <details id="expense-export" className="accordion">
         <summary>📤 匯出資料</summary>
         <div className="accordionBody">
           <ExpenseExport />
-        </div>
-      </details>
-
-      <details id="expense-details" className="accordion">
-        <summary>📋 完整消費明細</summary>
-        <div className="accordionBody">
-          <ExpenseTable />
         </div>
       </details>
 
