@@ -1,6 +1,9 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
 export function AppLayout() {
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
+
   return (
     <>
       <header className="topbar" id="top">
@@ -20,16 +23,20 @@ export function AppLayout() {
 
       <Outlet />
 
-      <nav className="bottomNav" aria-label="手機主要導覽">
-        <Link to="/">🏠<span>首頁</span></Link>
-        <Link to="/days">🗓️<span>行程</span></Link>
-        <Link to="/expense">💰<span>記帳</span></Link>
-        <Link to="/days/day-4">🎢<span>USJ</span></Link>
-      </nav>
+      {!isHomePage ? (
+        <>
+          <nav className="bottomNav" aria-label="手機主要導覽">
+            <Link to="/">🏠<span>首頁</span></Link>
+            <Link to="/days">🗓️<span>行程</span></Link>
+            <Link to="/expense">💰<span>記帳</span></Link>
+            <Link to="/days/day-4">🎢<span>USJ</span></Link>
+          </nav>
 
-      <a className="floatingTop" href="#top" aria-label="回到頁面頂端">
-        ↑
-      </a>
+          <a className="floatingTop" href="#top" aria-label="回到頁面頂端">
+            ↑
+          </a>
+        </>
+      ) : null}
     </>
   )
 }
