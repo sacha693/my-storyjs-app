@@ -48,7 +48,9 @@
   display: none;
 }
 
-.dailyCalendarButton {
+.dailyCalendarStrip .dailyCalendarButton {
+  width: auto;
+  max-width: 92px;
   scroll-snap-align: center;
   min-width: 78px;
   flex: 0 0 auto;
@@ -63,7 +65,7 @@
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.dailyCalendarButton:active {
+.dailyCalendarStrip .dailyCalendarButton:active {
   transform: scale(0.95);
 }
 
@@ -81,7 +83,7 @@
   font-weight: 700;
 }
 
-.activeDailyCalendarButton {
+.dailyCalendarStrip .activeDailyCalendarButton {
   background: var(--sun);
   border-color: var(--ink);
   transform: translateY(-3px);
@@ -303,8 +305,11 @@
     padding-bottom: 18px;
   }
 
-  .dailyCalendarButton {
+  .dailyCalendarStrip .dailyCalendarButton {
+    width: auto !important;
+    max-width: 88px;
     min-width: 72px;
+    flex: 0 0 auto;
     padding: 11px 15px 10px;
     border-radius: 23px;
   }
