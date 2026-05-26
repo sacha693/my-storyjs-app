@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { dayPlans } from '../data/days'
 import { useExpenses } from '../context/ExpenseContext'
 
@@ -14,8 +14,17 @@ function safeAmount(value: number) {
   return Number.isFinite(value) ? value : 0
 }
 
+function shortTitle(title: string) {
+  return title.replace(/^Day\s*\d+｜/, '')
+}
+
+function dayLabel(id: string) {
+  return id.replace('day-', 'D')
+}
+
 export function DailyExpenseBoard() {
   const { expenses } = useExpenses()
+  const [selectedDayId, setSelectedDayId] = useState(dayPlans[0]?.id ?? '')
 
   const groupedDays = useMemo(() => {
     return dayPlans.map((day) => {
@@ -26,7 +35,8 @@ export function DailyExpenseBoard() {
       return {
         id: day.id,
         date: day.date,
-        title: day.title.replace(/^Day\s*\d+｜/, ''),
+        dayLabel: dayLabel(day.id),
+        title: shortTitle(day.title),
         items,
         totalJpy: items.reduce((sum, item) => sum + safeAmount(item.jpy), 0),
         totalTwd: items.reduce((sum, item) => sum + safeAmount(item.twd), 0)
@@ -34,52 +44,67 @@ export function DailyExpenseBoard() {
     })
   }, [expenses])
 
+  const selectedDay = groupedDays.find((day) => day.id === selectedDayId) ?? groupedDays[0]
+
+  if (!selectedDay) return null
+
   return (
     <section className="dailyExpenseBoard" aria-label="每日花費記錄">
       <div className="dailyExpenseHero card">
         <span className="badge">每日花費</span>
         <h2>依日期查看旅費</h2>
-        <p>選擇日期展開後，可查看當日所有消費。</p>
+        <p>左右滑動日期，查看當日所有消費。</p>
       </div>
 
-      <div className="dailyExpenseList">
-        {groupedDays.map((day, index) => (
-          <details className="dailyExpenseCard" key={day.id} open={index === 0}>
-            <summary>
-              <div>
-                <span className="dailyExpenseDate">{day.date}</span>
-                <strong>{day.title}</strong>
-                <span>{day.items.length} 筆消費</span>
-              </div>
-              <div className="dailyExpenseTotal">
-                <strong>{yen(day.totalJpy)}</strong>
-                <span>{twd(day.totalTwd)}</span>
-              </div>
-            </summary>
-
-            {day.items.length === 0 ? (
-              <p className="dailyExpenseEmpty">這一天目前尚未新增消費。</p>
-            ) : (
-              <div className="dailyExpenseTable" role="table" aria-label={`${day.date} 消費明細`}>
-                <div className="dailyExpenseRow dailyExpenseHead" role="row">
-                  <span role="columnheader">類別</span>
-                  <span role="columnheader">項目</span>
-                  <span role="columnheader">日圓</span>
-                  <span role="columnheader">台幣</span>
-                </div>
-                {day.items.map((expense) => (
-                  <div className="dailyExpenseRow" role="row" key={`${expense.id}-${expense.item}`}>
-                    <span role="cell">{expense.category}</span>
-                    <strong role="cell">{expense.item}</strong>
-                    <span role="cell">{yen(expense.jpy)}</span>
-                    <span role="cell">{twd(expense.twd)}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </details>
+      <div className="dailyCalendarStrip" aria-label="選擇消費日期">
+        {groupedDays.map((day) => (
+          <button
+            className={`dailyCalendarButton ${day.id === selectedDay.id ? 'activeDailyCalendarButton' : ''}`}
+            key={day.id}
+            type="button"
+            onClick={() => setSelectedDayId(day.id)}
+          >
+            <span>{day.dayLabel}</span>
+            <strong>{day.date}</strong>
+            <small>{day.items.length} 筆</small>
+          </button>
         ))}
       </div>
+
+      <article className="dailyExpenseSelectedCard">
+        <div className="dailyExpenseSelectedHeader">
+          <div>
+            <span className="dailyExpenseDate">{selectedDay.date}</span>
+            <h3>{selectedDay.title}</h3>
+            <p>{selectedDay.items.length} 筆消費</p>
+          </div>
+          <div className="dailyExpenseTotal">
+            <strong>{yen(selectedDay.totalJpy)}</strong>
+            <span>{twd(selectedDay.totalTwd)}</span>
+          </div>
+        </div>
+
+        {selectedDay.items.length === 0 ? (
+          <p className="dailyExpenseEmpty">這一天目前尚未新增消費。</p>
+        ) : (
+          <div className="dailyExpenseTable" role="table" aria-label={`${selectedDay.date} 消費明細`}>
+            <div className="dailyExpenseRow dailyExpenseHead" role="row">
+              <span role="columnheader">類別</span>
+              <span role="columnheader">項目</span>
+              <span role="columnheader">日圓</span>
+              <span role="columnheader">台幣</span>
+            </div>
+            {selectedDay.items.map((expense) => (
+              <div className="dailyExpenseRow" role="row" key={`${expense.id}-${expense.item}`}>
+                <span role="cell">{expense.category}</span>
+                <strong role="cell">{expense.item}</strong>
+                <span role="cell">{yen(expense.jpy)}</span>
+                <span role="cell">{twd(expense.twd)}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </article>
     </section>
   )
 }
