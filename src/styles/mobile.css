@@ -6,7 +6,7 @@
 
   .wrap {
     padding: 12px;
-    padding-bottom: calc(150px + var(--safe-bottom));
+    padding-bottom: calc(240px + var(--safe-bottom));
   }
 
   .card {
@@ -96,6 +96,14 @@
     display: none;
   }
 
+  .bottomNav + .floatingTop {
+    margin-bottom: 20px;
+  }
+
+  .expenseWrap {
+    padding-bottom: calc(300px + var(--safe-bottom));
+  }
+
   .expenseTable,
   .expenseTable thead,
   .expenseTable tbody,
@@ -118,7 +126,7 @@
   .expenseTable tbody {
     display: grid;
     gap: 14px;
-    padding-bottom: calc(120px + var(--safe-bottom));
+    padding-bottom: calc(240px + var(--safe-bottom));
   }
 
   .expenseTable tr {
