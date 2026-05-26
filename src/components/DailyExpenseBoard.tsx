@@ -14,6 +14,18 @@ function safeAmount(value: number) {
   return Number.isFinite(value) ? value : 0
 }
 
+function categoryIcon(category: string) {
+  if (category.includes('餐')) return '🍜'
+  if (category.includes('交通')) return '🚃'
+  if (category.includes('住宿')) return '🏨'
+  if (category.includes('機票')) return '✈️'
+  if (category.includes('票券')) return '🎟️'
+  if (category.includes('購物')) return '🛍️'
+  if (category.includes('便利')) return '🏪'
+  if (category.includes('伴手')) return '🎁'
+  return '✨'
+}
+
 export function DailyExpenseBoard() {
   const { expenses } = useExpenses()
   const [selectedDayId, setSelectedDayId] = useState(dayPlans[0]?.id ?? '')
@@ -75,20 +87,22 @@ export function DailyExpenseBoard() {
         {selectedDay.items.length === 0 ? (
           <p className="dailyExpenseEmpty">這一天目前尚未新增消費。</p>
         ) : (
-          <div className="dailyExpenseTable" role="table" aria-label={`${selectedDay.date} 消費明細`}>
-            <div className="dailyExpenseRow dailyExpenseHead" role="row">
-              <span role="columnheader">類別</span>
-              <span role="columnheader">項目</span>
-              <span role="columnheader">日圓</span>
-              <span role="columnheader">台幣</span>
-            </div>
+          <div className="dailyExpenseReceiptList" aria-label={`${selectedDay.date} 消費明細`}>
             {selectedDay.items.map((expense) => (
-              <div className="dailyExpenseRow" role="row" key={`${expense.id}-${expense.item}`}>
-                <span role="cell">{expense.category}</span>
-                <strong role="cell">{expense.item}</strong>
-                <span role="cell">{yen(expense.jpy)}</span>
-                <span role="cell">{twd(expense.twd)}</span>
-              </div>
+              <article className="dailyExpenseReceipt" key={`${expense.id}-${expense.item}`}>
+                <div className="expenseCategoryIcon" aria-hidden="true">
+                  {categoryIcon(expense.category)}
+                </div>
+                <div className="expenseReceiptMain">
+                  <span className="expenseCategoryPill">{expense.category}</span>
+                  <strong>{expense.item}</strong>
+                  <span className="expenseReceiptMeta">{expense.pay}・{expense.createdBy}</span>
+                </div>
+                <div className="expenseReceiptAmount">
+                  <strong>{yen(expense.jpy)}</strong>
+                  <span>{twd(expense.twd)}</span>
+                </div>
+              </article>
             ))}
           </div>
         )}
