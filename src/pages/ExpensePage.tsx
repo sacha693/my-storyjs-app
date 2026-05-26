@@ -10,7 +10,7 @@ import { ExpenseProvider, useExpenses } from '../context/ExpenseContext'
 
 const QUICK_SECTIONS = [
   { id: 'expense-summary', label: '總額' },
-  { id: 'add-expense', label: '＋新增' },
+  { id: 'add-expense', label: '新增' },
   { id: 'expense-details', label: '明細' },
   { id: 'expense-export', label: '匯出' }
 ]
@@ -54,18 +54,18 @@ function ExpenseContent() {
     <main className="wrap expenseWrap" id="expense-top">
       <section className="card expenseMiniHeader">
         <div>
-          <span className="badge">旅費儀表板</span>
-          <h1>旅費記帳系統</h1>
+          <span className="badge">關西旅程</span>
+          <h1>旅費記錄</h1>
         </div>
 
-        <button onClick={reload}>重新同步</button>
+        <button onClick={reload}>更新資料</button>
       </section>
 
-      {loading ? <p className="miniHint">同步中，正在取得最新旅費資料...</p> : null}
+      {loading ? <p className="miniHint">正在更新旅費資料...</p> : null}
 
       {error ? (
         <p className="errorHint" role="alert">
-          同步錯誤：{error}
+          資料更新失敗：{error}
         </p>
       ) : null}
 
@@ -90,7 +90,7 @@ function ExpenseContent() {
       </details>
 
       <details className="accordion">
-        <summary>📊 圖表分析</summary>
+        <summary>📊 花費分析</summary>
         <div className="accordionBody">
           <ExpenseCharts />
         </div>
