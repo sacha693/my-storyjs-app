@@ -47,6 +47,78 @@
   font-size: 40px;
 }
 
+.fixedCostCompact {
+  display: grid;
+  gap: 14px;
+}
+
+.fixedCostSummaryCard {
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(231,251,255,0.96));
+  border: 1px solid rgba(18, 50, 58, 0.1);
+  border-radius: 22px;
+  padding: 18px;
+  display: grid;
+  gap: 4px;
+}
+
+.fixedCostSummaryCard strong {
+  font-size: clamp(32px, 5vw, 44px);
+  line-height: 1;
+}
+
+.fixedCostChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fixedCostChip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(18, 50, 58, 0.1);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.fixedCostDetails {
+  border: 1px solid rgba(18, 50, 58, 0.1);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.7);
+}
+
+.fixedCostDetails summary {
+  cursor: pointer;
+  padding: 14px 16px;
+  font-weight: 900;
+  list-style: none;
+}
+
+.fixedCostList {
+  display: grid;
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+
+.fixedCostItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(18, 50, 58, 0.08);
+}
+
+.fixedCostItem span {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: 0.72;
+}
+
 .expenseTable {
   width: 100%;
 }
@@ -57,56 +129,6 @@
   gap: 12px;
   align-items: center;
   margin-bottom: 10px;
-}
-
-.recentExpenseTableWrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.recentExpenseTable {
-  width: 100%;
-  min-width: 520px;
-}
-
-.recentExpenseTable th,
-.recentExpenseTable td {
-  white-space: nowrap;
-}
-
-.recentExpenseTable td:nth-child(2) {
-  white-space: normal;
-  min-width: 160px;
-}
-
-.buttonRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-.dangerButton {
-  background: #ffd6d6;
-}
-
-.chartRows {
-  display: grid;
-  gap: 12px;
-}
-
-.chartTrack {
-  height: 16px;
-  border: 1px solid rgba(18, 50, 58, 0.12);
-  border-radius: 999px;
-  background: #fff;
-  overflow: hidden;
-}
-
-.chartFill {
-  height: 100%;
-  min-width: 4px;
-  background: linear-gradient(90deg, var(--blue), var(--sun));
 }
 
 .todayJourneyCard {
@@ -139,8 +161,8 @@
     align-items: flex-start;
   }
 
-  .sectionTitleRow .quickButton {
-    width: auto;
-    white-space: nowrap;
+  .fixedCostItem {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
