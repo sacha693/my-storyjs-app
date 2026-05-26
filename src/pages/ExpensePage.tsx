@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { ExpenseCharts } from '../components/ExpenseCharts'
 import { ExpenseExport } from '../components/ExpenseExport'
 import { ExpenseForm } from '../components/ExpenseForm'
-import { RecentExpenseList } from '../components/RecentExpenseList'
 import { ExpenseBreakdownStats, ExpenseTotalStats } from '../components/ExpenseStats'
 import { ExpenseTable } from '../components/ExpenseTable'
 import { ExpenseSummary } from '../components/ExpenseSummary'
@@ -72,8 +71,6 @@ function ExpenseContent() {
       <div id="expense-summary">
         <ExpenseTotalStats />
       </div>
-
-      <RecentExpenseList />
 
       <details id="expense-details" className="accordion" open>
         <summary>📋 消費明細</summary>
