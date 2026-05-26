@@ -38,12 +38,6 @@
   box-shadow: var(--shadow-soft);
 }
 
-.dailyCalendarButton span {
-  font-size: 12px;
-  font-weight: 900;
-  color: var(--muted);
-}
-
 .dailyCalendarButton strong {
   font-size: 18px;
 }
@@ -60,8 +54,8 @@
 }
 
 .dailyExpenseSelectedCard {
-  background: rgba(255,255,255,0.9);
-  border-radius: 28px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 30px;
   border: 1px solid rgba(24, 51, 58, 0.08);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
@@ -72,7 +66,7 @@
   justify-content: space-between;
   gap: 16px;
   align-items: flex-start;
-  padding: 20px 20px 12px;
+  padding: 22px 22px 14px;
 }
 
 .dailyExpenseDate {
@@ -91,27 +85,74 @@
 
 .dailyExpenseTotal strong {
   display: block;
-  font-size: clamp(24px, 5vw, 38px);
+  font-size: clamp(24px, 5vw, 40px);
   line-height: 1;
 }
 
-.dailyExpenseTable {
-  padding: 0 20px 20px;
-}
-
-.dailyExpenseRow {
+.dailyExpenseReceiptList {
   display: grid;
-  grid-template-columns: 1fr 1.4fr .9fr .9fr;
-  gap: 12px;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px dashed rgba(24, 51, 58, 0.12);
+  gap: 14px;
+  padding: 0 22px 22px;
 }
 
-.dailyExpenseHead {
-  font-size: 12px;
+.dailyExpenseReceipt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,253,255,0.94));
+  border: 1px solid rgba(24, 51, 58, 0.06);
+  box-shadow: 0 10px 26px rgba(24, 51, 58, 0.06);
+}
+
+.expenseCategoryIcon {
+  width: 54px;
+  height: 54px;
+  border-radius: 20px;
+  background: rgba(127,211,223,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.expenseReceiptMain {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.expenseCategoryPill {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(244,201,93,0.16);
+  font-size: 11px;
   font-weight: 900;
+}
+
+.expenseReceiptMain strong {
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.expenseReceiptMeta {
+  font-size: 12px;
   color: var(--muted);
+}
+
+.expenseReceiptAmount {
+  text-align: right;
+  display: grid;
+  gap: 4px;
+}
+
+.expenseReceiptAmount strong {
+  font-size: 21px;
+  line-height: 1;
 }
 
 .dailyExpenseEmpty {
@@ -148,38 +189,11 @@
     text-align: left;
   }
 
-  .dailyExpenseRow {
-    grid-template-columns: 1fr;
-    gap: 4px;
-    padding: 10px 0;
+  .dailyExpenseReceipt {
+    align-items: flex-start;
   }
 
-  .dailyExpenseRow span::before,
-  .dailyExpenseRow strong::before {
-    display: inline-block;
-    width: 56px;
-    font-size: 12px;
-    font-weight: 900;
-    color: var(--muted);
-  }
-
-  .dailyExpenseRow span:nth-child(1)::before {
-    content: '類別';
-  }
-
-  .dailyExpenseRow strong::before {
-    content: '項目';
-  }
-
-  .dailyExpenseRow span:nth-child(3)::before {
-    content: '日圓';
-  }
-
-  .dailyExpenseRow span:nth-child(4)::before {
-    content: '台幣';
-  }
-
-  .dailyExpenseHead {
-    display: none;
+  .expenseReceiptAmount {
+    text-align: left;
   }
 }
