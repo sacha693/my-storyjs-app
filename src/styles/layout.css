@@ -2,15 +2,15 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(247, 253, 255, 0.9);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(18, 50, 58, 0.14);
+  background: rgba(248, 253, 255, 0.72);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(24, 51, 58, 0.08);
 }
 
 .topbarInner {
   max-width: 1100px;
   margin: auto;
-  padding: 12px 20px;
+  padding: 14px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,15 +20,15 @@
 .brand {
   color: inherit;
   text-decoration: none;
-  font-weight: 950;
-  font-size: 21px;
+  font-weight: 900;
+  font-size: 20px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .brandIcon {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .topnav {
@@ -44,35 +44,39 @@
 }
 
 .card {
-  background: var(--paper);
-  border: 1px solid rgba(18, 50, 58, 0.12);
-  border-radius: 24px;
-  padding: 18px;
+  background: var(--surface);
+  border: 1px solid rgba(24, 51, 58, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 20px;
   margin: 14px 0;
-  box-shadow: 0 10px 24px rgba(18, 50, 58, 0.08);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
 }
 
 .hero {
   text-align: center;
   background:
-    radial-gradient(circle at top right, rgba(244, 201, 93, 0.18), transparent 25%),
-    var(--paper);
+    radial-gradient(circle at top right, rgba(244, 201, 93, 0.16), transparent 25%),
+    var(--surface);
 }
 
 .badge {
-  display: inline-block;
-  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
   border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(18, 50, 58, 0.16);
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(24, 51, 58, 0.08);
   font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
 .grid,
 .chartGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
+  gap: 16px;
 }
 
 .bottomNav {
@@ -86,15 +90,15 @@
   width: 52px;
   height: 52px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.92);
   color: inherit;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  border: 1px solid rgba(18, 50, 58, 0.16);
-  box-shadow: 0 10px 24px rgba(18, 50, 58, 0.14);
+  border: 1px solid rgba(24, 51, 58, 0.08);
+  box-shadow: var(--shadow-soft);
   z-index: 40;
 }
 
@@ -103,21 +107,30 @@
     display: none;
   }
 
+  .wrap {
+    padding: 14px;
+  }
+
+  .card {
+    border-radius: 24px;
+    padding: 18px;
+  }
+
   .bottomNav {
     position: fixed;
-    left: 12px;
-    right: 12px;
+    left: 14px;
+    right: 14px;
     bottom: calc(12px + env(safe-area-inset-bottom));
     z-index: 120;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     padding: 10px;
-    border-radius: 24px;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(18, 50, 58, 0.12);
-    box-shadow: 0 12px 32px rgba(18, 50, 58, 0.16);
+    border-radius: 28px;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(24, 51, 58, 0.08);
+    box-shadow: var(--shadow-lift);
   }
 
   .bottomNav a {
@@ -127,10 +140,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 5px;
     min-height: 56px;
-    font-size: 12px;
-    font-weight: 900;
+    font-size: 11px;
+    font-weight: 800;
+    border-radius: 18px;
+    transition: background 0.16s ease;
+  }
+
+  .bottomNav a:hover,
+  .bottomNav a:active {
+    background: rgba(127,211,223,0.16);
   }
 
   .floatingTop {
