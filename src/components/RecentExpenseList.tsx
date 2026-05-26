@@ -19,7 +19,7 @@ export function RecentExpenseList() {
         const dateDiff = parseDate(b.date) - parseDate(a.date)
         if (dateDiff !== 0) return dateDiff
 
-        return (b.created_at ?? '').localeCompare(a.created_at ?? '')
+        return (b.createdAt ?? '').localeCompare(a.createdAt ?? '')
       })
       .slice(0, 5)
   }, [expenses])
