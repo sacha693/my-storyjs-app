@@ -5,7 +5,8 @@ const JPY_TO_TWD = 0.22
 const QUICK_AMOUNTS = [500, 1000, 3000, 5000, 10000]
 const CATEGORY_OPTIONS = ['交通', '餐食', '住宿', '機票', '票券', '購物', '便利商店', '伴手禮', '其他']
 const DATE_OPTIONS = ['7/23', '7/24', '7/25', '7/26', '7/27', '7/28', '7/29', '7/30', '7/31']
-const QUICK_ITEMS = ['早餐', '午餐', '晚餐', '飲料', '便利商店', '計程車', '電車', '門票', '藥妝', '伴手禮']
+const ITEM_OPTIONS = ['早餐', '午餐', '晚餐', '飲料', '便利商店', '計程車', '電車', '門票', '藥妝', '伴手禮', '拉麵', '咖啡', 'USJ門票', 'Rapi:t', '其他／自訂']
+const CUSTOM_ITEM_VALUE = '其他／自訂'
 
 function autoCategory(item: string) {
   const text = item.toLowerCase()
@@ -41,6 +42,7 @@ export function ExpenseForm() {
   const { addExpense } = useExpenses()
   const [message, setMessage] = useState('')
   const [isSaving, setIsSaving] = useState(false)
+  const [selectedItem, setSelectedItem] = useState('')
 
   const [form, setForm] = useState({
     date: '7/24',
@@ -63,6 +65,13 @@ export function ExpenseForm() {
   }, [message])
 
   function applyItem(item: string) {
+    setSelectedItem(item)
+
+    if (item === CUSTOM_ITEM_VALUE) {
+      setForm({ ...form, item: '', category: '其他' })
+      return
+    }
+
     setForm({ ...form, item, category: autoCategory(item) })
   }
 
@@ -80,7 +89,7 @@ export function ExpenseForm() {
     setMessage('')
 
     if (!form.item.trim()) {
-      setMessage('請先輸入消費項目。')
+      setMessage('請先選擇或輸入消費項目。')
       return
     }
 
@@ -99,6 +108,7 @@ export function ExpenseForm() {
         jpy: 0,
         twd: 0
       })
+      setSelectedItem('')
 
       setMessage('已新增消費，最新明細會顯示在上方。')
     } catch {
@@ -118,7 +128,7 @@ export function ExpenseForm() {
         <span className="statusPill">¥1 ≈ NT${JPY_TO_TWD}</span>
       </div>
 
-      <p className="miniHint">旅行中先記項目與金額即可；類別會自動判斷，也可以手動調整。</p>
+      <p className="miniHint">旅行中先選項目與金額即可；類別會自動判斷，也可以手動調整。</p>
 
       <form className="expenseForm" onSubmit={handleSubmit}>
         <label className="fieldGroup">
@@ -140,30 +150,34 @@ export function ExpenseForm() {
 
         <label className="fieldGroup fieldWide">
           <span>消費項目</span>
-          <input
-            value={form.item}
+          <select
+            value={selectedItem}
             disabled={isSaving}
-            onChange={(event) => {
-              const item = event.target.value
-              setForm({ ...form, item, category: autoCategory(item) })
-            }}
-            placeholder="例如：拉麵、USJ門票、Rapi:t"
-          />
+            onChange={(event) => applyItem(event.target.value)}
+          >
+            <option value="">請選擇消費項目</option>
+            {ITEM_OPTIONS.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
         </label>
 
-        <div className="quickChoiceRow fieldWide" aria-label="常用消費項目">
-          {QUICK_ITEMS.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className="softChoiceButton"
+        {selectedItem === CUSTOM_ITEM_VALUE ? (
+          <label className="fieldGroup fieldWide">
+            <span>自訂消費項目</span>
+            <input
+              value={form.item}
               disabled={isSaving}
-              onClick={() => applyItem(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+              onChange={(event) => {
+                const item = event.target.value
+                setForm({ ...form, item, category: autoCategory(item) })
+              }}
+              placeholder="例如：章魚燒、置物櫃、扭蛋"
+            />
+          </label>
+        ) : null}
 
         <label className="fieldGroup">
           <span>類別</span>
@@ -270,7 +284,7 @@ export function ExpenseForm() {
         </label>
 
         <div className="calcPreview fieldWide">
-          <strong>{form.item || '尚未輸入項目'}</strong>
+          <strong>{form.item || '尚未選擇項目'}</strong>
           <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
           <span>{form.category}・{form.pay}・{form.createdBy}</span>
         </div>
