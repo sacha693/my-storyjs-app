@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useExpenses } from '../context/ExpenseContext'
 
 const JPY_TO_TWD = 0.22
-const QUICK_AMOUNTS = [500, 1000, 3000, 5000, 10000]
 const CATEGORY_OPTIONS = ['交通', '餐食', '住宿', '機票', '票券', '購物', '便利商店', '伴手禮', '其他']
 const DATE_OPTIONS = ['7/23', '7/24', '7/25', '7/26', '7/27', '7/28', '7/29', '7/30', '7/31']
 const ITEM_OPTIONS = ['早餐', '午餐', '晚餐', '飲料', '便利商店', '計程車', '電車', '門票', '藥妝', '伴手禮', '拉麵', '咖啡', 'USJ門票', 'Rapi:t', '其他／自訂']
@@ -75,10 +74,6 @@ export function ExpenseForm() {
     setForm({ ...form, item, category: autoCategory(item) })
   }
 
-  function applyJpy(jpy: number) {
-    setForm({ ...form, jpy, twd: round(jpy * JPY_TO_TWD) })
-  }
-
   function clearAmounts() {
     setForm({ ...form, jpy: 0, twd: 0 })
   }
@@ -110,7 +105,7 @@ export function ExpenseForm() {
       })
       setSelectedItem('')
 
-      setMessage('已新增消費，最新明細會顯示在上方。')
+      setMessage('已新增消費。')
     } catch {
       setMessage('新增失敗，請稍後再試。')
     } finally {
@@ -123,43 +118,26 @@ export function ExpenseForm() {
       <div className="sectionTitleRow">
         <div>
           <span className="badge">快速記帳</span>
-          <h2>➕ 新增消費</h2>
         </div>
         <span className="statusPill">¥1 ≈ NT${JPY_TO_TWD}</span>
       </div>
 
-      <p className="miniHint">旅行中先選項目與金額即可；類別會自動判斷，也可以手動調整。</p>
-
       <form className="expenseForm" onSubmit={handleSubmit}>
         <label className="fieldGroup">
           <span>日期</span>
-          <select
-            value={form.date}
-            disabled={isSaving}
-            onChange={(event) =>
-              setForm({ ...form, date: event.target.value })
-            }
-          >
+          <select value={form.date} disabled={isSaving} onChange={(event) => setForm({ ...form, date: event.target.value })}>
             {DATE_OPTIONS.map((date) => (
-              <option key={date} value={date}>
-                {date}
-              </option>
+              <option key={date} value={date}>{date}</option>
             ))}
           </select>
         </label>
 
         <label className="fieldGroup fieldWide">
           <span>消費項目</span>
-          <select
-            value={selectedItem}
-            disabled={isSaving}
-            onChange={(event) => applyItem(event.target.value)}
-          >
+          <select value={selectedItem} disabled={isSaving} onChange={(event) => applyItem(event.target.value)}>
             <option value="">請選擇消費項目</option>
             {ITEM_OPTIONS.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
+              <option key={item} value={item}>{item}</option>
             ))}
           </select>
         </label>
@@ -167,98 +145,47 @@ export function ExpenseForm() {
         {selectedItem === CUSTOM_ITEM_VALUE ? (
           <label className="fieldGroup fieldWide">
             <span>自訂消費項目</span>
-            <input
-              value={form.item}
-              disabled={isSaving}
-              onChange={(event) => {
-                const item = event.target.value
-                setForm({ ...form, item, category: autoCategory(item) })
-              }}
-              placeholder="例如：章魚燒、置物櫃、扭蛋"
-            />
+            <input value={form.item} disabled={isSaving} onChange={(event) => {
+              const item = event.target.value
+              setForm({ ...form, item, category: autoCategory(item) })
+            }} placeholder="例如：章魚燒、置物櫃、扭蛋" />
           </label>
         ) : null}
 
         <label className="fieldGroup">
           <span>類別</span>
-          <select
-            value={form.category}
-            disabled={isSaving}
-            onChange={(event) =>
-              setForm({ ...form, category: event.target.value })
-            }
-          >
+          <select value={form.category} disabled={isSaving} onChange={(event) => setForm({ ...form, category: event.target.value })}>
             {CATEGORY_OPTIONS.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
+              <option key={category} value={category}>{category}</option>
             ))}
           </select>
         </label>
 
         <label className="fieldGroup">
           <span>日幣 JPY</span>
-          <input
-            inputMode="numeric"
-            type="number"
-            min="0"
-            value={form.jpy || ''}
-            disabled={isSaving}
-            onChange={(event) => {
-              const jpy = parseAmount(event.target.value)
-              setForm({ ...form, jpy, twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0 })
-            }}
-            placeholder="輸入日幣"
-          />
+          <input inputMode="numeric" type="number" min="0" value={form.jpy || ''} disabled={isSaving} onChange={(event) => {
+            const jpy = parseAmount(event.target.value)
+            setForm({ ...form, jpy, twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0 })
+          }} placeholder="輸入日幣" />
         </label>
 
         <label className="fieldGroup">
           <span>台幣 TWD</span>
-          <input
-            inputMode="numeric"
-            type="number"
-            min="0"
-            value={form.twd || ''}
-            disabled={isSaving}
-            onChange={(event) => {
-              const twd = parseAmount(event.target.value)
-              setForm({ ...form, twd, jpy: twd > 0 ? round(twd / JPY_TO_TWD) : 0 })
-            }}
-            placeholder="或輸入台幣"
-          />
+          <input inputMode="numeric" type="number" min="0" value={form.twd || ''} disabled={isSaving} onChange={(event) => {
+            const twd = parseAmount(event.target.value)
+            setForm({ ...form, twd, jpy: twd > 0 ? round(twd / JPY_TO_TWD) : 0 })
+          }} placeholder="或輸入台幣" />
         </label>
 
-        <div className="quickChoiceRow fieldWide" aria-label="常用金額">
-          {QUICK_AMOUNTS.map((amount) => (
-            <button
-              key={amount}
-              type="button"
-              className="softChoiceButton"
-              disabled={isSaving}
-              onClick={() => applyJpy(amount)}
-            >
-              ¥{amount.toLocaleString()}
-            </button>
-          ))}
-          <button
-            type="button"
-            className="softChoiceButton"
-            disabled={isSaving}
-            onClick={clearAmounts}
-          >
+        <div className="quickChoiceRow fieldWide">
+          <button type="button" className="softChoiceButton" disabled={isSaving} onClick={clearAmounts}>
             清空金額
           </button>
         </div>
 
         <label className="fieldGroup">
           <span>付款方式</span>
-          <select
-            value={form.pay}
-            disabled={isSaving}
-            onChange={(event) =>
-              setForm({ ...form, pay: event.target.value })
-            }
-          >
+          <select value={form.pay} disabled={isSaving} onChange={(event) => setForm({ ...form, pay: event.target.value })}>
             <option value="現金">現金</option>
             <option value="信用卡">信用卡</option>
             <option value="電子支付">電子支付</option>
@@ -268,16 +195,7 @@ export function ExpenseForm() {
 
         <label className="fieldGroup">
           <span>記帳人</span>
-          <select
-            value={form.createdBy}
-            disabled={isSaving}
-            onChange={(event) =>
-              setForm({
-                ...form,
-                createdBy: event.target.value as 'sacha' | 'yang'
-              })
-            }
-          >
+          <select value={form.createdBy} disabled={isSaving} onChange={(event) => setForm({ ...form, createdBy: event.target.value as 'sacha' | 'yang' })}>
             <option value="sacha">sacha</option>
             <option value="yang">yang</option>
           </select>
@@ -286,11 +204,10 @@ export function ExpenseForm() {
         <div className="calcPreview fieldWide">
           <strong>{form.item || '尚未選擇項目'}</strong>
           <span>¥{form.jpy.toLocaleString()} ≈ NT${form.twd.toLocaleString()}</span>
-          <span>{form.category}・{form.pay}・{form.createdBy}</span>
         </div>
 
         <button className="fieldSubmit" type="submit" disabled={isSaving}>
-          {isSaving ? '新增中...' : '新增這筆消費'}
+          {isSaving ? '新增中...' : '新增消費'}
         </button>
       </form>
 
