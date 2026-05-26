@@ -14,14 +14,6 @@ function safeAmount(value: number) {
   return Number.isFinite(value) ? value : 0
 }
 
-function shortTitle(title: string) {
-  return title.replace(/^Day\s*\d+｜/, '')
-}
-
-function dayLabel(id: string) {
-  return id.replace('day-', 'D')
-}
-
 export function DailyExpenseBoard() {
   const { expenses } = useExpenses()
   const [selectedDayId, setSelectedDayId] = useState(dayPlans[0]?.id ?? '')
@@ -35,8 +27,6 @@ export function DailyExpenseBoard() {
       return {
         id: day.id,
         date: day.date,
-        dayLabel: dayLabel(day.id),
-        title: shortTitle(day.title),
         items,
         totalJpy: items.reduce((sum, item) => sum + safeAmount(item.jpy), 0),
         totalTwd: items.reduce((sum, item) => sum + safeAmount(item.twd), 0)
@@ -64,7 +54,6 @@ export function DailyExpenseBoard() {
             type="button"
             onClick={() => setSelectedDayId(day.id)}
           >
-            <span>{day.dayLabel}</span>
             <strong>{day.date}</strong>
             <small>{day.items.length} 筆</small>
           </button>
@@ -75,7 +64,6 @@ export function DailyExpenseBoard() {
         <div className="dailyExpenseSelectedHeader">
           <div>
             <span className="dailyExpenseDate">{selectedDay.date}</span>
-            <h3>{selectedDay.title}</h3>
             <p>{selectedDay.items.length} 筆消費</p>
           </div>
           <div className="dailyExpenseTotal">
