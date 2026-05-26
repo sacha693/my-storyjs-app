@@ -77,7 +77,9 @@
   .routeChip,
   .quickButton,
   .mapButton,
-  button {
+  .buttonRow button,
+  .expenseForm button,
+  .calcPreview button {
     width: 100%;
     text-align: center;
   }
