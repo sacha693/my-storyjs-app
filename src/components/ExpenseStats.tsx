@@ -12,9 +12,8 @@ function twd(value: number) {
   return `NT$${Math.round(value).toLocaleString()}`
 }
 
-export function ExpenseStats() {
+function useExpenseStats() {
   const { expenses } = useExpenses()
-
   const totalJpy = expenses.reduce((sum, item) => sum + safeAmount(item.jpy), 0)
   const totalTwd = expenses.reduce((sum, item) => sum + safeAmount(item.twd), 0)
   const fixedCount = expenses.filter((expense) => expense.fixed).length
@@ -31,21 +30,33 @@ export function ExpenseStats() {
     count: expenses.filter((expense) => expense.createdBy === name).length
   }))
 
+  return { expenses, totalJpy, totalTwd, fixedCount, flexibleCount, family }
+}
+
+export function ExpenseTotalStats() {
+  const { expenses, totalJpy, totalTwd, fixedCount, flexibleCount } = useExpenseStats()
+
+  return (
+    <section className="card expenseStatCard expenseStatPrimary">
+      <span className="badge">總覽</span>
+      <h2>💰 總旅費</h2>
+      <div className="summaryTotal summaryTotalMain">
+        <span>目前總額</span>
+        <strong>{yen(totalJpy)}</strong>
+        <span>{twd(totalTwd)}</span>
+      </div>
+      <p className="miniHint">
+        共 {expenses.length} 筆，固定費 {fixedCount} 筆，自行新增 {flexibleCount} 筆。
+      </p>
+    </section>
+  )
+}
+
+export function ExpenseBreakdownStats() {
+  const { family } = useExpenseStats()
+
   return (
     <section className="grid expenseStatsGrid">
-      <article className="card expenseStatCard expenseStatPrimary">
-        <span className="badge">總覽</span>
-        <h2>💰 總旅費</h2>
-        <div className="summaryTotal">
-          <span>目前總額</span>
-          <strong>{yen(totalJpy)}</strong>
-          <span>{twd(totalTwd)}</span>
-        </div>
-        <p className="miniHint">
-          共 {expenses.length} 筆，固定費 {fixedCount} 筆，自行新增 {flexibleCount} 筆。
-        </p>
-      </article>
-
       {family.map((member) => (
         <article className="card expenseStatCard" key={member.name}>
           <span className="badge">{member.count} 筆</span>
@@ -58,5 +69,14 @@ export function ExpenseStats() {
         </article>
       ))}
     </section>
+  )
+}
+
+export function ExpenseStats() {
+  return (
+    <>
+      <ExpenseTotalStats />
+      <ExpenseBreakdownStats />
+    </>
   )
 }
