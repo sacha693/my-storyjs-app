@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
+import type { Expense } from '../types'
 import { dayPlans } from '../data/days'
-import { useExpenses } from '../context/ExpenseContext'
+import { type ExpenseInput, useExpenses } from '../context/ExpenseContext'
 
 function yen(value: number) {
   return `¥${Math.round(value).toLocaleString()}`
@@ -12,6 +13,11 @@ function twd(value: number) {
 
 function safeAmount(value: number) {
   return Number.isFinite(value) ? value : 0
+}
+
+function toNumber(value: string, fallback: number) {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback
 }
 
 function categoryIcon(category: string) {
@@ -26,9 +32,22 @@ function categoryIcon(category: string) {
   return '✨'
 }
 
+function toInput(expense: Expense): ExpenseInput {
+  return {
+    date: expense.date,
+    category: expense.category,
+    item: expense.item,
+    jpy: expense.jpy,
+    twd: expense.twd,
+    pay: expense.pay,
+    createdBy: expense.createdBy === 'yang' ? 'yang' : 'sacha'
+  }
+}
+
 export function DailyExpenseBoard() {
-  const { expenses } = useExpenses()
+  const { expenses, deleteExpense, updateExpense } = useExpenses()
   const [selectedDayId, setSelectedDayId] = useState(dayPlans[0]?.id ?? '')
+  const [busyId, setBusyId] = useState<string | null>(null)
 
   const groupedDays = useMemo(() => {
     return dayPlans.map((day) => {
@@ -49,6 +68,51 @@ export function DailyExpenseBoard() {
   const selectedDay = groupedDays.find((day) => day.id === selectedDayId) ?? groupedDays[0]
 
   if (!selectedDay) return null
+
+  async function handleEdit(expense: Expense) {
+    if (!expense.id || expense.fixed || busyId) return
+
+    const nextItem = window.prompt('修改消費項目', expense.item)
+    if (nextItem === null) return
+
+    const item = nextItem.trim()
+    if (!item) return
+
+    const nextJpy = window.prompt('修改日幣金額', String(expense.jpy))
+    if (nextJpy === null) return
+
+    const nextTwd = window.prompt('修改台幣金額', String(expense.twd))
+    if (nextTwd === null) return
+
+    const input = toInput(expense)
+    const updatedInput: ExpenseInput = {
+      ...input,
+      item,
+      jpy: toNumber(nextJpy, expense.jpy),
+      twd: toNumber(nextTwd, expense.twd)
+    }
+
+    setBusyId(expense.id)
+    try {
+      await updateExpense(expense.id, updatedInput)
+    } finally {
+      setBusyId(null)
+    }
+  }
+
+  async function handleDelete(expense: Expense) {
+    if (!expense.id || expense.fixed || busyId) return
+
+    const confirmed = window.confirm(`確定要刪除「${expense.item}」嗎？`)
+    if (!confirmed) return
+
+    setBusyId(expense.id)
+    try {
+      await deleteExpense(expense.id)
+    } finally {
+      setBusyId(null)
+    }
+  }
 
   return (
     <section className="dailyExpenseBoard" aria-label="每日花費記錄">
@@ -101,6 +165,16 @@ export function DailyExpenseBoard() {
                 <div className="expenseReceiptAmount">
                   <strong>{yen(expense.jpy)}</strong>
                   <span>{twd(expense.twd)}</span>
+                  {!expense.fixed ? (
+                    <div className="expenseReceiptActions">
+                      <button type="button" disabled={Boolean(busyId)} onClick={() => handleEdit(expense)}>
+                        修改
+                      </button>
+                      <button type="button" className="dangerButton" disabled={Boolean(busyId)} onClick={() => handleDelete(expense)}>
+                        {busyId === expense.id ? '處理中' : '刪除'}
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </article>
             ))}
