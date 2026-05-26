@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { Expense } from '../types'
 import { type ExpenseInput, useExpenses } from '../context/ExpenseContext'
 
@@ -38,6 +38,11 @@ function toInput(expense: Expense): ExpenseInput {
   }
 }
 
+function parseDate(date: string) {
+  const [month, day] = date.split('/').map(Number)
+  return month * 100 + day
+}
+
 export function ExpenseTable() {
   const { expenses, deleteExpense, updateExpense } = useExpenses()
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -46,6 +51,11 @@ export function ExpenseTable() {
   const [busyId, setBusyId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [savedId, setSavedId] = useState<string | null>(null)
+
+  const sortedExpenses = useMemo(() => {
+    return [...expenses].sort((a, b) => parseDate(a.date) - parseDate(b.date))
+  }, [expenses])
+
   const editableCount = expenses.filter((expense) => !expense.fixed).length
   const fixedCount = expenses.length - editableCount
 
@@ -148,7 +158,7 @@ export function ExpenseTable() {
         </thead>
 
         <tbody>
-          {expenses.map((expense) => {
+          {sortedExpenses.map((expense) => {
             const isEditing = editingId === expense.id && draft
             const isBusy = busyId === expense.id
             const isDeleting = deletingId === expense.id
@@ -159,140 +169,14 @@ export function ExpenseTable() {
                 className={`${isDeleting ? 'expenseRowDeleting' : ''} ${isSaved ? 'expenseRowSaved' : ''}`.trim()}
                 key={`${expense.id}-${expense.item}`}
               >
+                <td>{expense.date}</td>
+                <td>{expense.category}</td>
+                <td>{expense.item}</td>
+                <td>{yen(expense.jpy)}</td>
+                <td>{twd(expense.twd)}</td>
+                <td>{expense.createdBy}</td>
                 <td>
-                  {isEditing ? (
-                    <input
-                      value={draft.date}
-                      disabled={isBusy}
-                      onChange={(event) =>
-                        setDraft({ ...draft, date: event.target.value })
-                      }
-                    />
-                  ) : (
-                    expense.date
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      value={draft.category}
-                      disabled={isBusy}
-                      onChange={(event) =>
-                        setDraft({ ...draft, category: event.target.value })
-                      }
-                    />
-                  ) : (
-                    expense.category
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      value={draft.item}
-                      disabled={isBusy}
-                      onChange={(event) =>
-                        setDraft({ ...draft, item: event.target.value })
-                      }
-                    />
-                  ) : (
-                    expense.item
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      inputMode="numeric"
-                      type="number"
-                      min="0"
-                      value={draft.jpy || ''}
-                      disabled={isBusy}
-                      onChange={(event) => {
-                        const jpy = sanitizeAmount(event.target.value)
-                        setDraft({
-                          ...draft,
-                          jpy,
-                          twd: jpy > 0 ? round(jpy * JPY_TO_TWD) : 0
-                        })
-                      }}
-                    />
-                  ) : (
-                    yen(expense.jpy)
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <input
-                      inputMode="numeric"
-                      type="number"
-                      min="0"
-                      value={draft.twd || ''}
-                      disabled={isBusy}
-                      onChange={(event) => {
-                        const twdAmount = sanitizeAmount(event.target.value)
-                        setDraft({
-                          ...draft,
-                          twd: twdAmount,
-                          jpy: twdAmount > 0 ? round(twdAmount / JPY_TO_TWD) : 0
-                        })
-                      }}
-                    />
-                  ) : (
-                    twd(expense.twd)
-                  )}
-                </td>
-                <td>
-                  {isEditing ? (
-                    <select
-                      value={draft.createdBy}
-                      disabled={isBusy}
-                      onChange={(event) =>
-                        setDraft({
-                          ...draft,
-                          createdBy: event.target.value as 'sacha' | 'yang'
-                        })
-                      }
-                    >
-                      <option value="sacha">sacha</option>
-                      <option value="yang">yang</option>
-                    </select>
-                  ) : (
-                    expense.createdBy
-                  )}
-                </td>
-                <td>
-                  {expense.fixed ? (
-                    '固定費'
-                  ) : isEditing ? (
-                    <div className="buttonRow">
-                      <button onClick={saveEdit} disabled={isBusy}>
-                        {isBusy ? '儲存中...' : '儲存'}
-                      </button>
-                      <button
-                        type="button"
-                        disabled={isBusy}
-                        onClick={() => {
-                          setEditingId(null)
-                          setDraft(null)
-                          setMessage('')
-                        }}
-                      >
-                        取消
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="buttonRow">
-                      <button disabled={Boolean(busyId)} onClick={() => startEdit(expense)}>
-                        修改
-                      </button>
-                      <button
-                        className="dangerButton"
-                        disabled={Boolean(busyId)}
-                        onClick={() => handleDelete(expense)}
-                      >
-                        {isBusy ? '刪除中...' : '刪除'}
-                      </button>
-                    </div>
-                  )}
+                  {expense.fixed ? '固定費' : isEditing ? '編輯中' : '可修改'}
                 </td>
               </tr>
             )
