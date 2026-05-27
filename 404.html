@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>正在回到 App</title>
+    <script>
+      const repoBase = '/my-storyjs-app'
+      const fullPath = location.pathname + location.search + location.hash
+      const appPath = fullPath.startsWith(repoBase)
+        ? fullPath.slice(repoBase.length)
+        : fullPath
+
+      sessionStorage.setItem('spa-redirect-path', appPath || '/')
+      location.replace(repoBase + '/')
+    </script>
+  </head>
+  <body>
+    <p>正在回到金童家關西旅程 App...</p>
+  </body>
+</html>
