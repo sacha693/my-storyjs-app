@@ -69,7 +69,6 @@ export function DailyExpenseBoard() {
 
   function selectDay(id: string) {
     setSelectedDayId(id)
-    // 讓選中的日期按鈕捲動到中心位置
     setTimeout(() => {
       const btn = document.getElementById(`date-btn-${id}`)
       const container = btn?.parentElement
@@ -143,6 +142,7 @@ export function DailyExpenseBoard() {
       </div>
 
       <div className="dailyCalendarStrip" aria-label="選擇消費日期">
+        <span className="dateScrollSpacer" aria-hidden="true" />
         {groupedDays.map((day) => (
           <button
             id={`date-btn-${day.id}`}
@@ -155,6 +155,7 @@ export function DailyExpenseBoard() {
             <small>{day.items.length} 筆</small>
           </button>
         ))}
+        <span className="dateScrollSpacer" aria-hidden="true" />
       </div>
 
       <article className="dailyExpenseSelectedCard">
