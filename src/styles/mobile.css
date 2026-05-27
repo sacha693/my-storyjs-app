@@ -6,7 +6,7 @@
 
   .wrap {
     padding: 12px;
-    padding-bottom: calc(240px + var(--safe-bottom));
+    padding-bottom: calc(clamp(140px, 35vw, 200px) + var(--safe-bottom));
   }
 
   .card {
@@ -103,7 +103,7 @@
   }
 
   .expenseWrap {
-    padding-bottom: calc(300px + var(--safe-bottom));
+    padding-bottom: calc(clamp(160px, 40vw, 220px) + var(--safe-bottom));
   }
 
   .expenseTable,

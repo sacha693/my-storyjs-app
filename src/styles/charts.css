@@ -1,0 +1,150 @@
+/* Chart Visualization Styles */
+
+.chartCard {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-radius: clamp(18px, 5vw, 28px);
+  padding: clamp(16px, 4vw, 24px);
+  border: 1px solid rgba(24, 51, 58, 0.08);
+  box-shadow: 0 4px 12px rgba(24, 51, 58, 0.06);
+}
+
+.chartCard h2 {
+  font-size: clamp(18px, 5vw, 24px);
+  font-weight: 900;
+  margin: 0 0 clamp(14px, 3.5vw, 20px) 0;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+}
+
+.chartRows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 3vw, 16px);
+}
+
+.chartRow {
+  display: grid;
+  gap: clamp(8px, 2.5vw, 12px);
+  padding: clamp(10px, 2.5vw, 14px);
+  background: rgba(127, 211, 223, 0.06);
+  border-radius: clamp(12px, 3vw, 16px);
+  border: 1px solid rgba(127, 211, 223, 0.12);
+  transition: background 0.2s ease;
+}
+
+.chartRow:hover {
+  background: rgba(127, 211, 223, 0.12);
+}
+
+.chartLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(8px, 2vw, 12px);
+}
+
+.chartLabel span {
+  font-weight: 800;
+  font-size: clamp(12px, 3.2vw, 15px);
+  color: var(--ink);
+  flex: 1;
+  min-width: 0;
+}
+
+.chartLabel strong {
+  font-size: clamp(15px, 4.5vw, 20px);
+  color: #1f8aea;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.miniHint {
+  font-size: clamp(10px, 2.8vw, 12px);
+  color: var(--muted);
+  margin: 0;
+  font-weight: 700;
+}
+
+.chartTrack {
+  height: clamp(6px, 1.5vw, 10px);
+  background: rgba(24, 51, 58, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.chartFill {
+  height: 100%;
+  background: linear-gradient(90deg, #1f8aea 0%, #7fd3df 100%);
+  border-radius: 999px;
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 6px rgba(31, 138, 234, 0.3);
+  min-width: 2px;
+}
+
+/* Responsive adjustments for charts */
+@media (max-width: 720px) {
+  .chartCard {
+    border-radius: clamp(16px, 4vw, 24px);
+    padding: clamp(14px, 3.5vw, 20px);
+  }
+
+  .chartCard h2 {
+    font-size: clamp(16px, 4.5vw, 20px);
+    margin-bottom: clamp(12px, 3vw, 16px);
+  }
+
+  .chartRows {
+    gap: clamp(8px, 2.5vw, 12px);
+  }
+
+  .chartRow {
+    padding: clamp(8px, 2vw, 12px);
+    gap: clamp(6px, 2vw, 10px);
+  }
+
+  .chartLabel span {
+    font-size: clamp(11px, 3vw, 14px);
+  }
+
+  .chartLabel strong {
+    font-size: clamp(13px, 4vw, 18px);
+  }
+
+  .miniHint {
+    font-size: clamp(9px, 2.5vw, 11px);
+  }
+}
+
+@media (max-width: 380px) {
+  .chartCard {
+    padding: clamp(10px, 2.5vw, 12px);
+  }
+
+  .chartCard h2 {
+    font-size: clamp(14px, 4vw, 16px);
+    margin-bottom: clamp(10px, 2.5vw, 12px);
+  }
+
+  .chartRow {
+    padding: clamp(8px, 2vw, 10px);
+    gap: clamp(5px, 1.5vw, 8px);
+  }
+
+  .chartLabel span {
+    font-size: clamp(10px, 2.8vw, 12px);
+  }
+
+  .chartLabel strong {
+    font-size: clamp(12px, 3.5vw, 14px);
+  }
+
+  .miniHint {
+    font-size: clamp(8px, 2.2vw, 10px);
+  }
+
+  .chartTrack {
+    height: clamp(4px, 1vw, 6px);
+  }
+}

@@ -299,9 +299,9 @@
 
 @media (max-width: 720px) {
   .expenseTopSection {
-    position: sticky;
-    top: 70px;
+    position: relative;
     z-index: 10;
+    margin-bottom: clamp(12px, 3vw, 18px);
   }
 
   .dailyExpenseHero {
@@ -324,6 +324,10 @@
 
   .expenseReceiptActions {
     display: none;
+  }
+
+  .dailyExpenseReceiptList {
+    padding-bottom: calc(clamp(140px, 35vw, 200px) + var(--safe-bottom));
   }
 }
 
