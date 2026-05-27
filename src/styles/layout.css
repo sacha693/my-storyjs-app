@@ -39,9 +39,10 @@
 
 .wrap {
   max-width: 1100px;
-  margin: auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: clamp(16px, 4vw, 24px);
   width: 100%;
+  box-sizing: border-box;
   overflow-x: hidden;
 }
 
@@ -110,7 +111,7 @@
   }
 
   .wrap {
-    padding: 16px 12px;
+    padding: clamp(12px, 3vw, 16px) clamp(10px, 2.5vw, 12px);
     width: 100%;
     overflow-x: hidden;
   }

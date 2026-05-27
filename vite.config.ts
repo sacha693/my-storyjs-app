@@ -6,13 +6,16 @@ export default defineConfig({
   plugins: [react()],
   build: {
     sourcemap: false,
-    chunkSizeWarningLimit: 900,
+    chunkSizeWarningLimit: 1000,
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          supabase: ['@supabase/supabase-js']
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'vendor-react';
+            if (id.includes('supabase')) return 'vendor-supabase';
+            return 'vendor';
+          }
         }
       }
     }
