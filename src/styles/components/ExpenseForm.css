@@ -10,12 +10,20 @@
   display: flex;
   gap: clamp(8px, 2.8vw, 10px);
   overflow-x: auto;
-  padding: 6px 2px 10px;
+  padding: 6px clamp(28px, 10vw, 52px) 12px;
+  margin-inline: calc(clamp(28px, 10vw, 52px) * -1);
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
-  width: 100%;
+  scroll-padding-inline: clamp(28px, 10vw, 52px);
+  width: auto;
   min-width: 0;
+}
+
+.dateCapsuleRow::before,
+.dateCapsuleRow::after {
+  content: '';
+  flex: 0 0 clamp(18px, 8vw, 42px);
 }
 
 .dateCapsuleRow::-webkit-scrollbar {
@@ -108,7 +116,14 @@
 
   .dateCapsuleRow {
     gap: clamp(8px, 2.8vw, 10px);
-    padding-bottom: 12px;
+    padding-inline: clamp(34px, 12vw, 64px);
+    margin-inline: calc(clamp(34px, 12vw, 64px) * -1);
+    scroll-padding-inline: clamp(34px, 12vw, 64px);
+  }
+
+  .dateCapsuleRow::before,
+  .dateCapsuleRow::after {
+    flex-basis: clamp(28px, 12vw, 58px);
   }
 
   .dateCapsuleRow .dateCapsule {
