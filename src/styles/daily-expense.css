@@ -37,11 +37,19 @@
   gap: clamp(10px, 3.5vw, 16px);
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 8px 2px 18px;
+  padding: 8px clamp(28px, 10vw, 52px) 18px;
+  margin-inline: calc(clamp(28px, 10vw, 52px) * -1);
   flex-wrap: nowrap;
   scrollbar-width: none;
   scroll-snap-type: x proximity;
+  scroll-padding-inline: clamp(28px, 10vw, 52px);
   -webkit-overflow-scrolling: touch;
+}
+
+.dailyCalendarStrip::before,
+.dailyCalendarStrip::after {
+  content: '';
+  flex: 0 0 clamp(18px, 8vw, 42px);
 }
 
 .dailyCalendarStrip::-webkit-scrollbar {
