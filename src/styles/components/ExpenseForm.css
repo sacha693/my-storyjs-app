@@ -22,7 +22,7 @@
 
 .dateCapsuleRow::before,
 .dateCapsuleRow::after {
-  content: '';
+  content: "";
   flex: 0 0 clamp(18px, 8vw, 42px);
 }
 
@@ -108,8 +108,7 @@
   }
 
   .expenseForm input,
-  .expenseForm select,
-  .expenseForm button:not(.dateCapsule) {
+  .expenseForm select {
     width: 100%;
     font-size: clamp(15px, 4.2vw, 16px);
   }
@@ -133,6 +132,10 @@
     padding: clamp(7px, 2.2vw, 8px) clamp(10px, 3vw, 13px) !important;
     border-radius: clamp(15px, 4.5vw, 18px);
     font-size: clamp(12px, 3.6vw, 13px);
+  }
+
+  .expenseForm button {
+    font-size: 16px;
   }
 
   .calcPreview {

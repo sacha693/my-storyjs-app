@@ -78,9 +78,14 @@
   .quickButton,
   .mapButton,
   .buttonRow button,
-  .expenseForm button,
   .calcPreview button {
     width: 100%;
+    text-align: center;
+  }
+
+  .expenseForm button {
+    /* 移除強制 100% 寬度，讓按鈕可以根據內容自動調整 */
+    width: auto;
     text-align: center;
   }
 
