@@ -46,6 +46,10 @@
   overflow-x: hidden;
 }
 
+.expenseAppLayout.wrap {
+  overflow-x: visible;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid rgba(24, 51, 58, 0.08);
@@ -114,6 +118,10 @@
     padding: clamp(12px, 3vw, 16px) clamp(10px, 2.5vw, 12px);
     width: 100%;
     overflow-x: hidden;
+  }
+
+  .expenseAppLayout.wrap {
+    overflow-x: visible;
   }
 
   .card {
