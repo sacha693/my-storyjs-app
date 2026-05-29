@@ -135,12 +135,6 @@ export function DailyExpenseBoard() {
 
   return (
     <section className="dailyExpenseBoard" aria-label="每日花費記錄">
-      <div className="dailyExpenseHero card">
-        <span className="badge">每日花費</span>
-        <h2>依日期查看旅費</h2>
-        <p>左右滑動日期，查看當日所有消費。</p>
-      </div>
-
       <div className="dailyCalendarStrip" aria-label="選擇消費日期">
         <span className="dateScrollSpacer" aria-hidden="true" />
         {groupedDays.map((day) => (
