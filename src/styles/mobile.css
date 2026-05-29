@@ -87,10 +87,18 @@
     text-align: center;
   }
 
-  .expenseForm button {
+  .expenseForm button:not(.dateCapsule),
+  .expenseReceiptActions button {
     width: fit-content !important;
     justify-self: start !important;
     text-align: center;
+  }
+
+  .dateCapsuleRow .dateCapsule,
+  .dailyCalendarStrip .dailyCalendarButton {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    justify-self: auto !important;
   }
 
   .accordion {
