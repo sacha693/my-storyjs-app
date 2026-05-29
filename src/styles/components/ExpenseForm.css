@@ -64,7 +64,7 @@
 .expenseForm input,
 .expenseForm select,
 .expenseForm button:not(.dateCapsule) {
-  width: 100%;
+  width: auto;
   min-width: 0;
   min-height: clamp(42px, 11vw, 50px);
   padding: clamp(10px, 3vw, 14px);
@@ -149,6 +149,7 @@
   .expenseForm button:not(.dateCapsule) {
     min-height: 42px;
     padding: 10px 11px;
+    width: auto; /* 確保在小螢幕下也應用 auto 寬度 */
   }
 
   .dateCapsuleRow .dateCapsule {

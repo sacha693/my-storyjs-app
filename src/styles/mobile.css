@@ -84,8 +84,7 @@
   }
 
   .expenseForm button {
-    /* 移除強制 100% 寬度，讓按鈕可以根據內容自動調整 */
-    width: auto;
+    width: auto !important; /* 確保自動寬度生效 */
     text-align: center;
   }
 
