@@ -84,7 +84,8 @@
   }
 
   .expenseForm button {
-    width: auto !important; /* 確保自動寬度生效 */
+    width: fit-content !important;
+    justify-self: start !important;
     text-align: center;
   }
 
