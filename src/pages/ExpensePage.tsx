@@ -6,13 +6,15 @@ import { ExpenseProvider } from '../context/ExpenseContext'
 function ExpenseContent() {
   return (
     <main className="wrap expenseAppLayout">
+      <section className="expenseBottomSection">
+        <ExpenseForm />
+      </section>
+
       <section className="expenseTopSection">
         <DailyExpenseBoard />
       </section>
 
       <section className="expenseBottomSection">
-        <ExpenseForm />
-
         <details className="accordion expenseAnalysisSection">
           <summary>📊 花費分析</summary>
           <div className="accordionBody">
