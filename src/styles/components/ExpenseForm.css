@@ -73,8 +73,9 @@
 }
 
 .expenseForm button:not(.dateCapsule) {
-  width: fit-content;
-  justify-self: start;
+  width: fit-content !important;
+  max-width: max-content !important;
+  justify-self: start !important;
   min-width: 0;
   min-height: clamp(42px, 11vw, 50px);
   padding: clamp(10px, 6vw, 24px);

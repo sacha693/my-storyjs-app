@@ -76,10 +76,14 @@
 
   .routeChip,
   .quickButton,
-  .mapButton,
+  .mapButton {
+    width: 100%;
+    text-align: center;
+  }
+
   .buttonRow button,
   .calcPreview button {
-    width: 100%;
+    width: auto;
     text-align: center;
   }
 
