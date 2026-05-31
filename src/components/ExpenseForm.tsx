@@ -72,6 +72,17 @@ export function ExpenseForm() {
     row.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' })
   }
 
+  function selectDate(date: string) {
+    if (isSaving) return
+    setForm({ ...form, date })
+  }
+
+  function handleDateKeyDown(event: React.KeyboardEvent<HTMLSpanElement>, date: string) {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    event.preventDefault()
+    selectDate(date)
+  }
+
   function applyItem(item: string) {
     setSelectedItem(item)
 
@@ -141,15 +152,18 @@ export function ExpenseForm() {
             <div className="dateCapsuleRow" ref={dateRowRef}>
               <span className="dateScrollSpacer" aria-hidden="true" />
               {DATE_OPTIONS.map((date: string) => (
-                <button
+                <span
                   key={date}
-                  type="button"
+                  role="button"
+                  tabIndex={isSaving ? -1 : 0}
+                  aria-disabled={isSaving}
+                  aria-pressed={form.date === date}
                   className={`dateCapsule ${form.date === date ? 'active' : ''}`}
-                  onClick={() => setForm({ ...form, date })}
-                  disabled={isSaving}
+                  onClick={() => selectDate(date)}
+                  onKeyDown={(event) => handleDateKeyDown(event, date)}
                 >
                   {date}
-                </button>
+                </span>
               ))}
               <span className="dateScrollSpacer" aria-hidden="true" />
             </div>
