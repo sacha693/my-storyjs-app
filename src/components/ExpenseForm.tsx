@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useExpenses } from '../context/ExpenseContext'
 
 const JPY_TO_TWD = 0.22
@@ -39,7 +39,6 @@ function messageType(message: string) {
 
 export function ExpenseForm() {
   const { addExpense } = useExpenses()
-  const dateRowRef = useRef<HTMLDivElement | null>(null)
   const [message, setMessage] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [selectedItem, setSelectedItem] = useState('')
@@ -63,14 +62,6 @@ export function ExpenseForm() {
 
     return () => window.clearTimeout(timer)
   }, [message])
-
-  function scrollDateRow(direction: 'left' | 'right') {
-    const row = dateRowRef.current
-    if (!row) return
-
-    const amount = Math.max(160, row.clientWidth * 0.7)
-    row.scrollBy({ left: direction === 'left' ? -amount : amount, behavior: 'smooth' })
-  }
 
   function selectDate(date: string) {
     if (isSaving) return
@@ -146,10 +137,7 @@ export function ExpenseForm() {
         <div className="fieldGroup fieldWide">
           <span>日期</span>
           <div className="dateScrollerShell">
-            <button type="button" className="dateScrollControl" onClick={() => scrollDateRow('left')} aria-label="往前看日期">
-              ‹
-            </button>
-            <div className="dateCapsuleRow" ref={dateRowRef}>
+            <div className="dateCapsuleRow">
               <span className="dateScrollSpacer" aria-hidden="true" />
               {DATE_OPTIONS.map((date: string) => (
                 <span
@@ -167,9 +155,6 @@ export function ExpenseForm() {
               ))}
               <span className="dateScrollSpacer" aria-hidden="true" />
             </div>
-            <button type="button" className="dateScrollControl" onClick={() => scrollDateRow('right')} aria-label="往後看日期">
-              ›
-            </button>
           </div>
         </div>
 
