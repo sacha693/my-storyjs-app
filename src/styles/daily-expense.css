@@ -331,7 +331,14 @@
   }
 
   .expenseReceiptActions {
-    display: none;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .expenseReceiptActions button {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 13px;
   }
 
   .dailyExpenseReceiptList {
