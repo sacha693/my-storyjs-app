@@ -20,6 +20,11 @@
   overflow: visible;
 }
 
+.dateScrollerShell {
+  width: 100%;
+  min-width: 0;
+}
+
 .dateCapsuleRow {
   display: flex;
   gap: clamp(8px, 2.8vw, 10px);
@@ -108,6 +113,22 @@
   max-width: 100%;
 }
 
+.expenseForm .fieldSubmit {
+  width: 100% !important;
+  max-width: 100% !important;
+  justify-self: stretch !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  color: var(--ink) !important;
+  white-space: nowrap;
+  overflow: visible;
+  text-indent: 0;
+  line-height: 1.2;
+  font-weight: 900;
+}
+
 .expenseForm input:focus,
 .expenseForm select:focus {
   outline: 3px solid rgba(127, 211, 223, 0.55);
@@ -143,11 +164,18 @@
     font-size: clamp(15px, 4.2vw, 16px);
   }
 
-  .expenseForm button:not(.dateCapsule) {
+  .expenseForm button:not(.dateCapsule):not(.fieldSubmit) {
     width: fit-content;
     max-width: 100%;
     justify-self: start;
     font-size: clamp(15px, 4.2vw, 16px);
+  }
+
+  .expenseForm .fieldSubmit {
+    width: 100% !important;
+    justify-self: stretch !important;
+    font-size: 16px;
+    padding: 13px 16px;
   }
 
   .dateCapsuleRow {
@@ -178,7 +206,7 @@
 @media (max-width: 380px) {
   .expenseForm input,
   .expenseForm select,
-  .expenseForm button:not(.dateCapsule) {
+  .expenseForm button:not(.dateCapsule):not(.fieldSubmit) {
     min-height: 42px;
     padding: 10px 11px;
   }
