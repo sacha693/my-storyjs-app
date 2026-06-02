@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { ExpenseCsvExport } from './ExpenseCsvExport'
 import { useExpenses } from '../context/ExpenseContext'
 import type { Expense } from '../types'
 
@@ -109,6 +110,7 @@ export function ExpenseCharts() {
 
   return (
     <section className="chartGrid">
+      <ExpenseCsvExport />
       <BarChart title="📊 類別支出比例" rows={categoryRows} />
       <BarChart title="👨‍👩‍👦 家庭記帳比例" rows={memberRows} />
       <BarChart title="🗓️ 每日支出趨勢" rows={dailyRows} />
