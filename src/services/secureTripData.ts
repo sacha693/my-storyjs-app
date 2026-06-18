@@ -1,6 +1,5 @@
 import { supabase, TRIP_ID } from './supabase'
 import type { DayPlan } from '../data/types'
-import { fallbackDayPlans, FALLBACK_TRIP_PASSPHRASE } from '../data/fallbackDayPlans'
 
 const PASSPHRASE_STORAGE_KEY = 'kansai-trip-data-passphrase'
 const PBKDF2_ITERATIONS = 210_000
@@ -65,14 +64,6 @@ function getSavedPassphrase() {
   return window.sessionStorage.getItem(PASSPHRASE_STORAGE_KEY)
 }
 
-function canUseFallback(passphrase: string) {
-  return passphrase === FALLBACK_TRIP_PASSPHRASE
-}
-
-function getFallbackDayPlans(passphrase: string): DayPlan[] | null {
-  return canUseFallback(passphrase) ? fallbackDayPlans : null
-}
-
 export function hasTripDataPassphrase() {
   return Boolean(getSavedPassphrase())
 }
@@ -102,10 +93,6 @@ async function decryptDayPlans(row: EncryptedTripDataRow, passphrase: string) {
   return JSON.parse(bytesToText(decrypted)) as DayPlan[]
 }
 
-function getUnlockError(error: unknown) {
-  return error instanceof Error ? error.message : '旅遊資料讀取失敗。'
-}
-
 export async function fetchSecureDayPlans() {
   const passphrase = getSavedPassphrase()
 
@@ -113,37 +100,28 @@ export async function fetchSecureDayPlans() {
     throw new TripDataUnlockRequiredError()
   }
 
-  try {
-    const { data, error } = await supabase
-      .from('encrypted_trip_data')
-      .select('salt, iv, ciphertext')
-      .eq('trip_id', TRIP_ID)
-      .eq('data_key', 'day_plans')
-      .eq('is_active', true)
-      .maybeSingle()
+  const { data, error } = await supabase
+    .from('encrypted_trip_data')
+    .select('salt, iv, ciphertext')
+    .eq('trip_id', TRIP_ID)
+    .eq('data_key', 'day_plans')
+    .eq('is_active', true)
+    .maybeSingle()
 
-    if (error) {
-      throw new Error(`後台資料讀取失敗：${error.message}`)
-    }
-
-    if (!data) {
-      throw new Error('後台尚未建立 encrypted_trip_data/day_plans 資料。')
-    }
-
-    return await decryptDayPlans(data as EncryptedTripDataRow, passphrase)
-  } catch (loadError) {
-    const fallbackPlans = getFallbackDayPlans(passphrase)
-
-    if (fallbackPlans) {
-      return fallbackPlans
-    }
-
+  if (error) {
     clearTripDataPassphrase()
+    throw new Error(`後台資料讀取失敗：${error.message}`)
+  }
 
-    if (getUnlockError(loadError).includes('後台')) {
-      throw loadError
-    }
+  if (!data) {
+    clearTripDataPassphrase()
+    throw new Error('後台尚未建立加密行程資料。請先用 scripts/encrypt-trip-data.mjs 將找回的交通版行程加密後匯入 Supabase。')
+  }
 
-    throw new Error('旅遊資料密碼不正確，或後台資料暫時無法解密。')
+  try {
+    return await decryptDayPlans(data as EncryptedTripDataRow, passphrase)
+  } catch {
+    clearTripDataPassphrase()
+    throw new Error('旅遊資料密碼不正確，或後台加密資料已損毀。')
   }
 }
