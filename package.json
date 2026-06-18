@@ -9,7 +9,6 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "encrypt:trip-data": "node scripts/encrypt-trip-data.mjs",
-    "recover:encrypted-trip-data": "node scripts/recover-and-encrypt-trip-data.mjs",
     "recover:trip-data-sql": "node scripts/recover-trip-data-sql.mjs"
   },
   "dependencies": {
