@@ -12,6 +12,7 @@
 @import './components/ExpenseForm.css';
 @import './components/TransitAccordion.css';
 @import './components/TicketAccordion.css';
+@import './components/TripDataGate.css';
 @import './mobile.css';
 @import './daily-expense.css';
 @import './pwa.css';
