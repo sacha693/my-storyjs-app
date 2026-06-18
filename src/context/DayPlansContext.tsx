@@ -9,20 +9,14 @@ import {
 } from 'react'
 
 import type { DayPlan } from '../data/types'
-import {
-  clearTripDataPassphrase,
-  fetchSecureDayPlans,
-  hasTripDataPassphrase,
-  saveTripDataPassphrase,
-  TripDataUnlockRequiredError
-} from '../services/secureTripData'
+import { fetchSecureDayPlans } from '../services/secureTripData'
 
 type DayPlansContextValue = {
   dayPlans: DayPlan[]
   loading: boolean
   locked: boolean
   error: string | null
-  unlock: (passphrase: string) => Promise<void>
+  unlock: (_passphrase?: string) => Promise<void>
   lock: () => void
   reload: () => Promise<void>
 }
@@ -31,8 +25,7 @@ const DayPlansContext = createContext<DayPlansContextValue | null>(null)
 
 export function DayPlansProvider({ children }: { children: ReactNode }) {
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([])
-  const [loading, setLoading] = useState(hasTripDataPassphrase())
-  const [locked, setLocked] = useState(!hasTripDataPassphrase())
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const reload = useCallback(async () => {
@@ -42,58 +35,39 @@ export function DayPlansProvider({ children }: { children: ReactNode }) {
     try {
       const plans = await fetchSecureDayPlans()
       setDayPlans(plans)
-      setLocked(false)
     } catch (loadError) {
       setDayPlans([])
-
-      if (loadError instanceof TripDataUnlockRequiredError) {
-        setLocked(true)
-      } else {
-        setLocked(!hasTripDataPassphrase())
-        setError(loadError instanceof Error ? loadError.message : '旅遊資料讀取失敗。')
-      }
+      setError(loadError instanceof Error ? loadError.message : '旅遊資料讀取失敗。')
     } finally {
       setLoading(false)
     }
   }, [])
 
-  const unlock = useCallback(async (passphrase: string) => {
-    const trimmedPassphrase = passphrase.trim()
-
-    if (!trimmedPassphrase) {
-      setError('請輸入旅遊資料密碼。')
-      setLocked(true)
-      return
-    }
-
-    saveTripDataPassphrase(trimmedPassphrase)
+  const unlock = useCallback(async () => {
     await reload()
   }, [reload])
 
   const lock = useCallback(() => {
-    clearTripDataPassphrase()
     setDayPlans([])
-    setLocked(true)
     setError(null)
-  }, [])
+    void reload()
+  }, [reload])
 
   useEffect(() => {
-    if (hasTripDataPassphrase()) {
-      reload()
-    }
+    void reload()
   }, [reload])
 
   const value = useMemo(
     () => ({
       dayPlans,
       loading,
-      locked,
+      locked: false,
       error,
       unlock,
       lock,
       reload
     }),
-    [dayPlans, loading, locked, error, unlock, lock, reload]
+    [dayPlans, loading, error, unlock, lock, reload]
   )
 
   return (
