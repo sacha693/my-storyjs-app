@@ -1,18 +1,20 @@
 import { type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { dayPlans } from '../data/days'
+import { useDayPlans } from '../context/DayPlansContext'
 
-type DayListCardStyle = CSSProperties & {
+ type DayListCardStyle = CSSProperties & {
   '--day-theme'?: string
 }
 
 export function DaySection() {
+  const { dayPlans } = useDayPlans()
+
   if (dayPlans.length === 0) {
     return (
       <section id="days" className="card">
         <span className="badge">系統提醒</span>
         <h2>目前沒有行程資料</h2>
-        <p>請確認 src/data/days.ts 是否已正確匯入行程。</p>
+        <p>請確認 Supabase 後台 encrypted_trip_data/day_plans 是否已建立。</p>
       </section>
     )
   }
