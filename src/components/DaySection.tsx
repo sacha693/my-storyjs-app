@@ -2,7 +2,7 @@ import { type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { useDayPlans } from '../context/DayPlansContext'
 
- type DayListCardStyle = CSSProperties & {
+type DayListCardStyle = CSSProperties & {
   '--day-theme'?: string
 }
 
