@@ -1,11 +1,12 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { DayPlansProvider } from '../context/DayPlansContext'
 
 export function AppLayout() {
   const location = useLocation()
   const isHomePage = location.pathname === '/'
 
   return (
-    <>
+    <DayPlansProvider>
       <header className="topbar" id="top">
         <div className="topbarInner">
           <Link className="brand" to="/">
@@ -37,6 +38,6 @@ export function AppLayout() {
           </a>
         </>
       ) : null}
-    </>
+    </DayPlansProvider>
   )
 }
