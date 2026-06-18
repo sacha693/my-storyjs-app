@@ -21,9 +21,9 @@ These files include sensitive travel details such as flights, bookings, lodging,
 
 ## Current protection model
 
-The mobile app opens without a password. Trip data is kept out of GitHub and loaded from Supabase.
+The mobile app asks for a 4-digit travel password the first time it is opened on a phone, then remembers that phone in `localStorage`.
 
-This protects against people browsing the GitHub repository and seeing itinerary documents in source files. It does not protect against people who can open the deployed app URL, because the app intentionally has no password.
+Trip data is kept out of GitHub and loaded from Supabase. This protects against people browsing the GitHub repository and seeing itinerary documents in source files. It is not strong backend authentication; if you need to prevent access by anyone who knows the deployed app URL, add real login or a server-side access check.
 
 ## One-command Supabase recovery
 
@@ -46,14 +46,15 @@ Run `private/trip-data-documents.sql` in Supabase. It creates or updates:
 - `trip_id`: `kansai-2026`
 - `data_key`: `day_plans`
 
-The generated SQL also enables row level security and adds a public read policy for active rows. This is required for passwordless phone use.
+The generated SQL also enables row level security and adds a public read policy for active rows. This is required for the phone app to read data after the lightweight access screen.
 
 ## App protection rules
 
 - The full trip plan must not be committed as frontend TypeScript, JSON, or public assets.
 - Files under `private/` must stay local.
 - The app should load trip data from Supabase, not from source files.
-- If you later want to prevent other visitors from opening the app URL, add a PIN gate or real user authentication.
+- The plaintext travel password must not be committed.
+- If you later want stronger protection, add real user authentication.
 
 ## If the old data was already pushed publicly
 
