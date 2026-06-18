@@ -109,17 +109,19 @@ export async function fetchSecureDayPlans() {
     .maybeSingle()
 
   if (error) {
+    clearTripDataPassphrase()
     throw new Error(`後台資料讀取失敗：${error.message}`)
   }
 
   if (!data) {
-    throw new Error('後台尚未建立 encrypted_trip_data/day_plans 資料。')
+    clearTripDataPassphrase()
+    throw new Error('後台尚未建立加密行程資料。請先用 scripts/encrypt-trip-data.mjs 將找回的交通版行程加密後匯入 Supabase。')
   }
 
   try {
     return await decryptDayPlans(data as EncryptedTripDataRow, passphrase)
   } catch {
     clearTripDataPassphrase()
-    throw new Error('旅遊資料密碼不正確，或後台資料已損毀。')
+    throw new Error('旅遊資料密碼不正確，或後台加密資料已損毀。')
   }
 }
