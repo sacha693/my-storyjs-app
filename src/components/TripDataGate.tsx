@@ -12,6 +12,11 @@ export function TripDataGate({ children }: TripDataGateProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    if (submitting) {
+      return
+    }
+
     setSubmitting(true)
 
     try {
@@ -26,7 +31,7 @@ export function TripDataGate({ children }: TripDataGateProps) {
       <section className="card hero">
         <span className="badge">安全後台</span>
         <h1>旅遊資料解密載入中...</h1>
-        <p>正在從 Supabase 後台讀取加密行程資料。</p>
+        <p>正在讀取加密行程資料，請稍候。</p>
       </section>
     )
   }
@@ -36,7 +41,7 @@ export function TripDataGate({ children }: TripDataGateProps) {
       <section className="card hero secureGate">
         <span className="badge">安全後台</span>
         <h1>旅遊資料已加密</h1>
-        <p>請輸入旅遊資料密碼，解鎖後才會從後台載入每日行程。</p>
+        <p>請輸入旅遊資料密碼。完整交通路線、訂單與住宿資訊只會在解密成功後顯示。</p>
 
         <form className="secureGateForm" onSubmit={handleSubmit}>
           <label htmlFor="trip-passphrase">旅遊資料密碼</label>
@@ -46,14 +51,22 @@ export function TripDataGate({ children }: TripDataGateProps) {
             value={passphrase}
             autoComplete="current-password"
             placeholder="輸入密碼"
+            aria-describedby="trip-passphrase-help trip-passphrase-error"
             onChange={(event) => setPassphrase(event.target.value)}
           />
+          <p className="secureGateHelp" id="trip-passphrase-help">
+            密碼不會寫入程式碼，只會暫存在本次瀏覽器分頁中用來解密資料。
+          </p>
           <button className="quickButton" type="submit" disabled={submitting}>
             {submitting ? '解鎖中...' : '解鎖行程'}
           </button>
         </form>
 
-        {error ? <p className="secureGateError">{error}</p> : null}
+        {error ? (
+          <p className="secureGateError" id="trip-passphrase-error" role="alert">
+            {error}
+          </p>
+        ) : null}
       </section>
     )
   }
