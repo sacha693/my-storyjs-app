@@ -1,29 +1,37 @@
-# Mobile encrypted app usage
+# Mobile app usage without a password
 
 The app is configured as a mobile-friendly PWA:
 
 - `manifest.webmanifest` uses `display: standalone`
 - `start_url` and `scope` point to `/my-storyjs-app/`
-- the trip data gate uses a 4-digit numeric PIN field for phone keyboards
+- the phone opens directly into the trip after backend data loads
 
-## Generate the encrypted data for phone use
+## Data protection model
 
-Use the same PIN that the phone will use to unlock the app:
+The trip data is not committed to GitHub. It is recovered locally from an old commit, converted into SQL, and imported into Supabase.
+
+This protects against someone browsing the GitHub repository and reading the itinerary in source files. It does not protect against someone who can open the deployed app URL, because the phone app intentionally has no password.
+
+## Generate the Supabase import SQL
+
+Run this locally:
 
 ```bash
-TRIP_DATA_PASSPHRASE="1020" npm run recover:encrypted-trip-data
+npm run recover:trip-data-sql
 ```
 
-The command creates two encrypted outputs:
+The command creates:
 
-- `private/encrypted-day-plans.sql` for Supabase import
-- `public/encrypted-trip-data.json` for static GitHub Pages fallback
+- `private/trip-data-documents.sql`
 
-The app tries Supabase first. If Supabase is not updated or was encrypted with another PIN, the phone can still unlock from `public/encrypted-trip-data.json` after deployment.
+Do not commit anything under `private/`.
 
-## Deploy
+## Import and deploy
 
-Commit and deploy `public/encrypted-trip-data.json` together with the app build. Do not commit files under `private/`.
+1. Open Supabase SQL Editor.
+2. Run `private/trip-data-documents.sql`.
+3. Deploy the app from this branch.
+4. Open the app on the phone.
 
 ## Phone setup
 
@@ -32,16 +40,11 @@ Commit and deploy `public/encrypted-trip-data.json` together with the app build.
    - iPhone Safari: Share -> Add to Home Screen
    - Android Chrome: menu -> Add to Home screen or Install app
 3. Launch the app from the home screen.
-4. Enter the 4-digit PIN.
+4. The app loads the trip directly from Supabase.
 
 ## Privacy notes
 
-- The PIN is not committed to the repository.
-- The plaintext route data is not bundled into the frontend.
-- The browser only receives encrypted `salt`, `iv`, and `ciphertext`.
-- The unlocked session is stored in the current browser tab session only.
-- Closing the browser tab or app session requires unlocking again.
-
-## Operational note
-
-A 4-digit PIN is convenient for family phone use, but it is weaker than a long passphrase. If this repository is public, treat `public/encrypted-trip-data.json` as obfuscated family-use protection rather than high-security secrecy.
+- No itinerary source files are restored to the frontend bundle.
+- No PIN or password is stored in the frontend.
+- Supabase allows public read access to the active trip data so the phone can open without login.
+- If you later want to prevent other visitors from opening the app URL, add a PIN gate or real user authentication.
