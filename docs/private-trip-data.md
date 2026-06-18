@@ -19,24 +19,39 @@ That commit stores the route-rich plans in these historical files:
 
 These files include sensitive travel details such as flights, bookings, lodging, and exact routes. Do not restore them as normal frontend source files on `main`, because Vite would publish them in the built JavaScript bundle.
 
-## Protected recovery flow
+## One-command encrypted recovery
 
-1. Work locally on a private machine, not in a public PR branch.
-2. Recover the historical files from the commit above.
-3. Convert the recovered `dayPlans` array to a local JSON file such as `recovered-day-plans.json`.
-4. Set a private passphrase locally. Do not commit it and do not paste it into chat.
-5. Encrypt the JSON into SQL:
+Work locally on a private machine. Choose a private passphrase and keep it outside GitHub and chat.
 
 ```bash
-TRIP_DATA_PASSPHRASE="your-private-passphrase" npm run encrypt:trip-data -- ./recovered-day-plans.json ./encrypted-day-plans.sql
+TRIP_DATA_PASSPHRASE="your-private-passphrase" npm run recover:encrypted-trip-data
 ```
 
-6. Run the generated SQL in Supabase to upsert `encrypted_trip_data` for:
+The command will:
+
+- recover the old route-rich TypeScript data from commit `b9df62c13176faac2da0477a42234d6763f96114`
+- compile it in `private/recovered-route-data-work/`
+- write a temporary `private/recovered-day-plans.json`
+- encrypt it with AES-GCM using PBKDF2-SHA-256
+- write `private/encrypted-day-plans.sql`
+- delete the plaintext JSON by default
+
+Then run `private/encrypted-day-plans.sql` in Supabase. It upserts:
 
 - `trip_id`: `kansai-2026`
 - `data_key`: `day_plans`
 
-7. Delete the local plaintext JSON and SQL export after confirming the app unlocks.
+After importing, open the app and unlock it with the same passphrase.
+
+## Optional inspection
+
+If you need to inspect the recovered JSON before encryption cleanup, run:
+
+```bash
+TRIP_DATA_PASSPHRASE="your-private-passphrase" npm run recover:encrypted-trip-data -- --keep-plaintext
+```
+
+Delete `private/recovered-day-plans.json` immediately after checking it.
 
 ## App protection rules
 
