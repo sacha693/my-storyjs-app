@@ -19,49 +19,42 @@ That commit stores the route-rich plans in these historical files:
 
 These files include sensitive travel details such as flights, bookings, lodging, and exact routes. Do not restore them as normal frontend source files on `main`, because Vite would publish them in the built JavaScript bundle.
 
-## One-command encrypted recovery
+## Current protection model
 
-Work locally on a private machine. Choose a private passphrase or 4-digit family PIN and keep it outside GitHub and chat.
+The mobile app opens without a password. Trip data is kept out of GitHub and loaded from Supabase.
+
+This protects against people browsing the GitHub repository and seeing itinerary documents in source files. It does not protect against people who can open the deployed app URL, because the app intentionally has no password.
+
+## One-command Supabase recovery
+
+Work locally on a private machine:
 
 ```bash
-TRIP_DATA_PASSPHRASE="your-private-passphrase-or-pin" npm run recover:encrypted-trip-data
+npm run recover:trip-data-sql
 ```
 
 The command will:
 
 - recover the old route-rich TypeScript data from commit `b9df62c13176faac2da0477a42234d6763f96114`
 - compile it in `private/recovered-route-data-work/`
-- write a temporary `private/recovered-day-plans.json`
-- encrypt it with AES-GCM using PBKDF2-SHA-256
-- write `private/encrypted-day-plans.sql`
-- write `public/encrypted-trip-data.json`
-- delete the plaintext JSON by default
+- generate `private/trip-data-documents.sql`
+- clean up temporary recovered source files
 
-You can use both encrypted outputs:
+Run `private/trip-data-documents.sql` in Supabase. It creates or updates:
 
-- Run `private/encrypted-day-plans.sql` in Supabase to update the backend row.
-- Commit and deploy `public/encrypted-trip-data.json` so phones can still unlock even when Supabase has older ciphertext.
+- table: `public.trip_data_documents`
+- `trip_id`: `kansai-2026`
+- `data_key`: `day_plans`
 
-The app tries Supabase first, then falls back to the static encrypted JSON file. After importing or deploying, open the app and unlock it with the same passphrase or PIN.
-
-## Optional inspection
-
-If you need to inspect the recovered JSON before encryption cleanup, run:
-
-```bash
-TRIP_DATA_PASSPHRASE="your-private-passphrase-or-pin" npm run recover:encrypted-trip-data -- --keep-plaintext
-```
-
-Delete `private/recovered-day-plans.json` immediately after checking it.
+The generated SQL also enables row level security and adds a public read policy for active rows. This is required for passwordless phone use.
 
 ## App protection rules
 
-- The app fetches only `salt`, `iv`, and `ciphertext` from Supabase or the static encrypted JSON file.
-- The passphrase or PIN must never be hardcoded in frontend code.
 - The full trip plan must not be committed as frontend TypeScript, JSON, or public assets.
-- The passphrase or PIN is stored only in `sessionStorage`, so closing the browser tab clears the unlocked session.
-- The mobile gate accepts a 4-digit numeric PIN for easier phone use.
+- Files under `private/` must stay local.
+- The app should load trip data from Supabase, not from source files.
+- If you later want to prevent other visitors from opening the app URL, add a PIN gate or real user authentication.
 
 ## If the old data was already pushed publicly
 
-Git history can remain visible even after files are removed from the latest branch. If the historical route files contain information that must be treated as leaked, rotate or change affected booking references where possible, change the trip data passphrase, and consider repository history cleanup with GitHub support or a private repository migration.
+Git history can remain visible even after files are removed from the latest branch. If the historical route files contain information that must be treated as leaked, rotate or change affected booking references where possible, and consider repository history cleanup with GitHub support or a private repository migration.
