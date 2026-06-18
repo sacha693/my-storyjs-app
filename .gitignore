@@ -5,9 +5,10 @@ dist
 .env.*
 !.env.example
 
-# Private trip data should be encrypted before importing to Supabase.
+# Private trip data exports stay local and must not be committed.
 private/
 *.private.json
 *.private.sql
 recovered-day-plans.json
 encrypted-day-plans.sql
+trip-data-documents.sql
