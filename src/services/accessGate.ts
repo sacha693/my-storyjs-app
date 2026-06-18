@@ -14,7 +14,7 @@ export function hasStoredTripAccess() {
 }
 
 export async function verifyTripAccessCode(code: string) {
-  return sha256Hex(code.trim()) === ACCESS_CODE_HASH
+  return (await sha256Hex(code.trim())) === ACCESS_CODE_HASH
 }
 
 export function rememberTripAccess() {
