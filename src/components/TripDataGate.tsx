@@ -41,7 +41,7 @@ export function TripDataGate({ children }: TripDataGateProps) {
       <section className="card hero secureGate">
         <span className="badge">安全後台</span>
         <h1>旅遊資料已加密</h1>
-        <p>請輸入旅遊資料密碼。解鎖後會優先讀取 Supabase 加密資料；若後台尚未完成，會使用內建關西行程備援資料。</p>
+        <p>請輸入旅遊資料密碼。完整交通路線、訂單與住宿資訊只會在解密成功後顯示。</p>
 
         <form className="secureGateForm" onSubmit={handleSubmit}>
           <label htmlFor="trip-passphrase">旅遊資料密碼</label>
@@ -50,12 +50,12 @@ export function TripDataGate({ children }: TripDataGateProps) {
             type="password"
             value={passphrase}
             autoComplete="current-password"
-            placeholder="kansai2026"
+            placeholder="輸入密碼"
             aria-describedby="trip-passphrase-help trip-passphrase-error"
             onChange={(event) => setPassphrase(event.target.value)}
           />
           <p className="secureGateHelp" id="trip-passphrase-help">
-            測試與離線備援密碼：kansai2026
+            密碼不會寫入程式碼，只會暫存在本次瀏覽器分頁中用來解密資料。
           </p>
           <button className="quickButton" type="submit" disabled={submitting}>
             {submitting ? '解鎖中...' : '解鎖行程'}
