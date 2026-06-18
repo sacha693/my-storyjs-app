@@ -34,14 +34,15 @@ The command will:
 - write a temporary `private/recovered-day-plans.json`
 - encrypt it with AES-GCM using PBKDF2-SHA-256
 - write `private/encrypted-day-plans.sql`
+- write `public/encrypted-trip-data.json`
 - delete the plaintext JSON by default
 
-Then run `private/encrypted-day-plans.sql` in Supabase. It upserts:
+You can use both encrypted outputs:
 
-- `trip_id`: `kansai-2026`
-- `data_key`: `day_plans`
+- Run `private/encrypted-day-plans.sql` in Supabase to update the backend row.
+- Commit and deploy `public/encrypted-trip-data.json` so phones can still unlock even when Supabase has older ciphertext.
 
-After importing, open the app and unlock it with the same passphrase or PIN.
+The app tries Supabase first, then falls back to the static encrypted JSON file. After importing or deploying, open the app and unlock it with the same passphrase or PIN.
 
 ## Optional inspection
 
@@ -55,7 +56,7 @@ Delete `private/recovered-day-plans.json` immediately after checking it.
 
 ## App protection rules
 
-- The app should only fetch `salt`, `iv`, and `ciphertext` from Supabase.
+- The app fetches only `salt`, `iv`, and `ciphertext` from Supabase or the static encrypted JSON file.
 - The passphrase or PIN must never be hardcoded in frontend code.
 - The full trip plan must not be committed as frontend TypeScript, JSON, or public assets.
 - The passphrase or PIN is stored only in `sessionStorage`, so closing the browser tab clears the unlocked session.
