@@ -21,10 +21,10 @@ These files include sensitive travel details such as flights, bookings, lodging,
 
 ## One-command encrypted recovery
 
-Work locally on a private machine. Choose a private passphrase and keep it outside GitHub and chat.
+Work locally on a private machine. Choose a private passphrase or 4-digit family PIN and keep it outside GitHub and chat.
 
 ```bash
-TRIP_DATA_PASSPHRASE="your-private-passphrase" npm run recover:encrypted-trip-data
+TRIP_DATA_PASSPHRASE="your-private-passphrase-or-pin" npm run recover:encrypted-trip-data
 ```
 
 The command will:
@@ -41,14 +41,14 @@ Then run `private/encrypted-day-plans.sql` in Supabase. It upserts:
 - `trip_id`: `kansai-2026`
 - `data_key`: `day_plans`
 
-After importing, open the app and unlock it with the same passphrase.
+After importing, open the app and unlock it with the same passphrase or PIN.
 
 ## Optional inspection
 
 If you need to inspect the recovered JSON before encryption cleanup, run:
 
 ```bash
-TRIP_DATA_PASSPHRASE="your-private-passphrase" npm run recover:encrypted-trip-data -- --keep-plaintext
+TRIP_DATA_PASSPHRASE="your-private-passphrase-or-pin" npm run recover:encrypted-trip-data -- --keep-plaintext
 ```
 
 Delete `private/recovered-day-plans.json` immediately after checking it.
@@ -56,9 +56,10 @@ Delete `private/recovered-day-plans.json` immediately after checking it.
 ## App protection rules
 
 - The app should only fetch `salt`, `iv`, and `ciphertext` from Supabase.
-- The passphrase must never be hardcoded in frontend code.
+- The passphrase or PIN must never be hardcoded in frontend code.
 - The full trip plan must not be committed as frontend TypeScript, JSON, or public assets.
-- The passphrase is stored only in `sessionStorage`, so closing the browser tab clears the unlocked session.
+- The passphrase or PIN is stored only in `sessionStorage`, so closing the browser tab clears the unlocked session.
+- The mobile gate accepts a 4-digit numeric PIN for easier phone use.
 
 ## If the old data was already pushed publicly
 
