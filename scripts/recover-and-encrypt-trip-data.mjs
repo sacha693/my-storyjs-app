@@ -30,6 +30,7 @@ const repoRoot = resolve(__dirname, '..')
 const args = new Set(process.argv.slice(2))
 const keepPlaintext = args.has('--keep-plaintext')
 const outputSqlPath = resolve(repoRoot, 'private/encrypted-day-plans.sql')
+const outputJsonPath = resolve(repoRoot, 'public/encrypted-trip-data.json')
 const plaintextJsonPath = resolve(repoRoot, 'private/recovered-day-plans.json')
 const workDir = resolve(repoRoot, 'private/recovered-route-data-work')
 const sourceRoot = resolve(workDir, 'src')
@@ -155,10 +156,22 @@ async function encryptPlaintext() {
     encoder.encode(plaintext)
   )
 
-  const sql = `insert into public.encrypted_trip_data (trip_id, data_key, salt, iv, ciphertext, is_active)\nvalues (\n  '${TRIP_ID}',\n  '${DATA_KEY}',\n  '${toBase64(salt)}',\n  '${toBase64(iv)}',\n  '${sqlString(toBase64(new Uint8Array(ciphertext)))}',\n  true\n)\non conflict (trip_id, data_key)\ndo update set\n  salt = excluded.salt,\n  iv = excluded.iv,\n  ciphertext = excluded.ciphertext,\n  is_active = true;\n`
+  const encryptedPayload = {
+    trip_id: TRIP_ID,
+    data_key: DATA_KEY,
+    salt: toBase64(salt),
+    iv: toBase64(iv),
+    ciphertext: toBase64(new Uint8Array(ciphertext)),
+    is_active: true,
+    generated_at: new Date().toISOString()
+  }
+
+  const sql = `insert into public.encrypted_trip_data (trip_id, data_key, salt, iv, ciphertext, is_active)\nvalues (\n  '${TRIP_ID}',\n  '${DATA_KEY}',\n  '${encryptedPayload.salt}',\n  '${encryptedPayload.iv}',\n  '${sqlString(encryptedPayload.ciphertext)}',\n  true\n)\non conflict (trip_id, data_key)\ndo update set\n  salt = excluded.salt,\n  iv = excluded.iv,\n  ciphertext = excluded.ciphertext,\n  is_active = true;\n`
 
   await mkdir(dirname(outputSqlPath), { recursive: true })
+  await mkdir(dirname(outputJsonPath), { recursive: true })
   await writeFile(outputSqlPath, sql, 'utf8')
+  await writeFile(outputJsonPath, `${JSON.stringify(encryptedPayload, null, 2)}\n`, 'utf8')
 }
 
 if (!passphrase) {
@@ -179,9 +192,10 @@ try {
   }
 
   await rm(workDir, { recursive: true, force: true })
-  console.log(`已產生加密 SQL：${outputSqlPath}`)
+  console.log(`已產生 Supabase SQL：${outputSqlPath}`)
+  console.log(`已產生可部署加密檔：${outputJsonPath}`)
   console.log(keepPlaintext ? `已保留明文 JSON：${plaintextJsonPath}` : '明文 JSON 已刪除。')
-  console.log('請將 SQL 匯入 Supabase，然後用同一組密碼解鎖 App。')
+  console.log('請提交並部署 public/encrypted-trip-data.json，手機即可用同一組 PIN 解鎖。')
 } catch (error) {
   await rm(workDir, { recursive: true, force: true })
   console.error(error instanceof Error ? error.message : error)
