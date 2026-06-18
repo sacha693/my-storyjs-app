@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process'
+import { createRequire } from 'node:module'
 import { webcrypto } from 'node:crypto'
 import { existsSync } from 'node:fs'
-import { mkdir, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -69,26 +70,20 @@ async function writeRecoveredSource() {
     await writeFile(resolve(workDir, file), content, 'utf8')
   }
 
-  await writeFile(
-    resolve(sourceRoot, 'export-day-plans.ts'),
-    `import { writeFileSync } from 'node:fs'\nimport { resolve } from 'node:path'\nimport { dayPlans } from './data/days'\n\nwriteFileSync(resolve('${plaintextJsonPath.replaceAll('\\', '\\\\')}'), JSON.stringify(dayPlans, null, 2), 'utf8')\n`,
-    'utf8'
-  )
-
+  await writeFile(resolve(workDir, 'package.json'), JSON.stringify({ type: 'commonjs' }), 'utf8')
   await writeFile(
     resolve(workDir, 'tsconfig.json'),
     JSON.stringify(
       {
         compilerOptions: {
-          target: 'ES2022',
-          module: 'NodeNext',
-          moduleResolution: 'NodeNext',
+          target: 'ES2020',
+          module: 'CommonJS',
+          moduleResolution: 'Node',
           outDir: 'dist',
           rootDir: 'src',
           strict: false,
           skipLibCheck: true,
-          esModuleInterop: true,
-          types: ['node']
+          esModuleInterop: true
         },
         include: ['src/**/*.ts']
       },
@@ -110,8 +105,20 @@ async function compileRecoveredSource() {
   run('npx', ['tsc', '-p', resolve(workDir, 'tsconfig.json')])
 }
 
+async function exportPlaintextJson() {
+  const requireFromWorkDir = createRequire(resolve(workDir, 'package.json'))
+  const { dayPlans } = requireFromWorkDir(resolve(distDir, 'data/days.js'))
+
+  if (!Array.isArray(dayPlans) || dayPlans.length === 0) {
+    throw new Error('找回的 dayPlans 為空，已停止產生加密檔。')
+  }
+
+  await mkdir(dirname(plaintextJsonPath), { recursive: true })
+  await writeFile(plaintextJsonPath, JSON.stringify(dayPlans, null, 2), 'utf8')
+}
+
 async function encryptPlaintext() {
-  const plaintext = await import('node:fs/promises').then(({ readFile }) => readFile(plaintextJsonPath, 'utf8'))
+  const plaintext = await readFile(plaintextJsonPath, 'utf8')
   JSON.parse(plaintext)
 
   const encoder = new TextEncoder()
@@ -164,7 +171,7 @@ try {
   await mkdir(dirname(outputSqlPath), { recursive: true })
   await writeRecoveredSource()
   await compileRecoveredSource()
-  run('node', [resolve(distDir, 'export-day-plans.js')])
+  await exportPlaintextJson()
   await encryptPlaintext()
 
   if (!keepPlaintext) {
