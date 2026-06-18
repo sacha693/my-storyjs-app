@@ -17,9 +17,10 @@ type EncryptedTripDataRow = {
   ciphertext: string
 }
 
-function base64ToBytes(value: string) {
+function base64ToBytes(value: string): Uint8Array<ArrayBuffer> {
   const binary = window.atob(value)
-  const bytes = new Uint8Array(binary.length)
+  const buffer = new ArrayBuffer(binary.length)
+  const bytes = new Uint8Array(buffer)
 
   for (let index = 0; index < binary.length; index += 1) {
     bytes[index] = binary.charCodeAt(index)
@@ -32,7 +33,7 @@ function bytesToText(value: ArrayBuffer) {
   return new TextDecoder().decode(value)
 }
 
-async function getAesKey(passphrase: string, salt: Uint8Array) {
+async function getAesKey(passphrase: string, salt: Uint8Array<ArrayBuffer>) {
   const encodedPassphrase = new TextEncoder().encode(passphrase)
   const keyMaterial = await window.crypto.subtle.importKey(
     'raw',
