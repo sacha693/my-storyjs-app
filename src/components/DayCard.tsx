@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import type { DayPlan, TransitPoint } from '../data/days'
+import type { DayPlan, TransitPoint } from '../data/types'
 import { TicketAccordion } from './TicketAccordion'
 import { TransitAccordion } from './TransitAccordion'
 
