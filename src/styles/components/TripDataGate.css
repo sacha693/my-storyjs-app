@@ -1,0 +1,37 @@
+.secureGate {
+  gap: 16px;
+}
+
+.secureGateForm {
+  display: grid;
+  gap: 10px;
+  width: min(100%, 420px);
+  margin-top: 8px;
+}
+
+.secureGateForm label {
+  font-weight: 700;
+}
+
+.secureGateForm input {
+  width: 100%;
+  border: 1px solid rgba(39, 68, 92, 0.18);
+  border-radius: 16px;
+  padding: 13px 14px;
+  font: inherit;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.secureGateForm input:focus {
+  outline: 3px solid rgba(127, 211, 223, 0.35);
+  border-color: rgba(39, 68, 92, 0.38);
+}
+
+.secureGateError {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 236, 236, 0.92);
+  color: #9f2a2a;
+  font-weight: 700;
+}
