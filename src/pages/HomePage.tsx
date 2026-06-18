@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { NavGrid } from '../components/NavGrid'
+import { TripDataGate } from '../components/TripDataGate'
 import { navigationItems } from '../data/navigation'
-import { dayPlans } from '../data/days'
+import { useDayPlans } from '../context/DayPlansContext'
+import type { DayPlan } from '../data/types'
 
 const TRIP_YEAR = 2026
 
@@ -15,7 +17,7 @@ function startOfToday() {
   return new Date(now.getFullYear(), now.getMonth(), now.getDate())
 }
 
-function getJourneySummary() {
+function getJourneySummary(dayPlans: DayPlan[]) {
   const today = startOfToday()
   const firstDay = getTripDate(dayPlans[0].date)
   const lastDay = getTripDate(dayPlans[dayPlans.length - 1].date)
@@ -64,10 +66,30 @@ function getJourneySummary() {
 }
 
 export function HomePage() {
-  const journeySummary = getJourneySummary()
+  const { dayPlans } = useDayPlans()
 
   return (
     <main className="wrap appVisualWrap">
+      <TripDataGate>
+        {dayPlans.length === 0 ? (
+          <section className="card hero">
+            <span className="badge">系統提醒</span>
+            <h1>目前沒有行程資料</h1>
+            <p>請先在 Supabase 後台建立加密行程資料。</p>
+          </section>
+        ) : (
+          <HomeContent dayPlans={dayPlans} />
+        )}
+      </TripDataGate>
+    </main>
+  )
+}
+
+function HomeContent({ dayPlans }: { dayPlans: DayPlan[] }) {
+  const journeySummary = getJourneySummary(dayPlans)
+
+  return (
+    <>
       <section className="appVisualHero card">
         <div>
           <span className="badge">2026 關西親子自由行</span>
@@ -96,6 +118,6 @@ export function HomePage() {
       </section>
 
       <NavGrid items={navigationItems} />
-    </main>
+    </>
   )
 }
