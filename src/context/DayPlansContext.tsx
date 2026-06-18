@@ -1,5 +1,6 @@
 import {
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -28,7 +29,7 @@ type DayPlansContextValue = {
 
 const DayPlansContext = createContext<DayPlansContextValue | null>(null)
 
-export function DayPlansProvider({ children }: { children: React.ReactNode }) {
+export function DayPlansProvider({ children }: { children: ReactNode }) {
   const [dayPlans, setDayPlans] = useState<DayPlan[]>([])
   const [loading, setLoading] = useState(hasTripDataPassphrase())
   const [locked, setLocked] = useState(!hasTripDataPassphrase())
