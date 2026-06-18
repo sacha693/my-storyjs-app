@@ -3,6 +3,7 @@ import type { DayPlan } from '../data/types'
 
 const PASSPHRASE_STORAGE_KEY = 'kansai-trip-data-passphrase'
 const PBKDF2_ITERATIONS = 210_000
+const ENCRYPTED_TRIP_DATA_URL = `${import.meta.env.BASE_URL}encrypted-trip-data.json`
 
 export class TripDataUnlockRequiredError extends Error {
   constructor() {
@@ -93,13 +94,7 @@ async function decryptDayPlans(row: EncryptedTripDataRow, passphrase: string) {
   return JSON.parse(bytesToText(decrypted)) as DayPlan[]
 }
 
-export async function fetchSecureDayPlans() {
-  const passphrase = getSavedPassphrase()
-
-  if (!passphrase) {
-    throw new TripDataUnlockRequiredError()
-  }
-
+async function fetchSupabaseEncryptedDayPlans() {
   const { data, error } = await supabase
     .from('encrypted_trip_data')
     .select('salt, iv, ciphertext')
@@ -109,19 +104,48 @@ export async function fetchSecureDayPlans() {
     .maybeSingle()
 
   if (error) {
-    clearTripDataPassphrase()
     throw new Error(`後台資料讀取失敗：${error.message}`)
   }
 
-  if (!data) {
-    clearTripDataPassphrase()
-    throw new Error('後台尚未建立加密行程資料。請先用 scripts/encrypt-trip-data.mjs 將找回的交通版行程加密後匯入 Supabase。')
+  return data as EncryptedTripDataRow | null
+}
+
+async function fetchStaticEncryptedDayPlans() {
+  const response = await fetch(ENCRYPTED_TRIP_DATA_URL, {
+    cache: 'no-store'
+  })
+
+  if (!response.ok) {
+    return null
   }
 
-  try {
-    return await decryptDayPlans(data as EncryptedTripDataRow, passphrase)
-  } catch {
-    clearTripDataPassphrase()
-    throw new Error('旅遊資料密碼不正確，或後台加密資料已損毀。')
+  return (await response.json()) as EncryptedTripDataRow
+}
+
+export async function fetchSecureDayPlans() {
+  const passphrase = getSavedPassphrase()
+
+  if (!passphrase) {
+    throw new TripDataUnlockRequiredError()
   }
+
+  const encryptedSources = await Promise.allSettled([
+    fetchSupabaseEncryptedDayPlans(),
+    fetchStaticEncryptedDayPlans()
+  ])
+
+  for (const source of encryptedSources) {
+    if (source.status !== 'fulfilled' || !source.value) {
+      continue
+    }
+
+    try {
+      return await decryptDayPlans(source.value, passphrase)
+    } catch {
+      // Try the next encrypted source before reporting a PIN failure.
+    }
+  }
+
+  clearTripDataPassphrase()
+  throw new Error('旅遊 PIN 不正確，或加密資料尚未用這組 PIN 重新產生。')
 }
