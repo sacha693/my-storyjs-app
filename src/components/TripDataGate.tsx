@@ -41,23 +41,27 @@ export function TripDataGate({ children }: TripDataGateProps) {
       <section className="card hero secureGate">
         <span className="badge">安全後台</span>
         <h1>旅遊資料已加密</h1>
-        <p>請輸入旅遊資料密碼。完整交通路線、訂單與住宿資訊只會在解密成功後顯示。</p>
+        <p>請輸入 4 位數旅遊 PIN。完整交通路線、訂單與住宿資訊只會在解密成功後顯示。</p>
 
         <form className="secureGateForm" onSubmit={handleSubmit}>
-          <label htmlFor="trip-passphrase">旅遊資料密碼</label>
+          <label htmlFor="trip-passphrase">旅遊 PIN</label>
           <input
             id="trip-passphrase"
             type="password"
             value={passphrase}
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={4}
             autoComplete="current-password"
-            placeholder="輸入密碼"
+            enterKeyHint="done"
+            placeholder="4 位數 PIN"
             aria-describedby="trip-passphrase-help trip-passphrase-error"
-            onChange={(event) => setPassphrase(event.target.value)}
+            onChange={(event) => setPassphrase(event.target.value.replace(/\D/g, '').slice(0, 4))}
           />
           <p className="secureGateHelp" id="trip-passphrase-help">
-            密碼不會寫入程式碼，只會暫存在本次瀏覽器分頁中用來解密資料。
+            PIN 不會寫入程式碼，只會暫存在本次瀏覽器分頁中用來解密資料。
           </p>
-          <button className="quickButton" type="submit" disabled={submitting}>
+          <button className="quickButton" type="submit" disabled={submitting || passphrase.length !== 4}>
             {submitting ? '解鎖中...' : '解鎖行程'}
           </button>
         </form>
